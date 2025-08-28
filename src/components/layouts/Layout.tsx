@@ -1,9 +1,17 @@
-import React from 'react'
+import React from "react";
+import MainNav from "./includes/MainNav";
 
-const Layout = () => {
+type Props = {
+  children: React.ReactNode;
+};
+
+const Layout = ({ children }: Props) => {
   return (
-    <div>Layout</div>
-  )
-}
+    <div>
+      <MainNav />
+      {children}
+    </div>
+  );
+};
 
-export default Layout
+export default Layout;
