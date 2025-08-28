@@ -1,9 +1,21 @@
-import React from "react";
-import { useGetUser } from "../../hooks/useGetUser";
+import Layout from "../../components/layouts/Layout";
+import UserTable from "../../components/tables/UserTable";
+import Breadcrumb from "../../components/layouts/common/Breadcrumb";
+import { Link } from "react-router-dom";
 
-const User = () => {
-  const { data } = useGetUser();
-  return <div>User</div>;
+const Dashboard = () => {
+  return (
+    <Layout>
+      <Breadcrumb />
+      <div className="flex justify-between items-center">
+        <h3 className="text-2xl font-bold my-4">User List</h3>
+        <Link to="/users/create" className="btn btn-primary text-white">
+          Create User
+        </Link>
+      </div>
+      <UserTable />
+    </Layout>
+  );
 };
 
-export default User;
+export default Dashboard;

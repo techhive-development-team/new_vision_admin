@@ -1,6 +1,6 @@
 export const API_URLS = {
-  USER: "/api/user",
-  IMAGE: "/api/image",
+  USER: "/users",
+  IMAGE: "/image",
 };
 
 export const baseUrl = import.meta.env.VITE_APP_API_BASE_URL;
