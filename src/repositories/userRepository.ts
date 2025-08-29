@@ -5,8 +5,9 @@ import type {
 } from "../pages/User/userValidationSchema";
 import { client } from "./client";
 
-const getAll = async () => {
-  const response = await client.exec(API_URLS.USER, {
+const getAll = async (params?: { limit?: number; offset?: number }) => {
+  const query = new URLSearchParams(params as any).toString();
+  const response = await client.exec(`${API_URLS.USER}?${query}`, {
     method: "get",
   });
   return response;
@@ -21,7 +22,7 @@ const createUser = async (userData: UserForm) => {
 };
 
 const getUserById = async (id: string) => {
-  const response = await client.exec(`${id}`, {
+  const response = await client.exec(`${API_URLS.USER}/${id}`, {
     method: "get",
   });
   return response;
@@ -35,9 +36,17 @@ const updateUser = async (id: string, data: UserEditForm) => {
   return response;
 };
 
+const deleteUser = async (id: string) => {
+  const response = await client.exec(`${API_URLS.USER}/${id}`, {
+    method: "delete",
+  });
+  return response;
+};
+
 export const userRepository = {
   getAll,
   createUser,
   getUserById,
+  deleteUser,
   updateUser,
 };

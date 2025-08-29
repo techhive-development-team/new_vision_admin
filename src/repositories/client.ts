@@ -16,4 +16,23 @@ const exec = async (endPoint: RequestInfo, config?: RequestInit) => {
   return await response.json();
 };
 
-export const client = { exec };
+const execFormData = async (
+  endPoint: RequestInfo,
+  formData: FormData,
+  config?: RequestInit
+) => {
+  const token = localStorage.getItem("token");
+  const response = await fetch(`${baseUrl}${endPoint}`, {
+    method: "POST",
+    body: formData,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      ...config?.headers,
+    },
+    ...config,
+  });
+
+  return await response.json();
+};
+
+export const client = { exec, execFormData };

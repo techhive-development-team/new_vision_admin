@@ -7,10 +7,17 @@ import Alert from "../../../components/forms/Alert";
 import { useUserCreateForm } from "./useUserCreateForm";
 
 const UserCreate = () => {
-  const { onSubmit, loading, success, message, show, ...methods } = useUserCreateForm();
+  const { onSubmit, loading, success, message, show, ...methods } =
+    useUserCreateForm();
   return (
     <Layout>
-      <Breadcrumb />
+      <Breadcrumb
+        items={[
+          { label: "Home", path: "/" },
+          { label: "Users", path: "/users" },
+          { label: "Add User" },
+        ]}
+      />
       <div className="flex justify-between items-center">
         <h3 className="text-2xl font-bold my-4">Create User</h3>
       </div>

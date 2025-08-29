@@ -1,16 +1,28 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const Breadcrumb = () => {
+type BreadcrumbItem = {
+  label: string;
+  path?: string;
+};
+
+type BreadcrumbProps = {
+  items: BreadcrumbItem[];
+};
+
+const Breadcrumb: React.FC<BreadcrumbProps> = ({ items }) => {
   return (
     <div className="breadcrumbs text-sm">
       <ul>
-        <li>
-          <a>Home</a>
-        </li>
-        <li>
-          <a>Users</a>
-        </li>
-        <li>Add User</li>
+        {items.map((item, index) => (
+          <li key={index}>
+            {item.path ? (
+              <Link to={item.path}>{item.label}</Link>
+            ) : (
+              <span>{item.label}</span>
+            )}
+          </li>
+        ))}
       </ul>
     </div>
   );
