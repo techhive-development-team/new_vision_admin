@@ -3,12 +3,11 @@ import { useFormContext } from "react-hook-form";
 type Props = {
   label: string;
   name: string;
-  type?: string;
   placeholder?: string;
   required?: boolean;
 };
 
-const InputText = ({ label, name, type = "text", placeholder, required }: Props) => {
+const TextArea = ({ label, name, placeholder, required }: Props) => {
   const {
     register,
     formState: { errors },
@@ -17,18 +16,17 @@ const InputText = ({ label, name, type = "text", placeholder, required }: Props)
   const error = errors[name]?.message as string | undefined;
 
   return (
-    <div className="form-control w-full mb-4">
+    <div>
       <label className="label">
-        <span className="label-text font-semibold">
-          {label}
-          {required && <span className="text-red-400">*</span>}
-        </span>
+        <span className="label-text font-semibold">{label}</span>
+        {required && <span className="text-red-400">*</span>}
       </label>
-      <input
-        {...register(name)}
-        type={type}
+      <textarea
+        {...register(name, { required })}
+        className={`textarea textarea-bordered w-full h-20 ${
+          error ? "textarea-error" : ""
+        }`}
         placeholder={placeholder || `Enter your ${label.toLowerCase()}`}
-        className={`input input-bordered w-full ${error ? "input-error" : ""}`}
       />
       {error && (
         <label className="label">
@@ -39,4 +37,4 @@ const InputText = ({ label, name, type = "text", placeholder, required }: Props)
   );
 };
 
-export default InputText;
+export default TextArea;

@@ -11,30 +11,37 @@ const UserEdit = () => {
     useUserEditForm();
   return (
     <Layout>
-      <Breadcrumb
-        items={[
-          { label: "Home", path: "/" },
-          { label: "Users", path: "/users" },
-          { label: "Edit User"},
-        ]}
-      />
-      <div className="flex justify-between items-center">
-        <h3 className="text-2xl font-bold my-4">Edit User</h3>
-      </div>
-      <div className="card bg-base-100 shadow-xl p-6 max-w-md">
-        <FormProvider {...methods}>
-          <form className="space-y-4" onSubmit={methods.handleSubmit(onSubmit)}>
-            {show && <Alert success={success} message={message} />}
-            <InputText label="Name" name="name" />
-            <InputText label="Email" name="email" type="email" />
-            <div className="pt-4 flex justify-between">
-              <Link to="/users" className="btn btn-soft">
-                Back to Users
-              </Link>
-              <button className="btn btn-primary text-white">Edit User</button>
-            </div>
-          </form>
-        </FormProvider>
+      <div className="flex justify-start">
+        <div className="card card-bordered w-full max-w-2xl bg-base-100">
+          <div className="card-body">
+            <Breadcrumb
+              items={[
+                { label: "Home", path: "/" },
+                { label: "Users", path: "/users" },
+                { label: "Edit User" },
+              ]}
+            />
+            <h3 className="text-2xl font-bold my-4">Edit User</h3>
+            <FormProvider {...methods}>
+              <form
+                className="space-y-4"
+                onSubmit={methods.handleSubmit(onSubmit)}
+              >
+                {show && <Alert success={success} message={message} />}
+                <InputText label="Name" name="name" />
+                <InputText label="Email" name="email" type="email" />
+                <div className="pt-4 flex justify-between">
+                  <Link to="/users" className="btn btn-soft">
+                    Back to Users
+                  </Link>
+                  <button className="btn btn-primary text-white">
+                    Edit User
+                  </button>
+                </div>
+              </form>
+            </FormProvider>
+          </div>
+        </div>
       </div>
     </Layout>
   );
