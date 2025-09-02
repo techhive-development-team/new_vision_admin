@@ -17,8 +17,6 @@ const ImageCreate = () => {
     isLoading: imageTypeLoading,
     error: imageTypeError,
   } = useGetImageType();
-
-  console.log(data);
   return (
     <Layout>
       <div className="flex justify-start">

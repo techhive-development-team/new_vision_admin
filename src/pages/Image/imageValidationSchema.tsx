@@ -17,7 +17,7 @@ const checkFileType = () => ({
 });
 
 export const ImageSchema = z.object({
-  mainText: z.string().min(2).max(100),
+  mainText: z.string().min(2).max(1000),
   subText: z.string().optional(),
   imageTypeId: z.string().min(1, "Image Type is required"),
   link: z.string().url().or(z.literal("")).optional(),
@@ -38,3 +38,5 @@ export const ImageSchema = z.object({
 });
 
 export type ImageCreateForm = z.infer<typeof ImageSchema>;
+
+export type ImageUpdateForm = z.infer<typeof ImageSchema>;

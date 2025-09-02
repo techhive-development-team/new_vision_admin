@@ -1,6 +1,7 @@
 export const API_URLS = {
   USER: "/users",
   IMAGE: "/images",
+  UPLOAD: "/uploads",
   IMAGETYPE: "/imageType",
 };
 
