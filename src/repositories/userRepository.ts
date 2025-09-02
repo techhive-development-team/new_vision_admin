@@ -1,7 +1,7 @@
 import { API_URLS } from "../enum/urls";
 import type {
   UserEditForm,
-  UserForm,
+  UserCreateForm,
 } from "../pages/User/userValidationSchema";
 import { client } from "./client";
 
@@ -13,7 +13,7 @@ const getAll = async (params?: { limit?: number; offset?: number }) => {
   return response;
 };
 
-const createUser = async (userData: UserForm) => {
+const createUser = async (userData: UserCreateForm) => {
   const response = await client.exec(API_URLS.USER, {
     method: "post",
     body: JSON.stringify(userData),

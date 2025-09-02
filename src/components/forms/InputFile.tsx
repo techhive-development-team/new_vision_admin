@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 
 type Props = {
@@ -27,6 +27,12 @@ const InputFile = ({ label, name, required, defaultImage }: Props) => {
   const clickUploadImage = () => {
     inputRef.current?.click();
   };
+
+  useEffect(() => {
+    if (defaultImage) {
+      setSelectedImageUri(defaultImage);
+    }
+  }, [defaultImage]);
 
   return (
     <Controller

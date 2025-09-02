@@ -24,7 +24,7 @@ export const useGetImageById = (id: string) => {
     imageRepository.getImageById(id)
   );
   return {
-    data,
+    data: data?.data?.data,
     error,
     isLoading,
     mutate,

@@ -9,6 +9,7 @@ import { useGetImageType } from "../../../hooks/useGetImageType";
 import InputFile from "../../../components/forms/InputFile";
 import TextArea from "../../../components/forms/TextArea";
 import SelectBox from "../../../components/forms/SelectBox";
+import { API_URLS, baseUrl } from "../../../enum/urls";
 
 const ImageEdit = () => {
   const { onSubmit, loading, success, message, show, ...methods } =
@@ -19,6 +20,7 @@ const ImageEdit = () => {
     isLoading: imageTypeLoading,
     error: imageTypeError,
   } = useGetImageType();
+
   return (
     <Layout>
       <div className="flex justify-start">
@@ -38,7 +40,12 @@ const ImageEdit = () => {
                 onSubmit={methods.handleSubmit(onSubmit)}
               >
                 {show && <Alert success={success} message={message} />}
-                <InputFile label="Background Image" name="bgImg" required />
+                <InputFile
+                  label="Background Image"
+                  name="bg_img"
+                  required
+                  defaultImage={`${baseUrl}${API_URLS.UPLOAD}${API_URLS.IMAGE}/${methods.getValues("bg_img") || ""}`}
+                />
                 <TextArea label="Main Text" name="mainText" required />
                 <TextArea label="Sub Text" name="subText" />
                 <SelectBox

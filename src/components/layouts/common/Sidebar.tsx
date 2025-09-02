@@ -1,4 +1,4 @@
-import React from "react";
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   return (
@@ -6,19 +6,12 @@ const Sidebar = () => {
       <li>
         <ul className="menu bg-base-200 rounded-box w-56">
           <li>
-            <a>Item 1</a>
+            <Link to="/images">Images</Link>
           </li>
           <li>
-            <details open>
-              <summary>Parent</summary>
-              <ul>
-                <li>
-                  <a>Submenu 1</a>
-                </li>
-                <li>
-                  <a>Submenu 2</a>
-                </li>
-                <li>
+            <Link to="/users">Users</Link>
+          </li>
+          {/* <li>
                   <details open>
                     <summary>Parent</summary>
                     <ul>
@@ -30,13 +23,7 @@ const Sidebar = () => {
                       </li>
                     </ul>
                   </details>
-                </li>
-              </ul>
-            </details>
-          </li>
-          <li>
-            <a>Item 3</a>
-          </li>
+                </li> */}
         </ul>
       </li>
     </ul>

@@ -36,7 +36,7 @@ const ImageCreate = () => {
                 onSubmit={methods.handleSubmit(onSubmit)}
               >
                 {show && <Alert success={success} message={message} />}
-                <InputFile label="Background Image" name="bgImg" required />
+                <InputFile label="Background Image" name="bg_img" required />
                 <TextArea label="Main Text" name="mainText" required />
                 <TextArea label="Sub Text" name="subText" />
                 <SelectBox

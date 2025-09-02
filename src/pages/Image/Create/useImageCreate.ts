@@ -20,7 +20,7 @@ export const useImageCreate = () => {
     setMessage("");
     try {
       const formData = new FormData();
-      formData.append("file", data.bgImg);
+      formData.append("file", data.bg_img);
       formData.append("mainText", data.mainText);
       formData.append("subText", data.subText || "");
       formData.append("imageTypeId", data.imageTypeId);

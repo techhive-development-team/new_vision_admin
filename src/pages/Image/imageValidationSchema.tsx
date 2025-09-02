@@ -21,7 +21,7 @@ export const ImageSchema = z.object({
   subText: z.string().optional(),
   imageTypeId: z.string().min(1, "Image Type is required"),
   link: z.string().url().or(z.literal("")).optional(),
-  bgImg: z
+  bg_img: z
     .any()
     .refine(
       (files) => {

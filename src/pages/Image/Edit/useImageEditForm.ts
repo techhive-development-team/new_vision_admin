@@ -21,7 +21,7 @@ export const useImageEditForm = () => {
       subText: "",
       imageTypeId: "",
       link: "",
-      bgImg: null,
+      bg_img: null,
     },
   });
 
@@ -40,7 +40,7 @@ export const useImageEditForm = () => {
     formData.append("subText", data.subText || "");
     formData.append("imageTypeId", data.imageTypeId);
     formData.append("link", data.link || "");
-    formData.append("file", data.bgImg);
+    formData.append("file", data.bg_img);
 
     handleSubmit(() =>
       imageRepository.updateImage(id?.toString() || "", formData)

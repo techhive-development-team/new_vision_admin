@@ -1,4 +1,4 @@
-import React, { type JSX } from "react";
+import { type JSX } from "react";
 import { useFormContext } from "react-hook-form";
 
 type Props = JSX.IntrinsicElements["select"] & {
@@ -7,6 +7,7 @@ type Props = JSX.IntrinsicElements["select"] & {
   name: string;
   isDefaultChecked?: boolean;
   required?: boolean;
+  defaultChecked?: boolean;
 };
 
 const SelectBox = (props: Props) => {
@@ -30,7 +31,7 @@ const SelectBox = (props: Props) => {
         }`}
         {...register(props.name)}
       >
-        <option value="">
+        <option value="" selected={props.defaultChecked}>
           Choose {props.label}
         </option>
         {props.items.map((item) => (

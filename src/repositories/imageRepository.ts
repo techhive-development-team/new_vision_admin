@@ -34,7 +34,10 @@ const getImageById = async (id: string) => {
 const updateImage = async (id: string, imageData: FormData) => {
   const response = await client.execFormData(
     `${API_URLS.IMAGE}/${id}`,
-    imageData
+    imageData,
+    {
+      method: "put",
+    }
   );
   return response;
 };
