@@ -9,8 +9,12 @@ const Sidebar = () => {
             <Link to="/images">Images</Link>
           </li>
           <li>
+            <Link to="/imagetypes">ImageType</Link>
+          </li>
+          <li>
             <Link to="/users">Users</Link>
           </li>
+          
           {/* <li>
                   <details open>
                     <summary>Parent</summary>
