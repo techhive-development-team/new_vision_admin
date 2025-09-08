@@ -9,11 +9,11 @@ export const useGetImageType = (params?: { limit?: number; offset?: number}) => 
     imageTypeRepository.getAll(params)
   );
   return{
-    data: data?.data?.data,
+    data: data?.data,
     error,
     isLoading,
     mutate,
-    total: data?.data?.total,
+    total: data?.meta?.total,
   };
 };
 
@@ -24,7 +24,7 @@ export const useGetImageTypeById = (id: string) => {
   );
 
   return {
-    data: data?.data?.data,
+    data: data?.data,
     error,
     isLoading,
     mutate,

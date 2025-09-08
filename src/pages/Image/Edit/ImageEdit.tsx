@@ -29,7 +29,7 @@ const ImageEdit = () => {
             <Breadcrumb
               items={[
                 { label: "Home", path: "/" },
-                { label: "Image", path: "/images" },
+                { label: "Images", path: "/images" },
                 { label: "Edit Image" },
               ]}
             />

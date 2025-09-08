@@ -9,11 +9,11 @@ export const useGetUser = (params?: { limit?: number; offset?: number }) => {
     userRepository.getAll(params)
   );
   return {
-    data: data?.data?.data,
+    data: data?.data,
     error,
     isLoading,
     mutate,
-    total: data?.data?.total,
+    total: data?.meta?.total,
   };
 };
 
@@ -24,7 +24,7 @@ export const useGetUserById = (id: string) => {
   );
 
   return {
-    data: data?.data?.data,
+    data: data?.data,
     error,
     isLoading,
     mutate,

@@ -9,7 +9,7 @@ const Sidebar = () => {
             <Link to="/images">Images</Link>
           </li>
           <li>
-            <Link to="/imagetypes">ImageType</Link>
+            <Link to="/imagetypes">Image Type</Link>
           </li>
           <li>
             <Link to="/users">Users</Link>
