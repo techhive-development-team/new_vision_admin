@@ -1,26 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
-import Login from "../../../pages/Auth/Login/Login";
-
+import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [showLogin, setShowLogin] = useState(false);
   const logoutModalRef = useRef<HTMLDialogElement>(null);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsAuthenticated(!!token);
-  }, []);
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    setIsAuthenticated(false);
     logoutModalRef.current?.close();
-  };
-
-  const handleLoginSuccess = () => {
-    setIsAuthenticated(true);
-    setShowLogin(false);
+    navigate("/login");
   };
 
   return (
@@ -46,34 +35,21 @@ const Navbar = () => {
         </div>
 
         <div className="flex-1 px-2">
-          <a className="text-lg font-bold">New Vision Art & Science Institute</a>
+          <a className="text-lg font-bold">
+            New Vision Art & Science Institute
+          </a>
         </div>
 
         <div className="flex-none">
-          {isAuthenticated ? (
-            <button
-              className="btn btn-ghost"
-              onClick={() => logoutModalRef.current?.showModal()}
-            >
-              Logout
-            </button>
-          ) : (
-            <button className="btn btn-ghost" onClick={() => setShowLogin(true)}>
-              Login
-            </button>
-          )}
+          <button
+            className="btn btn-ghost"
+            onClick={() => logoutModalRef.current?.showModal()}
+          >
+            Logout
+          </button>
         </div>
       </div>
 
-      {/* Login modal */}
-      {!isAuthenticated && showLogin && (
-        <Login
-          onLoginSuccess={handleLoginSuccess}
-          onClose={() => setShowLogin(false)}
-        />
-      )}
-
-      {/* Logout confirmation modal */}
       <dialog id="logout_modal" className="modal" ref={logoutModalRef}>
         <div className="modal-box">
           <h3 className="font-bold text-lg">Confirm Logout</h3>
@@ -81,7 +57,11 @@ const Navbar = () => {
           <div className="modal-action">
             <form method="dialog" className="flex gap-2">
               <button className="btn">Cancel</button>
-              <button type="button" onClick={handleLogout} className="btn btn-error">
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="btn btn-error"
+              >
                 Yes, Logout
               </button>
             </form>

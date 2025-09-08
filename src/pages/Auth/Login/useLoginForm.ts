@@ -12,12 +12,14 @@ export const useLoginForm = () => {
   const onSubmit = async (data: LoginFormValues) => {
     try {
       const result = await authRepository.login(data);
-      return result.token; 
+      return result;
     } catch (errors: any) {
       errors.forEach((err: any) => {
-        methods.setError(err.field as "email" | "password", { message: err.message });
+        methods.setError(err.field as "email" | "password", {
+          message: err.message,
+        });
       });
-      throw errors; 
+      throw errors;
     }
   };
 

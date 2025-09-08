@@ -2,33 +2,25 @@ import { useState } from "react";
 import { FormProvider } from "react-hook-form";
 import InputText from "../../../components/forms/InputText";
 import { useLoginForm } from "./useLoginForm";
+import { useNavigate } from "react-router-dom";
 
-interface LoginProps {
-  onLoginSuccess: () => void;
-  onClose: () => void;
-}
-
-const Login = ({ onLoginSuccess, onClose }: LoginProps) => {
+const Login = () => {
+  const navigate = useNavigate();
   const { methods, onSubmit } = useLoginForm();
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async (data: any) => {
-  try {
-    const result = await onSubmit(data);
-
     setLoading(true);
-    await new Promise<void>((resolve) => setTimeout(resolve, 2000));
-
-    localStorage.setItem("token", result);
-    onLoginSuccess();
-    onClose();
-  } catch (err: any) {
-    console.log("Login failed:", err); 
-  } finally {
-    setLoading(false); 
-  }
-};
-
+    try {
+      const result: string = await onSubmit(data);
+      localStorage.setItem("token", result);
+      navigate("/");
+    } catch (err: any) {
+      console.log("Login failed:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div

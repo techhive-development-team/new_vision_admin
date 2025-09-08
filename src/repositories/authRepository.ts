@@ -1,27 +1,17 @@
 import { API_URLS } from "../enum/urls";
+import type { LoginFormValues } from "../pages/Auth/Login/loginValidationSchema";
 import { client } from "./client";
 
-interface LoginData {
-  email: string;
-  password: string;
-}
-
 export const authRepository = {
-  async login(data: LoginData): Promise<{ token: string }> {
+  async login(data: LoginFormValues): Promise<string> {
     const response = await client.exec(API_URLS.AUTH + "/login", {
       method: "POST",
       body: JSON.stringify(data),
     });
 
-    // parse JSON directly from response (client.exec must return a JS object)
-    const result = response; 
-
-    if (!result.success) {
-      // throw field-specific error
-      throw result.data; 
+    if (response?.statusCode !== 200) {
+      throw response.data;
     }
-
-    // return token
-    return { token: result.data.data };
+    return response.data;
   },
 };

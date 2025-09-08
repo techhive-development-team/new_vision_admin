@@ -1,65 +1,126 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useEffect, useState } from "react";
 import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
   RouterProvider,
+  Navigate,
+  Outlet,
 } from "react-router-dom";
 import Loading from "../components/layouts/common/Loading";
+import { client } from "../repositories/client";
 
+// Lazy loading helper
 const lazyLoad = (path: string) => lazy(() => import(path));
 
+// Route interface
 interface AppRoute {
   path: string;
   element: React.LazyExoticComponent<React.ComponentType<any>>;
   index?: boolean;
+  protected?: boolean;
 }
 
-const routes: AppRoute[] = [
-  { path: "/", element: lazyLoad("../pages/Dashboard"), index: true },
+const ProtectedRoute: React.FC = () => {
+  const [isAuth, setIsAuth] = useState<boolean | null>(null);
 
-  { path: "/users", element: lazyLoad("../pages/User/User") },
+  useEffect(() => {
+    const checkAuth = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) return setIsAuth(false);
+
+      try {
+        const res = await client.exec("/auth/verify-token", { method: "GET" });
+        setIsAuth(res?.success ?? false);
+      } catch {
+        setIsAuth(false);
+      }
+    };
+
+    checkAuth();
+  }, []);
+
+  if (isAuth === null) return <Loading />;
+
+  return isAuth ? <Outlet /> : <Navigate to="/login" replace />;
+};
+
+const routes: AppRoute[] = [
+  {
+    path: "/",
+    element: lazyLoad("../pages/Dashboard"),
+    index: true,
+    protected: true,
+  },
+
+  { path: "/users", element: lazyLoad("../pages/User/User"), protected: true },
   {
     path: "/users/create",
     element: lazyLoad("../pages/User/Create/UserCreate"),
+    protected: true,
   },
-  { path: "/users/:id/edit", element: lazyLoad("../pages/User/Edit/UserEdit") },
+  {
+    path: "/users/:id/edit",
+    element: lazyLoad("../pages/User/Edit/UserEdit"),
+    protected: true,
+  },
 
-  { path: "/images", element: lazyLoad("../pages/Image/Image") },
+  {
+    path: "/images",
+    element: lazyLoad("../pages/Image/Image"),
+    protected: true,
+  },
   {
     path: "/images/create",
     element: lazyLoad("../pages/Image/Create/ImageCreate"),
+    protected: true,
   },
   {
     path: "/images/:id/edit",
     element: lazyLoad("../pages/Image/Edit/ImageEdit"),
+    protected: true,
   },
-  //ImageType
-  { path: "/imagetypes", element: lazyLoad("../pages/ImageType/ImageType") },
+
+  {
+    path: "/imagetypes",
+    element: lazyLoad("../pages/ImageType/ImageType"),
+    protected: true,
+  },
   {
     path: "/imagetypes/create",
     element: lazyLoad("../pages/ImageType/Create/ImageTypeCreate"),
+    protected: true,
   },
   {
     path: "/imagetypes/:id/edit",
     element: lazyLoad("../pages/ImageType/Edit/ImageTypeEdit"),
+    protected: true,
   },
 
-  { path: "/login", 
-    element: lazyLoad("../pages/auth/Login/Login") },
+  { path: "/login", element: lazyLoad("../pages/auth/Login/Login") },
 
   { path: "*", element: lazyLoad("../pages/NotFound") },
 ];
 
 const generateRoutes = (routes: AppRoute[]) =>
-  routes.map((route) => (
-    <Route
-      key={route.path}
-      index={route.index}
-      path={route.path}
-      element={<route.element />}
-    />
-  ));
+  routes.map((route) =>
+    route.protected ? (
+      <Route element={<ProtectedRoute />} key={route.path}>
+        <Route
+          index={route.index}
+          path={route.path}
+          element={<route.element />}
+        />
+      </Route>
+    ) : (
+      <Route
+        key={route.path}
+        index={route.index}
+        path={route.path}
+        element={<route.element />}
+      />
+    )
+  );
 
 const NewVisionRoutes: React.FC = () => {
   const router = createBrowserRouter(
