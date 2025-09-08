@@ -45,6 +45,8 @@ const routes: AppRoute[] = [
     element: lazyLoad("../pages/ImageType/Edit/ImageTypeEdit"),
   },
 
+  { path: "/login", 
+    element: lazyLoad("../pages/auth/Login/Login") },
 
   { path: "*", element: lazyLoad("../pages/NotFound") },
 ];
