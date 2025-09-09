@@ -97,6 +97,23 @@ const routes: AppRoute[] = [
     protected: true,
   },
 
+  //HappeningType
+  {
+    path: "/happeningtypes",
+    element: lazyLoad("../pages/HappeningType/HappeningType"),
+    protected: true,
+  },
+  {
+    path: "/happeningtypes/create",
+    element: lazyLoad("../pages/HappeningType/Create/HappeningTypeCreate"),
+    protected: true,
+  },
+  {
+    path: "/happeningtypes/:id/edit",
+    element: lazyLoad("../pages/HappeningType/Edit/HappeningTypeEdit"),
+    protected: true,
+  },
+
   { path: "/login", element: lazyLoad("../pages/auth/Login/Login") },
 
   { path: "*", element: lazyLoad("../pages/NotFound") },
