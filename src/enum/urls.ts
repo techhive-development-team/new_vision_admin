@@ -2,8 +2,9 @@ export const API_URLS = {
   USER: "/users",
   IMAGE: "/images",
   UPLOAD: "/uploads",
+  COURSE: "/courses",
   IMAGETYPE: "/imageType",
-  HAPPENINGTYPE: "/happeningTypes",
+  HAPPENINGTYPE: "/happeningType",
   AUTH: "/auth"
 };
 

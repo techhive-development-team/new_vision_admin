@@ -1,6 +1,6 @@
 import z from "zod";
 
-const MAX_FILE_SIZE = 1024 * 1024 * 5; 
+const MAX_FILE_SIZE = 1024 * 1024 * 5;
 const ACCEPTED_IMAGE_MIME_TYPES = [
   "image/jpeg",
   "image/jpg",
@@ -23,20 +23,20 @@ export const ImageSchema = z.object({
   link: z.string().url().or(z.literal("")).optional(),
   bg_img: z
     .any()
+    .refine((file) => file instanceof File || typeof file === "string", {
+      message: "Background Image is required",
+    })
     .refine(
-      (files) => {
-        return files;
-      },
-      { message: "Background Image is required" }
+      (file) => !(file instanceof File) || file.size <= MAX_FILE_SIZE,
+      checkFileSize()
     )
-    .refine((files) => {
-      return files?.size <= MAX_FILE_SIZE;
-    }, checkFileSize())
-    .refine((files) => {
-      return ACCEPTED_IMAGE_MIME_TYPES.includes(files?.type);
-    }, checkFileType()),
+    .refine(
+      (file) =>
+        !(file instanceof File) ||
+        ACCEPTED_IMAGE_MIME_TYPES.includes(file.type),
+      checkFileType()
+    ),
 });
 
 export type ImageCreateForm = z.infer<typeof ImageSchema>;
-
 export type ImageUpdateForm = z.infer<typeof ImageSchema>;

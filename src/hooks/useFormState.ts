@@ -24,6 +24,8 @@ export const useFormState = <T>() => {
       } else if (response?.statusCode === 400) {
         setSuccess(false);
         if (Array.isArray(response?.data)) {
+          setShow(true)
+          setSuccess(false)
           setMessage(response.data.map((err: any) => err.message));
         } else {
           setMessage(response?.data || "Invalid data");
@@ -35,6 +37,7 @@ export const useFormState = <T>() => {
       return response;
     } catch (error: any) {
       setSuccess(false);
+      console.log(error);
       setMessage(error?.response?.data || "Something went wrong");
       throw error;
     } finally {

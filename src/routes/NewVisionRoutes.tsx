@@ -57,7 +57,7 @@ const routes: AppRoute[] = [
   {
     path: "/users/create",
     element: lazyLoad("../pages/User/Create/UserCreate"),
-    protected: true,
+    protected: false,
   },
   {
     path: "/users/:id/edit",
@@ -96,8 +96,6 @@ const routes: AppRoute[] = [
     element: lazyLoad("../pages/ImageType/Edit/ImageTypeEdit"),
     protected: true,
   },
-
-  //HappeningType
   {
     path: "/happeningtypes",
     element: lazyLoad("../pages/HappeningType/HappeningType"),
@@ -114,6 +112,21 @@ const routes: AppRoute[] = [
     protected: true,
   },
 
+  {
+    path: "/courses/create",
+    element: lazyLoad("../pages/Course/Create/CourseCreate"),
+    protected: true,
+  },
+  {
+    path: "/courses/:id/edit",
+    element: lazyLoad("../pages/Course/Edit/CourseEdit"),
+    protected: true,
+  },
+  {
+    path: "/courses",
+    element: lazyLoad("../pages/Course/Course"),
+    protected: true,
+  },
   { path: "/login", element: lazyLoad("../pages/auth/Login/Login") },
 
   { path: "*", element: lazyLoad("../pages/NotFound") },

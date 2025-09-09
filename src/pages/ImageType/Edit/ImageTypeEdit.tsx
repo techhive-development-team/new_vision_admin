@@ -34,7 +34,7 @@ const ImageTypeEdit =()=>{
                   <Link to="/imagetypes" className="btn btn-soft">
                     Back to Image Type
                   </Link>
-                  <button className="btn btn-primary text-white">
+                  <button className="btn btn-primary">
                     Edit Image Type
                   </button>
                 </div>
