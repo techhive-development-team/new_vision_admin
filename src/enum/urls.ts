@@ -3,6 +3,7 @@ export const API_URLS = {
   IMAGE: "/images",
   UPLOAD: "/uploads",
   IMAGETYPE: "/imageType",
+  HAPPENINGTYPE: "/happeningTypes",
   AUTH: "/auth"
 };
 
