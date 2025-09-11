@@ -19,9 +19,10 @@ export const CourseCreateSchema = z.object({
       message: "Price must be a number",
     }),
   quiz: z.string().url().or(z.literal("")).optional(),
-  image: z
-    .any()
-    .refine((val) => val instanceof File, "Background image is required"),
+  image: z.union([
+    z.instanceof(File),
+    z.string().min(1, "Background image is required"),
+  ]),
   skills: z.array(z.string().min(1, "At least one skill is required")),
 });
 

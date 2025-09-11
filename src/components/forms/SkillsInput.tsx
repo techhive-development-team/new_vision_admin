@@ -90,7 +90,6 @@ export default function SkillsInput({
       </div>
 
       {error && <p className="text-red-500 mt-1">{error}</p>}
-      <input {...register(name, { required })} type="hidden" />
     </div>
   );
 }

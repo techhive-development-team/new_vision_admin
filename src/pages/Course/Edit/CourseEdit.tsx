@@ -86,7 +86,7 @@ const CourseEdit = () => {
               />
               <InputFile
                 label="Background Image"
-                name="file"
+                name="image"
                 required
                 defaultImage={`${baseUrl}${API_URLS.UPLOAD}${API_URLS.COURSE}/${
                   methods.getValues("image") || ""
