@@ -20,7 +20,10 @@ const Sidebar = () => {
           <li>
             <Link to="/education-partners">Education Partner</Link>
           </li>
-          
+          <li>
+            <Link to="/courses">Courses</Link>
+          </li>
+
           {/* <li>
                   <details open>
                     <summary>Parent</summary>

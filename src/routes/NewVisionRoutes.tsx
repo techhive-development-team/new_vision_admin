@@ -57,7 +57,7 @@ const routes: AppRoute[] = [
   {
     path: "/users/create",
     element: lazyLoad("../pages/User/Create/UserCreate"),
-    protected: true,
+    protected: false,
   },
   {
     path: "/users/:id/edit",
@@ -96,8 +96,6 @@ const routes: AppRoute[] = [
     element: lazyLoad("../pages/ImageType/Edit/ImageTypeEdit"),
     protected: true,
   },
-
-    //HappeningType
   {
     path: "/happeningtypes",
     element: lazyLoad("../pages/HappeningType/HappeningType"),
@@ -113,8 +111,6 @@ const routes: AppRoute[] = [
     element: lazyLoad("../pages/HappeningType/Edit/HappeningTypeEdit"),
     protected: true,
   },
-
-  //EduPartner
   {
     path: "/education-partners",
     element: lazyLoad("../pages/EducationPartner/EducationPartner"),
@@ -122,7 +118,9 @@ const routes: AppRoute[] = [
   },
   {
     path: "/education-partners/create",
-    element: lazyLoad("../pages/EducationPartner/Create/EducationPartnerCreate"),
+    element: lazyLoad(
+      "../pages/EducationPartner/Create/EducationPartnerCreate"
+    ),
     protected: true,
   },
   {
@@ -131,6 +129,21 @@ const routes: AppRoute[] = [
     protected: true,
   },
 
+  {
+    path: "/courses/create",
+    element: lazyLoad("../pages/Course/Create/CourseCreate"),
+    protected: true,
+  },
+  {
+    path: "/courses/:id/edit",
+    element: lazyLoad("../pages/Course/Edit/CourseEdit"),
+    protected: true,
+  },
+  {
+    path: "/courses",
+    element: lazyLoad("../pages/Course/Course"),
+    protected: true,
+  },
   { path: "/login", element: lazyLoad("../pages/auth/Login/Login") },
 
   { path: "*", element: lazyLoad("../pages/NotFound") },

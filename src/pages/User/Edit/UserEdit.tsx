@@ -34,7 +34,7 @@ const UserEdit = () => {
                   <Link to="/users" className="btn btn-soft">
                     Back to Users
                   </Link>
-                  <button className="btn btn-primary text-white">
+                  <button className="btn btn-primary">
                     Edit User
                   </button>
                 </div>

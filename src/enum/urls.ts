@@ -2,6 +2,7 @@ export const API_URLS = {
   USER: "/users",
   IMAGE: "/images",
   UPLOAD: "/uploads",
+  COURSE: "/courses",
   IMAGETYPE: "/imageType",
   HAPPENINGTYPE: "/happeningTypes",
   EDUCATION_PARTNER: "/education-partners",

@@ -68,7 +68,7 @@ const ImageEdit = () => {
                   <Link to="/images" className="btn btn-soft">
                     Back to Images
                   </Link>
-                  <button className="btn btn-primary text-white">
+                  <button className="btn btn-primary">
                     Edit Image
                   </button>
                 </div>

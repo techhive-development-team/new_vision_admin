@@ -27,9 +27,15 @@ export const useImageEditForm = () => {
 
   useEffect(() => {
     if (imageData) {
-      methods.reset(imageData);
+      methods.reset({
+        mainText: imageData.mainText,
+        subText: imageData.subText || "",
+        imageTypeId: imageData.imageTypeId.toString() || "",
+        link: imageData.link || "",
+        bg_img: imageData.bg_img,
+      });
     }
-  }, [imageData]);
+  }, [imageData, methods]);
 
   const { loading, success, message, show, handleSubmit } =
     useFormState<Form>();
@@ -40,7 +46,7 @@ export const useImageEditForm = () => {
     formData.append("subText", data.subText || "");
     formData.append("imageTypeId", data.imageTypeId);
     formData.append("link", data.link || "");
-    formData.append("file", data.bg_img);
+    formData.append("bg_img", data.bg_img);
 
     handleSubmit(() =>
       imageRepository.updateImage(id?.toString() || "", formData)

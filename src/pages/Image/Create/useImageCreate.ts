@@ -1,7 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { ImageSchema, type ImageCreateForm } from "../imageValidationSchema";
-import { useState } from "react";
 import { imageRepository } from "../../../repositories/imageRepository";
 import { useFormState } from "../../../hooks/useFormState";
 
@@ -15,7 +14,7 @@ export const useImageCreate = () => {
 
   const onSubmit = async (data: ImageCreateForm) => {
     const formData = new FormData();
-    formData.append("file", data.bg_img);
+    formData.append("bg_img", data.bg_img);
     formData.append("mainText", data.mainText);
     formData.append("subText", data.subText || "");
     formData.append("imageTypeId", data.imageTypeId);

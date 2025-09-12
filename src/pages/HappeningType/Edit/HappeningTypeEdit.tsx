@@ -35,7 +35,7 @@ const HappeningTypeEdit = () => {
                   <Link to="/happeningtypes" className="btn btn-soft">
                     Back to Happening Type
                   </Link>
-                  <button className="btn btn-primary text-white">
+                  <button className="btn btn-primary">
                     Edit Happening Type
                   </button>
                 </div>
