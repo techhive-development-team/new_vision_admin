@@ -4,6 +4,7 @@ export const API_URLS = {
   UPLOAD: "/uploads",
   IMAGETYPE: "/imageType",
   HAPPENINGTYPE: "/happeningTypes",
+  EDUCATION_PARTNER: "/education-partners",
   AUTH: "/auth"
 };
 

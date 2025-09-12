@@ -97,7 +97,7 @@ const routes: AppRoute[] = [
     protected: true,
   },
 
-  //HappeningType
+    //HappeningType
   {
     path: "/happeningtypes",
     element: lazyLoad("../pages/HappeningType/HappeningType"),
@@ -111,6 +111,23 @@ const routes: AppRoute[] = [
   {
     path: "/happeningtypes/:id/edit",
     element: lazyLoad("../pages/HappeningType/Edit/HappeningTypeEdit"),
+    protected: true,
+  },
+
+  //EduPartner
+  {
+    path: "/education-partners",
+    element: lazyLoad("../pages/EducationPartner/EducationPartner"),
+    protected: true,
+  },
+  {
+    path: "/education-partners/create",
+    element: lazyLoad("../pages/EducationPartner/Create/EducationPartnerCreate"),
+    protected: true,
+  },
+  {
+    path: "/education-partners/:id/edit",
+    element: lazyLoad("../pages/EducationPartner/Edit/EducationPartnerEdit"),
     protected: true,
   },
 
