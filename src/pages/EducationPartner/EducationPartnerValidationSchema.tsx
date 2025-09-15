@@ -20,23 +20,18 @@ export const EducationPartnerSchema = z.object({
   overview: z.string().min(2, "Overview is required").max(2000),
   location: z.string().min(1, "Location is required"),
   foundedDate: z.string().optional(),
-  partnerType: z.string().optional(),
-  logo_img: z
-    .any()
-    .refine((file) => file, { message: "Logo image is required" })
-    .refine((file) => file?.size <= MAX_FILE_SIZE, checkFileSize())
-    .refine(
-      (file) => ACCEPTED_IMAGE_MIME_TYPES.includes(file?.type),
-      checkFileType()
-    ),
-  bg_img: z
-    .any()
-    .refine((file) => file, { message: "Background image is required" })
-    .refine((file) => file?.size <= MAX_FILE_SIZE, checkFileSize())
-    .refine(
-      (file) => ACCEPTED_IMAGE_MIME_TYPES.includes(file?.type),
-      checkFileType()
-    ),
+  partnerType: z.enum(
+    ["INSTITUTE", "UNIVERSITY", "COLLEGE"],
+    "Partner Type is required"
+  ),
+  logo_img: z.union([
+    z.instanceof(File),
+    z.string().min(1, "Logo image is required"),
+  ]),
+  bg_img: z.union([
+    z.instanceof(File),
+    z.string().min(1, "Background image is required"),
+  ]),
 });
 
 export type EducationPartnerCreateForm = z.infer<typeof EducationPartnerSchema>;

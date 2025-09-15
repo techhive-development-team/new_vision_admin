@@ -22,9 +22,9 @@ export const useEducationPartnerEditForm = () => {
       overview: "",
       location: "",
       foundedDate: "",
-      partnerType: "",
-      logo_img: null,
-      bg_img: null,
+      partnerType: "INSTITUTE",
+      logo_img: "",
+      bg_img: "",
     },
   });
 

@@ -8,6 +8,7 @@ import InputFile from "../../../components/forms/InputFile";
 import TextArea from "../../../components/forms/TextArea";
 import { useEducationPartnerEditForm } from "./useEducationPartnerEditForm";
 import { API_URLS, baseUrl } from "../../../enum/urls";
+import RadioInput from "../../../components/forms/RadioInput";
 
 const EducationPartnerEdit = () => {
   const { onSubmit, loading, success, message, show, ...methods } =
@@ -32,29 +33,45 @@ const EducationPartnerEdit = () => {
                 onSubmit={methods.handleSubmit(onSubmit)}
               >
                 {show && <Alert success={success} message={message} />}
-                
+
                 <InputFile
                   label="Logo Image"
                   name="logo_img"
                   required
-                  defaultImage={`${baseUrl}${API_URLS.UPLOAD}${API_URLS.EDUCATION_PARTNER}/${methods.getValues("logo_img") || ""}`}
+                  defaultImage={`${baseUrl}${API_URLS.UPLOAD}${
+                    API_URLS.EDUCATION_PARTNER
+                  }/${methods.getValues("logo_img") || ""}`}
                 />
                 <InputFile
                   label="Background Image"
                   name="bg_img"
                   required
-                  defaultImage={`${baseUrl}${API_URLS.UPLOAD}${API_URLS.EDUCATION_PARTNER}/${methods.getValues("bg_img") || ""}`}
+                  defaultImage={`${baseUrl}${API_URLS.UPLOAD}${
+                    API_URLS.EDUCATION_PARTNER
+                  }/${methods.getValues("bg_img") || ""}`}
                 />
                 <TextArea label="Overview" name="overview" required />
                 <InputText label="Location" name="location" required />
                 <InputText label="Founded Date" name="foundedDate" />
-                <InputText label="Partner Type" name="partnerType" />
+                <RadioInput
+                  name="partnerType"
+                  label="Partner Type"
+                  options={[
+                    { value: "INSTITUTE", label: "Institute" },
+                    { value: "UNIVERSITY", label: "University" },
+                    { value: "COLLEGE", label: "College" },
+                  ]}
+                  required
+                />
 
                 <div className="pt-4 flex justify-between">
                   <Link to="/education-partners" className="btn btn-soft">
                     Back to Partners
                   </Link>
-                  <button className="btn btn-primary text-white" disabled={loading}>
+                  <button
+                    className="btn btn-primary text-white"
+                    disabled={loading}
+                  >
                     Edit Partner
                   </button>
                 </div>
