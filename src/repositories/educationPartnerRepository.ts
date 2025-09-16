@@ -33,7 +33,7 @@ const updateEducationPartner = async (
     `${API_URLS.EDUCATION_PARTNER}/${id}`,
     partnerData,
     {
-      method: "patch",
+      method: "put",
     }
   );
   return response;

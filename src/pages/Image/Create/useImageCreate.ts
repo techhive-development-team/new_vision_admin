@@ -6,7 +6,7 @@ import { useFormState } from "../../../hooks/useFormState";
 
 export const useImageCreate = () => {
   const methods = useForm({
-    resolver: zodResolver(ImageSchema),
+    resolver: zodResolver(ImageSchema(false)),
   });
 
   const { loading, success, message, show, handleSubmit } =
