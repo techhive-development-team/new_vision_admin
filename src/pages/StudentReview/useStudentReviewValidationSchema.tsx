@@ -16,12 +16,6 @@ const checkFileType = () => ({
   message: "Only .jpg, .jpeg, .png and .webp formats are supported",
 });
 
-// id                 Int              @id @default(autoincrement())
-//   name               String
-//   batch              String
-//   educationPartnerId Int
-//   educationPartner   EducationPartner @relation(fields: [educationPartnerId], references: [id])
-//   review             String?
 export const StudentReviewCreateSchema = z.object({
     name : z.string().min(2, "Name is required"),
     batch: z.string().min(2, "Batch is required"),
