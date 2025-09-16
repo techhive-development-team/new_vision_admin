@@ -1,45 +1,38 @@
-import { Link } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
+import { sidebarRoutes } from "./sidebarRoutes";
 
 const Sidebar = () => {
-  return (
-    <ul className="menu p-4 w-64 min-h-full bg-base-100">
-      <li>
-        <ul className="menu bg-base-200 rounded-box w-56">
-          <li>
-            <Link to="/images">Images</Link>
-          </li>
-          <li>
-            <Link to="/imagetypes">Image Type</Link>
-          </li>
-          <li>
-            <Link to="/happeningtypes">Happening Type</Link>
-          </li>
-          <li>
-            <Link to="/users">Users</Link>
-          </li>
-          <li>
-            <Link to="/education-partners">Education Partner</Link>
-          </li>
-          <li>
-            <Link to="/courses">Courses</Link>
-          </li>
+  const location = useLocation();
+  const closeDrawer = () => {
+    const drawer = document.getElementById("my-drawer") as HTMLInputElement;
+    if (drawer && drawer.checked) drawer.checked = false;
+  };
 
-          {/* <li>
-                  <details open>
-                    <summary>Parent</summary>
-                    <ul>
-                      <li>
-                        <a>Submenu 1</a>
-                      </li>
-                      <li>
-                        <a>Submenu 2</a>
-                      </li>
-                    </ul>
-                  </details>
-                </li> */}
-        </ul>
-      </li>
-    </ul>
+  return (
+    <div className="w-60 bg-base-100 h-full min-h-screen">
+      <ul className="menu pt-2 space-y-2">
+        {sidebarRoutes.map((route, index) => (
+          <li key={index} className="relative">
+            <NavLink
+              end
+              to={route.path}
+              onClick={closeDrawer}
+              className={({ isActive }) =>
+                `${isActive ? "font-semibold bg-base-200" : "font-normal"}`
+              }
+            >
+              {route.icon} {route.name}
+              {location.pathname === route.path && (
+                <span
+                  className="absolute inset-y-0 left-0 w-1 rounded-tr-md rounded-br-md bg-primary"
+                  aria-hidden="true"
+                />
+              )}
+            </NavLink>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
 

@@ -144,6 +144,11 @@ const routes: AppRoute[] = [
     element: lazyLoad("../pages/Course/Course"),
     protected: true,
   },
+  {
+    path: "/happenings/create",
+    element: lazyLoad("../pages/Happening/Create/HappeningCreate"),
+    protected: true,
+  },
   { path: "/login", element: lazyLoad("../pages/auth/Login/Login") },
 
   { path: "*", element: lazyLoad("../pages/NotFound") },

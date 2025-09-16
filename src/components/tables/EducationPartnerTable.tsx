@@ -21,7 +21,11 @@ const EducationPartnerTable = () => {
   const [page, setPage] = useState(1);
   const offset = (page - 1) * PAGE_SIZE;
 
-  const { data: partners, total, mutate } = useGetEducationPartner({
+  const {
+    data: partners,
+    total,
+    mutate,
+  } = useGetEducationPartner({
     offset,
     limit: PAGE_SIZE,
   });
@@ -95,7 +99,17 @@ const EducationPartnerTable = () => {
                   </td>
                   <td>{partner.overview}</td>
                   <td>{partner.location}</td>
-                  <td>{partner.partnerType || "-"}</td>
+                  <td>
+                    {partner.partnerType === "UNIVERSITY" && (
+                      <div className="badge badge-primary">University</div>
+                    )}
+                    {partner.partnerType === "INSTITUTE" && (
+                      <div className="badge badge-info">Institute</div>
+                    )}
+                    {partner.partnerType === "COLLEGE" && (
+                      <div className="badge badge-success">College</div>
+                    )}
+                  </td>
                   <td>{partner.foundedDate || "-"}</td>
                   <td>
                     {new Date(partner.createdAt).toLocaleString("en-GB", {

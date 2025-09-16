@@ -21,7 +21,6 @@ const CourseCreate = () => {
           className="grid grid-cols-1 lg:grid-cols-2 gap-0 lg:gap-6"
           onSubmit={methods.handleSubmit(onSubmit)}
         >
-          {/* LEFT SIDE */}
           <div className="card card-bordered w-full bg-base-100">
             <div className="card-body">
               <Breadcrumb

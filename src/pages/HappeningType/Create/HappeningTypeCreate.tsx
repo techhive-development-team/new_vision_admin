@@ -18,8 +18,8 @@ const HappeningTypeCreate = () => {
             <Breadcrumb
               items={[
                 { label: "Home", path: "/" },
-                { label: "HappeningType", path: "/happeningtypes" },
-                { label: "Add HappeningType" },
+                { label: "Happening Types", path: "/happeningtypes" },
+                { label: "Add Happening Type" },
               ]}
             />
             <h3 className="text-2xl font-bold my-4">Create Happening Type</h3>
