@@ -144,6 +144,28 @@ const routes: AppRoute[] = [
     element: lazyLoad("../pages/Course/Course"),
     protected: true,
   },
+
+  //StudentReview
+  {
+    path: "/studentReview",
+    element: lazyLoad("../pages/StudentReview/StudentReview"),
+    protected: true,
+  },
+  {
+    path: "/studentReview/create",
+    element: lazyLoad(
+      "../pages/StudentReview/Create/StudentReviewCreate"
+    ),
+    protected: true,
+  },
+  {
+    path: "/studentReview/:id/edit",
+    element: lazyLoad("../pages/StudentReview/Edit/StudentReviewEdit"),
+    protected: true,
+  },
+
+
+  
   { path: "/login", element: lazyLoad("../pages/auth/Login/Login") },
 
   { path: "*", element: lazyLoad("../pages/NotFound") },

@@ -23,6 +23,9 @@ const Sidebar = () => {
           <li>
             <Link to="/courses">Courses</Link>
           </li>
+          <li>
+            <Link to="/studentReview">Student Review</Link>
+          </li>
 
           {/* <li>
                   <details open>
