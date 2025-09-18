@@ -15,13 +15,13 @@ export const useImageEditForm = () => {
   const { data: imageData } = useGetImageById(id?.toString() || "");
 
   const methods: UseFormReturn<Form> = useForm<Form>({
-    resolver: zodResolver(ImageSchema),
+    resolver: zodResolver(ImageSchema(!!imageData?.bg_img)),
     defaultValues: {
       mainText: "",
       subText: "",
       imageTypeId: "",
       link: "",
-      bg_img: null,
+      bg_img: "",
     },
   });
 

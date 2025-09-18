@@ -14,7 +14,7 @@ export const useCourseEditForm = () => {
   const { id } = useParams();
   const { data: courseData } = useGetCourseById(id?.toString() || "");
   const methods: UseFormReturn<CourseEditForm> = useForm<CourseEditForm>({
-    resolver: zodResolver(CourseEditSchema),
+    resolver: zodResolver(CourseEditSchema(!!courseData?.image)),
     defaultValues: {
       name: "",
       programOverview: "",

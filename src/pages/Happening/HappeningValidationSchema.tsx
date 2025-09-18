@@ -1,6 +1,6 @@
-import z from "zod";
+import { z } from "zod";
 
-const MAX_FILE_SIZE = 1024 * 1024 * 5;
+const MAX_FILE_SIZE = 1024 * 1024 * 5; // 5MB
 const ACCEPTED_IMAGE_MIME_TYPES = [
   "image/jpeg",
   "image/jpg",
@@ -28,14 +28,17 @@ const fileValidator = (hasDefault = false, fieldName = "Image") =>
       `${fieldName} must be less than ${MAX_FILE_SIZE / (1024 * 1024)}MB`
     );
 
-export const ImageSchema = (hasDefaultBg = false) =>
+export const HappeningSchema = (hasMainImage = false, hasAlbumImages = false) =>
   z.object({
-    mainText: z.string().min(2).max(1000),
-    subText: z.string().optional(),
-    imageTypeId: z.string().min(1, "Image Type is required"),
-    link: z.string().url().or(z.literal("")).optional(),
-    bg_img: fileValidator(hasDefaultBg, "Background image"),
+    title: z.string().min(1, "Title is required").trim(),
+    description: z.string().min(1, "Description is required").trim(),
+    happeningTypeId: z.string().min(1, "Happening Type is required"),
+    bg_image: fileValidator(hasMainImage, "Background Image"),
+    album_images: hasAlbumImages
+      ? z
+          .array(fileValidator(false, "Album Image"))
+          .min(1, "At least one album image is required")
+      : z.array(fileValidator(false, "Album Image")).optional(),
   });
 
-export type ImageCreateForm = z.infer<ReturnType<typeof ImageSchema>>;
-export type ImageUpdateForm = z.infer<ReturnType<typeof ImageSchema>>;
+export type HappeningCreateForm = z.infer<ReturnType<typeof HappeningSchema>>;

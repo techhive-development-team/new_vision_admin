@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useGetEducationPartnerById } from "../../../hooks/useGetEducationPartner";
-import { useForm, type UseFormReturn } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useFormState } from "../../../hooks/useFormState";
@@ -16,8 +16,10 @@ export const useEducationPartnerEditForm = () => {
     id?.toString() || ""
   );
 
-  const methods: UseFormReturn<Form> = useForm<Form>({
-    resolver: zodResolver(EducationPartnerSchema),
+  const methods = useForm<Form>({
+    resolver: zodResolver(
+      EducationPartnerSchema(!!partnerData?.logo_img, !!partnerData?.bg_img)
+    ),
     defaultValues: {
       overview: "",
       location: "",
@@ -43,8 +45,11 @@ export const useEducationPartnerEditForm = () => {
     formData.append("location", data.location);
     formData.append("foundedDate", data.foundedDate || "");
     formData.append("partnerType", data.partnerType || "");
-    formData.append("logo_img", data.logo_img);
-    formData.append("bg_img", data.bg_img);
+
+    // Append files only if they are File instances
+    if (data.logo_img instanceof File)
+      formData.append("logo_img", data.logo_img);
+    if (data.bg_img instanceof File) formData.append("bg_img", data.bg_img);
 
     handleSubmit(() =>
       educationPartnerRepository.updateEducationPartner(

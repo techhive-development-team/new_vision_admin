@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 
 type Props = {
@@ -11,23 +11,37 @@ type Props = {
 const InputFile = ({ label, name, required, defaultImage }: Props) => {
   const { control } = useFormContext();
   const inputRef = useRef<HTMLInputElement>(null);
+  const [preview, setPreview] = useState<string>(defaultImage || "");
 
   const clickUploadImage = () => {
     inputRef.current?.click();
   };
 
-  const getPreviewUrl = (value?: File | null) => {
-    if (value instanceof File) return URL.createObjectURL(value);
-    return defaultImage || "";
+  const handleFileChange = (file?: File | null) => {
+    if (file) {
+      const objectUrl = URL.createObjectURL(file);
+      setPreview(objectUrl);
+    } else {
+      setPreview(defaultImage || "");
+    }
   };
+
+  useEffect(() => {
+    return () => {
+      if (preview && preview !== defaultImage) {
+        URL.revokeObjectURL(preview);
+      }
+    };
+  }, [preview, defaultImage]);
 
   return (
     <Controller
       name={name}
       control={control}
+      rules={{
+        required: required && !defaultImage ? "This field is required" : false,
+      }}
       render={({ field, fieldState }) => {
-        const previewUrl = getPreviewUrl(field.value);
-
         return (
           <div className="form-control w-full mb-4 flex flex-col">
             <label className="label">
@@ -42,22 +56,24 @@ const InputFile = ({ label, name, required, defaultImage }: Props) => {
             <input
               ref={inputRef}
               type="file"
+              accept="image/*"
               hidden
               onChange={(e) => {
-                const file = e.target.files?.[0];
+                const file = e.target.files?.[0] || null;
                 field.onChange(file);
+                handleFileChange(file);
               }}
               onBlur={field.onBlur}
             />
 
-            {previewUrl ? (
+            {preview ? (
               <label
                 className="relative cursor-pointer rounded-lg border shadow p-2 flex justify-center items-center"
                 title="Click to change photo"
                 onClick={clickUploadImage}
               >
                 <img
-                  src={previewUrl}
+                  src={preview}
                   alt="Selected"
                   className="max-h-40 object-contain"
                 />

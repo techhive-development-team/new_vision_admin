@@ -3,6 +3,7 @@ import { FormProvider } from "react-hook-form";
 import InputText from "../../../components/forms/InputText";
 import { useLoginForm } from "./useLoginForm";
 import { useNavigate } from "react-router-dom";
+import logo from "../../../../public/logo.png";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -23,34 +24,26 @@ const Login = () => {
   };
 
   return (
-    <div
-      className="fixed inset-0 flex justify-center items-center z-50"
-      style={{
-        backgroundImage:
-          'url("https://unbounce.com/photos/Gradient-Background.png")',
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    >
+    <div className="fixed inset-0 flex justify-center items-center z-50 bg-base-100">
       <div className="relative z-10 w-96 flex justify-center">
         <div className="bg-[rgba(0,77,128,0.2)] backdrop-blur-sm rounded-xl shadow-xl pt-16 pb-8 px-8 flex flex-col items-center w-full border border-white/30">
           <div className="absolute -top-20 w-36 h-36 rounded-full overflow-hidden border-2 border-[rgba(0,77,128,0.5)] shadow-lg">
             <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5KMYum87GQOSZDJYrdnL1OrAN8oDWbdgXAg&s"
+              src={logo}
               alt="User Avatar"
               className="w-full h-full object-cover"
             />
           </div>
 
           <div className="mt-4 text-center">
-            <h1 className="text-lg font-semibold text-white mb-6">
-              Welcome to Admin Dashboard
+            <h1 className="text-lg font-semibold text-black mb-6">
+              Welcome to New Vision <br />Admin Dashboard
             </h1>
           </div>
 
           <FormProvider {...methods}>
             <form
-              className="flex flex-col gap-4 w-full"
+              className="flex flex-col w-full"
               onSubmit={methods.handleSubmit(handleLogin)}
             >
               <InputText label="Email" name="email" type="email" required />

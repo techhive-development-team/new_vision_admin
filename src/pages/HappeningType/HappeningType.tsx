@@ -10,12 +10,15 @@ const Dashboard = () => {
         <div className="card card-bordered w-full bg-base-100">
           <div className="card-body">
             <Breadcrumb
-              items={[{ label: "Home", path: "/" }, { label: "HappeningTypes" }]}
+              items={[
+                { label: "Home", path: "/" },
+                { label: "Happening Types" },
+              ]}
             />
             <div className="flex justify-between items-center">
-              <h3 className="text-2xl font-bold my-4">HappeningType List</h3>
+              <h3 className="text-2xl font-bold my-4">Happening Type List</h3>
               <Link to="/happeningtypes/create" className="btn btn-primary">
-                Create HappeningType
+                Create Happening Type
               </Link>
             </div>
             <HappeningTypeTable />

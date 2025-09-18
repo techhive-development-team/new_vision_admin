@@ -7,7 +7,8 @@ export const API_URLS = {
   HAPPENINGTYPE: "/happeningTypes",
   EDUCATION_PARTNER: "/education-partners",
   STUDENTREVIEW: "/studentReview",
-  AUTH: "/auth"
+  AUTH: "/auth",
+  HAPPENING: "/happenings",
 };
 
 export const baseUrl = import.meta.env.VITE_APP_API_BASE_URL;

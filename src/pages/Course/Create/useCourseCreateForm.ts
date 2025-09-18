@@ -9,7 +9,7 @@ import { courseRepository } from "../../../repositories/courseRepository";
 
 export const useCourseCreateForm = () => {
   const methods = useForm({
-    resolver: zodResolver(CourseCreateSchema),
+    resolver: zodResolver(CourseCreateSchema(false)),
   });
 
   const { loading, success, message, show, handleSubmit } =

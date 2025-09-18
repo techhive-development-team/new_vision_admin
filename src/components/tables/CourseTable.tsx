@@ -106,7 +106,7 @@ const CourseTable = () => {
                     {course.skills?.map((skill, i) => (
                       <span
                         key={i}
-                        className="px-2 py-1 text-xs bg-gray-200 rounded-md mr-1"
+                        className="px-2 py-1 text-xs bg-success rounded-md mr-1"
                       >
                         {skill.substring(0, 50)}
                       </span>
@@ -115,14 +115,20 @@ const CourseTable = () => {
                   <td>{course.price} MMK</td>
                   <td>
                     {course.isOpened ? (
-                      <span className="text-green-600 font-semibold">Open</span>
+                      <div className="badge badge-primary">Open</div>
                     ) : (
-                      <span className="text-red-600 font-semibold">Closed</span>
+                      <div className="badge badge-error">Closed</div>
                     )}
                   </td>
                   <td>{new Date(course.expireDate).toLocaleDateString()}</td>
                   <td>{course.duration}</td>
-                  <td>{course.location}</td>
+                  <td>
+                    {course.location == "onsite" ? (
+                      <div className="badge badge-success">Onsite</div>
+                    ) : (
+                      <div className="badge badge-accent">Online</div>
+                    )}
+                  </td>
                   <td>{course.level}</td>
                   <td>{new Date(course.createdAt).toLocaleString()}</td>
                   <td className="flex gap-2">

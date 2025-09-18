@@ -1,55 +1,53 @@
-import { useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useRef } from "react";
 
 const Navbar = () => {
   const logoutModalRef = useRef<HTMLDialogElement>(null);
 
-  const navigate = useNavigate();
+  const openLogoutModal = () => {
+    logoutModalRef.current?.showModal();
+  };
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
     logoutModalRef.current?.close();
-    navigate("/login");
+    localStorage.removeItem("token");
+    window.location.href = "/login";
   };
 
   return (
     <>
-      <div className="navbar bg-base-200 shadow-md">
-        <div className="flex-none lg:hidden">
-          <label htmlFor="my-drawer" className="btn btn-square btn-ghost">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          </label>
-        </div>
-
-        <div className="flex-1 px-2">
-          <a className="text-lg font-bold">
-            New Vision Art & Science Institute
-          </a>
-        </div>
-
-        <div className="flex-none">
-          <button
-            className="btn btn-ghost"
-            onClick={() => logoutModalRef.current?.showModal()}
+      <div className="w-full navbar bg-base-100 px-4 shadow-md">
+        <label
+          htmlFor="my-drawer"
+          className="btn btn-square btn-ghost lg:hidden"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
           >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </label>
+
+        <div className="flex-1">
+          <h1 className="text-xl font-bold">
+            New Vision Art & Science Institute
+          </h1>
+        </div>
+        <div className="flex-none flex gap-2">
+          <button className="btn btn-ghost">Profile</button>
+          <button onClick={openLogoutModal} className="btn btn-error">
             Logout
           </button>
         </div>
       </div>
-
       <dialog id="logout_modal" className="modal" ref={logoutModalRef}>
         <div className="modal-box">
           <h3 className="font-bold text-lg">Confirm Logout</h3>

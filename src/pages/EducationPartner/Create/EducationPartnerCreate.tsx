@@ -39,7 +39,7 @@ const EducationPartnerCreate = () => {
                 <InputFile label="Background Image" name="bg_img" required />
                 <TextArea label="Overview" name="overview" required />
                 <InputText label="Location" name="location" required />
-                <InputText label="Founded Date" name="foundedDate" />
+                <InputText label="Founded Date" name="foundedDate" type="date" />
                 <RadioInput
                   name="partnerType"
                   label="Partner Type"
