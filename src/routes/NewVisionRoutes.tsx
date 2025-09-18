@@ -167,10 +167,21 @@ const routes: AppRoute[] = [
 
   
   {
+    path: "/happenings",
+    element: lazyLoad("../pages/Happening/Happening"),
+    protected: true,
+  },
+  {
     path: "/happenings/create",
     element: lazyLoad("../pages/Happening/Create/HappeningCreate"),
     protected: true,
   },
+  // {
+  //   path: "/happenings/:id/edit",
+  //   element: lazyLoad("../pages/Happening/Edit/HappeningEdit"),
+  //   protected: true,
+  // },
+
   { path: "/login", element: lazyLoad("../pages/auth/Login/Login") },
 
   { path: "*", element: lazyLoad("../pages/NotFound") },

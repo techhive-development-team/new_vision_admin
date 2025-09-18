@@ -9,6 +9,7 @@ import SelectBox from "../../../components/forms/SelectBox";
 import { useGetHappeningType } from "../../../hooks/useGetHappeningType";
 import InputFile from "../../../components/forms/InputFile";
 import { Link } from "react-router-dom";
+import Alert from "../../../components/forms/Alert";
 
 const HappeningCreate = () => {
   const { onSubmit, loading, success, message, show, ...methods } =
@@ -33,6 +34,7 @@ const HappeningCreate = () => {
             <h3 className="text-2xl font-bold my-4">Create Happening</h3>
             <FormProvider {...methods}>
               <form onSubmit={methods.handleSubmit(onSubmit)}>
+                {show && <Alert success={success} message={message} />}
                 <InputText
                   required
                   label="Happening Name"
@@ -41,7 +43,7 @@ const HappeningCreate = () => {
                 />
                 <TextArea label="Description" name="description" required />
                 <SelectBox
-                  label="Image Type"
+                  label="Happening Type"
                   name="happeningTypeId"
                   items={
                     happeningTypeLoading
