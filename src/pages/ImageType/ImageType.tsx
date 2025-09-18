@@ -14,7 +14,7 @@ const Dashboard = () => {
               items={[{ label: "Home", path: "/" }, { label: "ImageTypes" }]}
             />
             <div className="flex justify-between items-center">
-              <h3 className="text-2xl font-bold my-4">ImageType List</h3>
+              <h3 className="text-2xl font-bold my-4">Image Type List</h3>
               <Link to="/imagetypes/create" className="btn btn-primary">
                 Create Image Type
               </Link>

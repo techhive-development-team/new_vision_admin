@@ -1,4 +1,4 @@
-import React, { useState, useEffect, type DragEvent } from "react";
+import React, { type DragEvent } from "react";
 import { useController, useFormContext } from "react-hook-form";
 
 interface MultiImageUploadProps {
@@ -6,12 +6,7 @@ interface MultiImageUploadProps {
   label?: string;
 }
 
-interface PreviewImage {
-  file: File;
-  previewUrl: string;
-}
-
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = [
   "image/jpeg",
   "image/png",
@@ -26,22 +21,6 @@ const MultiImageUpload: React.FC<MultiImageUploadProps> = ({ name, label }) => {
     field: { value = [], onChange },
     fieldState: { error },
   } = useController({ name, control });
-
-  const [previews, setPreviews] = useState<PreviewImage[]>([]);
-
-  // Sync previews with form value
-  useEffect(() => {
-    const newPreviews: PreviewImage[] = (value as File[]).map((file: File) => ({
-      file,
-      previewUrl: URL.createObjectURL(file),
-    }));
-    setPreviews(newPreviews);
-
-    // Cleanup URLs on unmount
-    return () => {
-      newPreviews.forEach((p) => URL.revokeObjectURL(p.previewUrl));
-    };
-  }, [value]);
 
   const handleFiles = (files: FileList | null) => {
     if (!files) return;
@@ -66,7 +45,7 @@ const MultiImageUpload: React.FC<MultiImageUploadProps> = ({ name, label }) => {
     }
 
     if (validFiles.length > 0) {
-      onChange([...value, ...validFiles]);
+      onChange([...(value as File[]), ...validFiles]);
     }
 
     if (invalidFiles.length > 0) {
@@ -92,7 +71,9 @@ const MultiImageUpload: React.FC<MultiImageUploadProps> = ({ name, label }) => {
         className="border-2 border-dashed border-gray-400 rounded-lg p-10 flex flex-col items-center justify-center cursor-pointer"
         onDragOver={(e) => e.preventDefault()}
         onDrop={handleDrop}
-        onClick={() => document.getElementById(`hiddenFileInput-${name}`)?.click()}
+        onClick={() =>
+          document.getElementById(`hiddenFileInput-${name}`)?.click()
+        }
       >
         <p className="text-gray-500">Click or Drag & Drop images here</p>
         <p className="text-gray-400 text-sm mt-1">
@@ -112,25 +93,29 @@ const MultiImageUpload: React.FC<MultiImageUploadProps> = ({ name, label }) => {
       {error && <p className="text-red-500 mt-2">{error.message}</p>}
 
       <div className="flex flex-wrap gap-4 mt-4">
-        {previews.map((img, idx) => (
-          <div
-            key={idx}
-            className="relative w-36 h-36 border p-1 flex items-center justify-center"
-          >
-            <img
-              src={img.previewUrl}
-              alt={`preview-${idx}`}
-              className="max-w-full max-h-full object-contain"
-            />
-            <button
-              type="button"
-              onClick={() => handleRemove(idx)}
-              className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600"
+        {(value as File[]).map((file, idx) => {
+          const previewUrl = URL.createObjectURL(file);
+          return (
+            <div
+              key={idx}
+              className="relative w-36 h-36 border p-1 flex items-center justify-center"
             >
-              ×
-            </button>
-          </div>
-        ))}
+              <img
+                src={previewUrl}
+                alt={`preview-${idx}`}
+                className="max-w-full max-h-full object-contain"
+                onLoad={() => URL.revokeObjectURL(previewUrl)} // cleanup after load
+              />
+              <button
+                type="button"
+                onClick={() => handleRemove(idx)}
+                className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600"
+              >
+                ×
+              </button>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
