@@ -8,6 +8,7 @@ import { FormProvider } from "react-hook-form";
 import InputFile from "../../../components/forms/InputFile";
 import Alert from "../../../components/forms/Alert";
 import { useGetImageType } from "../../../hooks/useGetImageType";
+import { Link } from "react-router-dom";
 
 const ImageCreate = () => {
   const { onSubmit, loading, success, message, show, ...methods } =
@@ -55,7 +56,10 @@ const ImageCreate = () => {
                   required
                 />
                 <InputText label="Link" name="link" />
-                <div className="flex justify-end mt-4">
+                <div className="pt-4 flex justify-between">
+                  <Link to="/images" className="btn btn-soft">
+                    Back to Images
+                  </Link>
                   <button className="btn btn-primary" disabled={loading}>
                     {loading ? "Loading..." : "Create Image"}
                   </button>
