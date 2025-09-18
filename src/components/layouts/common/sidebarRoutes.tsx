@@ -14,6 +14,6 @@ export const sidebarRoutes: SidebarRoute[] = [
   { path: "/imagetypes", name: "Image Types", icon: <BookOpen size={18} /> },
   { path: "/happeningtypes", name: "Happening Types", icon: <BookOpen size={18} /> },
   { path: "/education-partners", name: "Education Partners", icon: <Building2 size={18} /> },
-  { path: "/happenings/create", name: "Happenings", icon: <Calendar1 size={18} /> },
+  { path: "/happenings", name: "Happenings", icon: <Calendar1 size={18} /> },
   { path: "/courses", name: "Courses", icon: <BookOpen size={18} /> },
 ];
