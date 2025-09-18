@@ -33,7 +33,7 @@ export const HappeningSchema = (hasMainImage = false, hasAlbumImages = false) =>
     title: z.string().min(1, "Title is required").trim(),
     description: z.string().min(1, "Description is required").trim(),
     happeningTypeId: z.string().min(1, "Happening Type is required"),
-    bg_image: fileValidator(hasMainImage, "Background Image"),
+    mainImage: fileValidator(hasMainImage, "Background Image"),
     album_images: hasAlbumImages
       ? z
           .array(fileValidator(false, "Album Image"))

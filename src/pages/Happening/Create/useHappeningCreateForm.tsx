@@ -20,8 +20,8 @@ export const useHappeningCreateForm = () => {
     formData.append("description", data.description);
     formData.append("happeningTypeId", data.happeningTypeId);
 
-    if (data.bg_image instanceof File)
-      formData.append("bg_image", data.bg_image);
+    if (data.mainImage instanceof File)
+      formData.append("mainImage", data.mainImage);
     if (Array.isArray(data.album_images)) {
       data.album_images.forEach((file) => {
         if (file instanceof File) formData.append("album_images", file);

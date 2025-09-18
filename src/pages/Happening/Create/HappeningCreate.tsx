@@ -57,7 +57,7 @@ const HappeningCreate = () => {
                   }
                   required
                 />
-                <InputFile label="Background Image" name="bg_image" required />
+                <InputFile label="Background Image" name="mainImage" required />
                 <MultiImageUpload name="album_images" label="Album Images" />
                 <div className="pt-4 card-actions flex justify-between">
                   <Link to="/happenings" className="btn btn-soft">
