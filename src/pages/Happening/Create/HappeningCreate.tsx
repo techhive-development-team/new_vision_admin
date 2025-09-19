@@ -1,5 +1,4 @@
 import { FormProvider } from "react-hook-form";
-import MultiImageUpload from "../../../components/forms/MultiImageUpload";
 import Breadcrumb from "../../../components/layouts/common/Breadcrumb";
 import Layout from "../../../components/layouts/Layout";
 import { useHappeningCreateForm } from "./useHappeningCreateForm";
@@ -10,6 +9,7 @@ import { useGetHappeningType } from "../../../hooks/useGetHappeningType";
 import InputFile from "../../../components/forms/InputFile";
 import { Link } from "react-router-dom";
 import Alert from "../../../components/forms/Alert";
+import MultiFileUpload from "../../../components/forms/MultiFileUpload";
 
 const HappeningCreate = () => {
   const { onSubmit, loading, success, message, show, ...methods } =
@@ -58,7 +58,13 @@ const HappeningCreate = () => {
                   required
                 />
                 <InputFile label="Background Image" name="mainImage" required />
-                <MultiImageUpload name="album_images" label="Album Images" />
+                <MultiFileUpload
+                  name="album_images"
+                  label="Album Images"
+                  accept="image/*"
+                  allowedTypes={["image/jpeg", "image/png", "image/webp"]}
+                  fileTypeLabel="images"
+                />
                 <div className="pt-4 card-actions flex justify-between">
                   <Link to="/happenings" className="btn btn-soft">
                     Back to Happenings

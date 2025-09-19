@@ -1,26 +1,31 @@
-import { useHappeningEditForm } from "./useHappeningEditForm";
-import { useGetHappeningType } from "../../../hooks/useGetHappeningType";
 import { FormProvider } from "react-hook-form";
-import MultiImageUpload from "../../../components/forms/MultiImageUpload";
-import Breadcrumb from "../../../components/layouts/common/Breadcrumb";
-import Layout from "../../../components/layouts/Layout";
 import InputText from "../../../components/forms/InputText";
 import TextArea from "../../../components/forms/TextArea";
 import SelectBox from "../../../components/forms/SelectBox";
 import InputFile from "../../../components/forms/InputFile";
-import { Link } from "react-router-dom";
+import Breadcrumb from "../../../components/layouts/common/Breadcrumb";
+import Layout from "../../../components/layouts/Layout";
 import Alert from "../../../components/forms/Alert";
+import { Link } from "react-router-dom";
+import { useHappeningEditForm } from "./useHappeningEditForm";
+import { useGetHappeningType } from "../../../hooks/useGetHappeningType";
 import { API_URLS, baseUrl } from "../../../enum/urls";
-
+import MultiFileUpload from "../../../components/forms/MultiFileUpload";
+// In your HappeningEdit component
 const HappeningEdit = () => {
-  const { onSubmit, loading, success, message, show, ...methods } =
-    useHappeningEditForm();
-  console.log(methods.getValues());
   const {
-    data,
-    isLoading: happeningTypeLoading,
-    error: happeningTypeError,
-  } = useGetHappeningType();
+    onSubmit,
+    loading,
+    success,
+    message,
+    show,
+    defaultAlbumUrls,
+    handleExistingImagesChange,
+    ...methods
+  } = useHappeningEditForm();
+
+  const { data, isLoading, error } = useGetHappeningType();
+
   return (
     <Layout>
       <div className="flex justify-start">
@@ -37,20 +42,15 @@ const HappeningEdit = () => {
             <FormProvider {...methods}>
               <form onSubmit={methods.handleSubmit(onSubmit)}>
                 {show && <Alert success={success} message={message} />}
-                <InputText
-                  required
-                  label="Happening Name"
-                  name="title"
-                  placeholder="Enter happening name"
-                />
+                <InputText label="Happening Name" name="title" required />
                 <TextArea label="Description" name="description" required />
                 <SelectBox
                   label="Happening Type"
                   name="happeningTypeId"
                   items={
-                    happeningTypeLoading
+                    isLoading
                       ? [{ value: "", showValue: "Loading..." }]
-                      : happeningTypeError
+                      : error
                       ? [{ value: "", showValue: "Failed to load types" }]
                       : data?.map((type: { id: string; typeName: string }) => ({
                           value: type.id,
@@ -68,7 +68,21 @@ const HappeningEdit = () => {
                   }/${methods.getValues("mainImage")}`}
                 />
 
-                <MultiImageUpload name="album_images" label="Album Images" />
+                <MultiFileUpload
+                  name="album_images"
+                  label="Album Images"
+                  defaultUrls={defaultAlbumUrls}
+                  accept="image/*"
+                  allowedTypes={[
+                    "image/jpeg",
+                    "image/png",
+                    "image/webp",
+                    "image/gif",
+                  ]}
+                  fileTypeLabel="images"
+                  onExistingImagesChange={handleExistingImagesChange}
+                />
+
                 <div className="pt-4 card-actions flex justify-between">
                   <Link to="/happenings" className="btn btn-soft">
                     Back to Happenings
@@ -85,5 +99,4 @@ const HappeningEdit = () => {
     </Layout>
   );
 };
-
 export default HappeningEdit;
