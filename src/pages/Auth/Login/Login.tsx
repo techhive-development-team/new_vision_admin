@@ -3,7 +3,7 @@ import { FormProvider } from "react-hook-form";
 import InputText from "../../../components/forms/InputText";
 import { useLoginForm } from "./useLoginForm";
 import { useNavigate } from "react-router-dom";
-import logo from "../../../../public/logo.png";
+import logo from "/logo.png";
 
 const Login = () => {
   const navigate = useNavigate();
