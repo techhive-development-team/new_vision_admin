@@ -178,6 +178,23 @@ const routes: AppRoute[] = [
     protected: true,
   },
 
+  //inquiry
+  {
+    path: "/inquiry",
+    element: lazyLoad("../pages/Inquiry/Inquiry"),
+    protected: true,
+  },
+  {
+    path: "/inquiry/view",
+    element: lazyLoad("../pages/Inquiry/view/InquiryView"),
+    protected: true,
+  },
+  {
+    path: "/inquiry/create",
+    element: lazyLoad("../pages/Inquiry/Create/InquiryCreate"),
+    protected: true,
+  },
+
   { path: "/login", element: lazyLoad("../pages/auth/Login/Login") },
 
   { path: "*", element: lazyLoad("../pages/NotFound") },
