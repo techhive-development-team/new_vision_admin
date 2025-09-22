@@ -81,6 +81,15 @@ const HappeningEdit = lazy(
   () => import("../pages/Happening/Edit/HappeningEdit")
 );
 
+//FutureCountry
+const FutureCountryPage = lazy(() => import("../pages/FutureCountry/FutureCountry"));
+const FutureCountryCreate = lazy(
+  () => import("../pages/FutureCountry/Create/FutureCountryCreate")
+);
+const FutureCountryEdit = lazy(
+  () => import("../pages/FutureCountry/Edit/FutureCountryEdit")
+);
+
 // Auth & NotFound
 const Login = lazy(() => import("../pages/Auth/Login/Login"));
 const NotFound = lazy(() => import("../pages/NotFound"));
@@ -184,6 +193,10 @@ const routes: AppRoute[] = [
   { path: "/happenings", element: HappeningPage, protected: true },
   { path: "/happenings/create", element: HappeningCreate, protected: true },
   { path: "/happenings/:id/edit", element: HappeningEdit, protected: true },
+
+  { path: "/futureCountry", element: FutureCountryPage, protected: true },
+  { path: "/futureCountry/create", element: FutureCountryCreate, protected: true },
+  { path: "/futureCountry/:id/edit", element: FutureCountryEdit, protected: true },
 
   { path: "/login", element: Login },
   { path: "*", element: NotFound },
