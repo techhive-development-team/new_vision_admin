@@ -37,6 +37,7 @@ const EducationPartnerCreate = () => {
 
                 <InputFile label="Logo Image" name="logo_img" required />
                 <InputFile label="Background Image" name="bg_img" required />
+                <InputText label="Name" name="name"required />
                 <TextArea label="Overview" name="overview" required />
                 <InputText label="Location" name="location" required />
                 <InputText label="Founded Date" name="foundedDate" type="date" />

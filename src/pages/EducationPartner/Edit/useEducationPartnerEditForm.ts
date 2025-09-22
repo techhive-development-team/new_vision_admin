@@ -21,6 +21,7 @@ export const useEducationPartnerEditForm = () => {
       EducationPartnerSchema(!!partnerData?.logo_img, !!partnerData?.bg_img)
     ),
     defaultValues: {
+      name: "",
       overview: "",
       location: "",
       foundedDate: "",
@@ -41,6 +42,7 @@ export const useEducationPartnerEditForm = () => {
 
   const onSubmit = (data: Form) => {
     const formData = new FormData();
+    formData.append("name", data.name);
     formData.append("overview", data.overview);
     formData.append("location", data.location);
     formData.append("foundedDate", data.foundedDate || "");
