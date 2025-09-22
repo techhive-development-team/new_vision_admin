@@ -1,14 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FormProvider } from "react-hook-form";
 import InputText from "../../../components/forms/InputText";
 import { useLoginForm } from "./useLoginForm";
 import { useNavigate } from "react-router-dom";
-import logo from "../../../../public/logo.png";
+import logo from "/logo.png";
 
 const Login = () => {
   const navigate = useNavigate();
   const { methods, onSubmit } = useLoginForm();
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme") || "light";
+    document.documentElement.setAttribute("data-theme", savedTheme);
+  }, []);
 
   const handleLogin = async (data: any) => {
     setLoading(true);
@@ -36,8 +41,9 @@ const Login = () => {
           </div>
 
           <div className="mt-4 text-center">
-            <h1 className="text-lg font-semibold text-black mb-6">
-              Welcome to New Vision <br />Admin Dashboard
+            <h1 className="text-lg font-semibold mb-6">
+              Welcome to New Vision <br />
+              Admin Dashboard
             </h1>
           </div>
 
