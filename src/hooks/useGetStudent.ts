@@ -1,0 +1,32 @@
+import useSWR from "swr";
+import { API_URLS } from "../enum/urls";
+import { studentRepository } from "../repositories/studentRepository";
+
+export const useGetStudent = (params?: { limit?: number; offset?: number }) => {
+  const key = params ? [`${API_URLS.STUDENT}`, params] : API_URLS.STUDENT;
+
+  const { data, error, isLoading, mutate } = useSWR(key, () =>
+    studentRepository.getAll(params)
+  );
+  return {
+    data: data?.data,
+    error,
+    isLoading,
+    mutate,
+    total: data?.meta?.total,
+  };
+};
+
+export const useGetStudentById = (id: string) => {
+  const key = id ? [`${API_URLS.STUDENT}/${id}`] : null;
+
+  const { data, error, isLoading, mutate } = useSWR(key, () =>
+    studentRepository.getStudentById(id)
+  );
+  return {
+    data: data?.data,
+    error,
+    isLoading,
+    mutate,
+  };
+};
