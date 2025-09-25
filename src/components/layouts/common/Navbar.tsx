@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import ThemeSelector from "../../forms/ThemeSelector";
 
 const Navbar = () => {
   const logoutModalRef = useRef<HTMLDialogElement>(null);
@@ -41,8 +42,8 @@ const Navbar = () => {
             New Vision Art & Science Institute
           </h1>
         </div>
-        <div className="flex-none flex gap-2">
-          <button className="btn btn-ghost">Profile</button>
+        <div className="flex justify-center items-center gap-2">
+          <ThemeSelector />
           <button onClick={openLogoutModal} className="btn btn-error">
             Logout
           </button>

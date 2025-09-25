@@ -6,6 +6,7 @@ import { educationPartnerRepository } from "../../repositories/educationPartnerR
 
 type Partner = {
   id: string;
+  name: string;
   overview: string;
   location: string;
   foundedDate?: string;
@@ -66,6 +67,7 @@ const EducationPartnerTable = () => {
               <th>No</th>
               <th>Logo</th>
               <th>Background</th>
+              <th>Name</th>
               <th>Overview</th>
               <th>Location</th>
               <th>Partner Type</th>
@@ -97,6 +99,7 @@ const EducationPartnerTable = () => {
                       />
                     )}
                   </td>
+                  <td>{partner.name}</td>
                   <td>{partner.overview}</td>
                   <td>{partner.location}</td>
                   <td>

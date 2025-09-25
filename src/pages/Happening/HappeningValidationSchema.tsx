@@ -9,7 +9,7 @@ const ACCEPTED_IMAGE_MIME_TYPES = [
   "image/gif",
 ];
 
-const fileValidator = (hasDefault = false, fieldName = "Image") =>
+const fileValidator = (hasDefault = false, fieldName = "") =>
   z
     .union([z.instanceof(File), z.string().min(1, `${fieldName} is required`)])
     .refine(
@@ -34,11 +34,8 @@ export const HappeningSchema = (hasMainImage = false, hasAlbumImages = false) =>
     description: z.string().min(1, "Description is required").trim(),
     happeningTypeId: z.string().min(1, "Happening Type is required"),
     mainImage: fileValidator(hasMainImage, "Background Image"),
-    album_images: hasAlbumImages
-      ? z
-          .array(fileValidator(false, "Album Image"))
-          .min(1, "At least one album image is required")
-      : z.array(fileValidator(false, "Album Image")).optional(),
+    // Album images are completely optional - user can remove all existing and not add new ones
+    album_images: z.array(z.instanceof(File)).optional(),
   });
 
 export type HappeningCreateForm = z.infer<ReturnType<typeof HappeningSchema>>;
