@@ -9,7 +9,8 @@ export const API_URLS = {
   STUDENTREVIEW: "/studentReview",
   AUTH: "/auth",
   HAPPENING: "/happenings",
-  INQUIRY: "/inquiry"
+  INQUIRY: "/inquiry",
+  FUTURECOUNTRY: "/futureCountry"
 };
 
 export const baseUrl = import.meta.env.VITE_APP_API_BASE_URL;

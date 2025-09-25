@@ -10,17 +10,101 @@ import {
 import Loading from "../components/layouts/common/Loading";
 import { client } from "../repositories/client";
 
-// Lazy loading helper
-const lazyLoad = (path: string) => lazy(() => import(path));
+// --------------------
+// Lazy-loaded Pages
+// --------------------
+const Dashboard = lazy(() => import("../pages/Dashboard"));
 
-// Route interface
-interface AppRoute {
-  path: string;
-  element: React.LazyExoticComponent<React.ComponentType<any>>;
-  index?: boolean;
-  protected?: boolean;
-}
+// Users
+const UserPage = lazy(() => import("../pages/User/User"));
+const UserCreate = lazy(() => import("../pages/User/Create/UserCreate"));
+const UserEdit = lazy(() => import("../pages/User/Edit/UserEdit"));
 
+// Images
+const ImagePage = lazy(() => import("../pages/Image/Image"));
+const ImageCreate = lazy(() => import("../pages/Image/Create/ImageCreate"));
+const ImageEdit = lazy(() => import("../pages/Image/Edit/ImageEdit"));
+
+// Image Types
+const ImageTypePage = lazy(() => import("../pages/ImageType/ImageType"));
+const ImageTypeCreate = lazy(
+  () => import("../pages/ImageType/Create/ImageTypeCreate")
+);
+const ImageTypeEdit = lazy(
+  () => import("../pages/ImageType/Edit/ImageTypeEdit")
+);
+
+// Happening Types
+const HappeningTypePage = lazy(
+  () => import("../pages/HappeningType/HappeningType")
+);
+const HappeningTypeCreate = lazy(
+  () => import("../pages/HappeningType/Create/HappeningTypeCreate")
+);
+const HappeningTypeEdit = lazy(
+  () => import("../pages/HappeningType/Edit/HappeningTypeEdit")
+);
+
+// Education Partners
+const EducationPartnerPage = lazy(
+  () => import("../pages/EducationPartner/EducationPartner")
+);
+const EducationPartnerCreate = lazy(
+  () => import("../pages/EducationPartner/Create/EducationPartnerCreate")
+);
+const EducationPartnerEdit = lazy(
+  () => import("../pages/EducationPartner/Edit/EducationPartnerEdit")
+);
+
+// Courses
+const CoursePage = lazy(() => import("../pages/Course/Course"));
+const CourseCreate = lazy(() => import("../pages/Course/Create/CourseCreate"));
+const CourseEdit = lazy(() => import("../pages/Course/Edit/CourseEdit"));
+
+// Student Reviews
+const StudentReviewPage = lazy(
+  () => import("../pages/StudentReview/StudentReview")
+);
+const StudentReviewCreate = lazy(
+  () => import("../pages/StudentReview/Create/StudentReviewCreate")
+);
+const StudentReviewEdit = lazy(
+  () => import("../pages/StudentReview/Edit/StudentReviewEdit")
+);
+
+// Happenings
+const HappeningPage = lazy(() => import("../pages/Happening/Happening"));
+const HappeningCreate = lazy(
+  () => import("../pages/Happening/Create/HappeningCreate")
+);
+const HappeningEdit = lazy(
+  () => import("../pages/Happening/Edit/HappeningEdit")
+);
+
+//FutureCountry
+const FutureCountryPage = lazy(
+  () => import("../pages/FutureCountry/FutureCountry")
+);
+const FutureCountryCreate = lazy(
+  () => import("../pages/FutureCountry/Create/FutureCountryCreate")
+);
+const FutureCountryEdit = lazy(
+  () => import("../pages/FutureCountry/Edit/FutureCountryEdit")
+);
+
+const Inquiry = lazy(() => import("../pages/Inquiry/Inquiry"));
+const InquiryCreate = lazy(
+  () => import("../pages/Inquiry/Create/InquiryCreate")
+);
+const InquiryView = lazy(() => import("../pages/Inquiry/View/InquiryView"));
+
+// Auth & NotFound
+const Login = lazy(() => import("../pages/Auth/Login/Login"));
+const NotFound = lazy(() => import("../pages/NotFound"));
+
+// --------------------
+// Protected Route
+// --------------------
 const ProtectedRoute: React.FC = () => {
   const [isAuth, setIsAuth] = useState<boolean | null>(null);
 
@@ -45,161 +129,115 @@ const ProtectedRoute: React.FC = () => {
   return isAuth ? <Outlet /> : <Navigate to="/login" replace />;
 };
 
+// --------------------
+// Routes Definition
+// --------------------
+interface AppRoute {
+  path: string;
+  element: React.LazyExoticComponent<React.ComponentType<any>>;
+  index?: boolean;
+  protected?: boolean;
+}
+
 const routes: AppRoute[] = [
-  {
-    path: "/",
-    element: lazyLoad("../pages/Dashboard"),
-    index: true,
-    protected: true,
-  },
+  { path: "/", element: Dashboard, index: true, protected: true },
 
-  { path: "/users", element: lazyLoad("../pages/User/User"), protected: true },
-  {
-    path: "/users/create",
-    element: lazyLoad("../pages/User/Create/UserCreate"),
-    protected: false,
-  },
-  {
-    path: "/users/:id/edit",
-    element: lazyLoad("../pages/User/Edit/UserEdit"),
-    protected: true,
-  },
+  { path: "/users", element: UserPage, protected: true },
+  { path: "/users/create", element: UserCreate },
+  { path: "/users/:id/edit", element: UserEdit, protected: true },
 
-  {
-    path: "/images",
-    element: lazyLoad("../pages/Image/Image"),
-    protected: true,
-  },
-  {
-    path: "/images/create",
-    element: lazyLoad("../pages/Image/Create/ImageCreate"),
-    protected: true,
-  },
-  {
-    path: "/images/:id/edit",
-    element: lazyLoad("../pages/Image/Edit/ImageEdit"),
-    protected: true,
-  },
+  { path: "/images", element: ImagePage, protected: true },
+  { path: "/images/create", element: ImageCreate, protected: true },
+  { path: "/images/:id/edit", element: ImageEdit, protected: true },
 
-  {
-    path: "/imagetypes",
-    element: lazyLoad("../pages/ImageType/ImageType"),
-    protected: true,
-  },
-  {
-    path: "/imagetypes/create",
-    element: lazyLoad("../pages/ImageType/Create/ImageTypeCreate"),
-    protected: true,
-  },
-  {
-    path: "/imagetypes/:id/edit",
-    element: lazyLoad("../pages/ImageType/Edit/ImageTypeEdit"),
-    protected: true,
-  },
-  {
-    path: "/happeningtypes",
-    element: lazyLoad("../pages/HappeningType/HappeningType"),
-    protected: true,
-  },
+  { path: "/imagetypes", element: ImageTypePage, protected: true },
+  { path: "/imagetypes/create", element: ImageTypeCreate, protected: true },
+  { path: "/imagetypes/:id/edit", element: ImageTypeEdit, protected: true },
+
+  { path: "/happeningtypes", element: HappeningTypePage, protected: true },
   {
     path: "/happeningtypes/create",
-    element: lazyLoad("../pages/HappeningType/Create/HappeningTypeCreate"),
+    element: HappeningTypeCreate,
     protected: true,
   },
   {
     path: "/happeningtypes/:id/edit",
-    element: lazyLoad("../pages/HappeningType/Edit/HappeningTypeEdit"),
+    element: HappeningTypeEdit,
     protected: true,
   },
+
   {
     path: "/education-partners",
-    element: lazyLoad("../pages/EducationPartner/EducationPartner"),
+    element: EducationPartnerPage,
     protected: true,
   },
   {
     path: "/education-partners/create",
-    element: lazyLoad(
-      "../pages/EducationPartner/Create/EducationPartnerCreate"
-    ),
+    element: EducationPartnerCreate,
     protected: true,
   },
   {
     path: "/education-partners/:id/edit",
-    element: lazyLoad("../pages/EducationPartner/Edit/EducationPartnerEdit"),
+    element: EducationPartnerEdit,
     protected: true,
   },
 
-  {
-    path: "/courses/create",
-    element: lazyLoad("../pages/Course/Create/CourseCreate"),
-    protected: true,
-  },
-  {
-    path: "/courses/:id/edit",
-    element: lazyLoad("../pages/Course/Edit/CourseEdit"),
-    protected: true,
-  },
-  {
-    path: "/courses",
-    element: lazyLoad("../pages/Course/Course"),
-    protected: true,
-  },
+  { path: "/courses", element: CoursePage, protected: true },
+  { path: "/courses/create", element: CourseCreate, protected: true },
+  { path: "/courses/:id/edit", element: CourseEdit, protected: true },
 
-  //StudentReview
-  {
-    path: "/studentReview",
-    element: lazyLoad("../pages/StudentReview/StudentReview"),
-    protected: true,
-  },
+  { path: "/studentReview", element: StudentReviewPage, protected: true },
   {
     path: "/studentReview/create",
-    element: lazyLoad("../pages/StudentReview/Create/StudentReviewCreate"),
+    element: StudentReviewCreate,
     protected: true,
   },
   {
     path: "/studentReview/:id/edit",
-    element: lazyLoad("../pages/StudentReview/Edit/StudentReviewEdit"),
+    element: StudentReviewEdit,
     protected: true,
   },
 
-  {
-    path: "/happenings",
-    element: lazyLoad("../pages/Happening/Happening"),
-    protected: true,
-  },
-  {
-    path: "/happenings/create",
-    element: lazyLoad("../pages/Happening/Create/HappeningCreate"),
-    protected: true,
-  },
-  {
-    path: "/happenings/:id/edit",
-    element: lazyLoad("../pages/Happening/Edit/HappeningEdit"),
-    protected: true,
-  },
+  { path: "/happenings", element: HappeningPage, protected: true },
+  { path: "/happenings/create", element: HappeningCreate, protected: true },
+  { path: "/happenings/:id/edit", element: HappeningEdit, protected: true },
 
   //inquiry
   {
     path: "/inquiry",
-    element: lazyLoad("../pages/Inquiry/Inquiry"),
+    element: Inquiry,
     protected: true,
   },
   {
     path: "/inquiry/view",
-    element: lazyLoad("../pages/Inquiry/view/InquiryView"),
+    element: InquiryView,
     protected: true,
   },
   {
     path: "/inquiry/create",
-    element: lazyLoad("../pages/Inquiry/Create/InquiryCreate"),
+    element: InquiryCreate,
     protected: true,
   },
 
-  { path: "/login", element: lazyLoad("../pages/auth/Login/Login") },
+  { path: "/futureCountry", element: FutureCountryPage, protected: true },
+  {
+    path: "/futureCountry/create",
+    element: FutureCountryCreate,
+    protected: true,
+  },
+  {
+    path: "/futureCountry/:id/edit",
+    element: FutureCountryEdit,
+    protected: true,
+  },
 
-  { path: "*", element: lazyLoad("../pages/NotFound") },
+  { path: "/login", element: Login },
+  { path: "*", element: NotFound },
 ];
 
+// --------------------
+// Generate Routes
+// --------------------
 const generateRoutes = (routes: AppRoute[]) =>
   routes.map((route) =>
     route.protected ? (

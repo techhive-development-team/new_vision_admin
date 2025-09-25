@@ -17,6 +17,7 @@ export const useEducationPartnerCreateForm = () => {
 
   const onSubmit = (data: EducationPartnerCreateForm) => {
     const formData = new FormData();
+    formData.append("name", data.name);
     formData.append("overview", data.overview);
     formData.append("location", data.location);
     formData.append("foundedDate", data.foundedDate || "");

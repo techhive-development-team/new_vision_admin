@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Home, Users, Image, BookOpen, Building2, Calendar1, MessageSquare, Inbox, MailSearch } from "lucide-react";
+import { Home, Users, Image, BookOpen, Building2, Calendar1, MessageSquare } from "lucide-react";
 
 export interface SidebarRoute {
   path: string;
@@ -17,5 +17,4 @@ export const sidebarRoutes: SidebarRoute[] = [
   { path: "/education-partners", name: "Education Partners", icon: <Building2 size={18} /> },
   { path: "/studentReview", name: "Student Review", icon: <MessageSquare size={18} /> },
   { path: "/courses", name: "Courses", icon: <BookOpen size={18} /> },
-  { path: "/inquiry", name: "Inquiry", icon: <MailSearch size={18} /> },
 ];

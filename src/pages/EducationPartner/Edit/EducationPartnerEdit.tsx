@@ -50,6 +50,7 @@ const EducationPartnerEdit = () => {
                     API_URLS.EDUCATION_PARTNER
                   }/${methods.getValues("bg_img") || ""}`}
                 />
+                <InputText label="Name" name="name"required />
                 <TextArea label="Overview" name="overview" required />
                 <InputText label="Location" name="location" required />
                 <InputText label="Founded Date" name="foundedDate" type="date" />
