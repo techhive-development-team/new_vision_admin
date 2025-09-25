@@ -201,9 +201,9 @@ const MultiFileUpload: React.FC<MultiFileUploadProps> = ({
     const isImg = isImage(item.file || item.url);
 
     return (
-      <div className="relative group border border-gray-300 rounded-lg p-3 bg-white hover:shadow-md transition-shadow">
+      <div className="relative group border rounded-lg p-3 hover:shadow-md transition-shadow">
         {isImg ? (
-          <div className="w-24 h-24 mx-auto mb-2 flex items-center justify-center bg-gray-50 rounded">
+          <div className="w-24 h-24 mx-auto mb-2 flex items-center justify-center rounded">
             <img
               src={item.url}
               alt={item.name}
@@ -211,9 +211,9 @@ const MultiFileUpload: React.FC<MultiFileUploadProps> = ({
             />
           </div>
         ) : (
-          <div className="w-24 h-24 mx-auto mb-2 flex items-center justify-center bg-gray-100 rounded">
+          <div className="w-24 h-24 mx-auto mb-2 flex items-center justify-center rounded">
             <svg
-              className="w-8 h-8 text-gray-400"
+              className="w-8 h-8"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -237,9 +237,7 @@ const MultiFileUpload: React.FC<MultiFileUploadProps> = ({
             </p>
           )}
           {item.isDefault && (
-            <span className="inline-block px-2 py-1 mt-1 text-xs bg-blue-100 text-blue-800 rounded">
-              Existing
-            </span>
+            <span className="badge badge-primary badge-sm mt-1">Existing</span>
           )}
         </div>
 
@@ -257,9 +255,7 @@ const MultiFileUpload: React.FC<MultiFileUploadProps> = ({
 
   return (
     <div className="w-full">
-      {label && (
-        <label className="block mb-2 font-medium text-gray-700">{label}</label>
-      )}
+      {label && <label className="block mb-2 font-medium">{label}</label>}
 
       <div
         className={`border-2 border-dashed rounded-lg p-8 flex flex-col items-center justify-center cursor-pointer transition-colors ${
@@ -277,7 +273,7 @@ const MultiFileUpload: React.FC<MultiFileUploadProps> = ({
       >
         <div className="text-center">
           <svg
-            className="mx-auto h-12 w-12 text-gray-400 mb-4"
+            className="mx-auto h-12 w-12 mb-4"
             stroke="currentColor"
             fill="none"
             viewBox="0 0 48 48"
@@ -289,10 +285,8 @@ const MultiFileUpload: React.FC<MultiFileUploadProps> = ({
               strokeLinejoin="round"
             />
           </svg>
-          <p className="text-gray-600 text-lg">
-            Click or drag & drop {fileTypeLabel} here
-          </p>
-          <p className="text-gray-400 text-sm mt-2">
+          <p className="text-lg">Click or drag & drop {fileTypeLabel} here</p>
+          <p className="text-sm mt-2">
             Max size: {formatFileSize(maxSize)}
             {allowedTypes.length > 0 && (
               <span className="block mt-1">
@@ -314,7 +308,7 @@ const MultiFileUpload: React.FC<MultiFileUploadProps> = ({
 
       {previews.length > 0 && (
         <div className="mt-6">
-          <h4 className="text-sm font-medium text-gray-700 mb-3">
+          <h4 className="text-sm font-medium mb-3">
             Selected Files ({previews.length})
           </h4>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
