@@ -9,6 +9,7 @@ export const API_URLS = {
   STUDENTREVIEW: "/studentReview",
   AUTH: "/auth",
   HAPPENING: "/happenings",
+  INQUIRY: "/inquiry",
   FUTURECOUNTRY: "/futureCountry"
 };
 

@@ -82,13 +82,21 @@ const HappeningEdit = lazy(
 );
 
 //FutureCountry
-const FutureCountryPage = lazy(() => import("../pages/FutureCountry/FutureCountry"));
+const FutureCountryPage = lazy(
+  () => import("../pages/FutureCountry/FutureCountry")
+);
 const FutureCountryCreate = lazy(
   () => import("../pages/FutureCountry/Create/FutureCountryCreate")
 );
 const FutureCountryEdit = lazy(
   () => import("../pages/FutureCountry/Edit/FutureCountryEdit")
 );
+
+const Inquiry = lazy(() => import("../pages/Inquiry/Inquiry"));
+const InquiryCreate = lazy(
+  () => import("../pages/Inquiry/Create/InquiryCreate")
+);
+const InquiryView = lazy(() => import("../pages/Inquiry/View/InquiryView"));
 
 // Auth & NotFound
 const Login = lazy(() => import("../pages/Auth/Login/Login"));
@@ -194,9 +202,34 @@ const routes: AppRoute[] = [
   { path: "/happenings/create", element: HappeningCreate, protected: true },
   { path: "/happenings/:id/edit", element: HappeningEdit, protected: true },
 
+  //inquiry
+  {
+    path: "/inquiry",
+    element: Inquiry,
+    protected: true,
+  },
+  {
+    path: "/inquiry/view",
+    element: InquiryView,
+    protected: true,
+  },
+  {
+    path: "/inquiry/create",
+    element: InquiryCreate,
+    protected: true,
+  },
+
   { path: "/futureCountry", element: FutureCountryPage, protected: true },
-  { path: "/futureCountry/create", element: FutureCountryCreate, protected: true },
-  { path: "/futureCountry/:id/edit", element: FutureCountryEdit, protected: true },
+  {
+    path: "/futureCountry/create",
+    element: FutureCountryCreate,
+    protected: true,
+  },
+  {
+    path: "/futureCountry/:id/edit",
+    element: FutureCountryEdit,
+    protected: true,
+  },
 
   { path: "/login", element: Login },
   { path: "*", element: NotFound },
