@@ -98,6 +98,10 @@ const InquiryCreate = lazy(
 );
 const InquiryView = lazy(() => import("../pages/Inquiry/View/InquiryView"));
 
+const Student = lazy(() => import("../pages/Student/Student"));
+const StudentEdit = lazy(() => import("../pages/Student/Edit/StudentEdit"));
+const StudentView = lazy(() => import("../pages/Student/View/StudentView"));
+
 // Auth & NotFound
 const Login = lazy(() => import("../pages/Auth/Login/Login"));
 const NotFound = lazy(() => import("../pages/NotFound"));
@@ -216,6 +220,23 @@ const routes: AppRoute[] = [
   {
     path: "/inquiry/create",
     element: InquiryCreate,
+    protected: true,
+  },
+
+  //student
+  {
+    path: "/students",
+    element: Student,
+    protected: true,
+  },
+  {
+    path: "/students/:id/edit",
+    element: StudentEdit,
+    protected: true,
+  },
+  {
+    path: "/students/:id/view",
+    element: StudentView,
     protected: true,
   },
 

@@ -18,7 +18,7 @@ const SelectBox = (props: Props) => {
 
   const error = errors[props.name]?.message as string | undefined;
   return (
-    <div>
+    <div className="mb-4">
       <label className="label">
         <span className="label-text font-semibold">
           {props.label}
