@@ -26,6 +26,7 @@ type Form = {
   paymentOption: string;
   status: string;
   transactionId?: string;
+  courseName?: string; 
 };
 
 const StudentView = () => {
@@ -45,12 +46,14 @@ const StudentView = () => {
     );
   }
 
+  const formatDate = (date?: string) => (date ? date.split("T")[0] : "");
+
   const methods = useForm<Form>({
     defaultValues: {
       name: student.name,
       parentName: student.parentName,
       parentJob: student.parentJob,
-      dob: student.dob,
+      dob: formatDate(student.dob),
       email: student.email,
       address: student.address,
       postalCode: student.postalCode,
@@ -61,11 +64,12 @@ const StudentView = () => {
       futurePlan: student.futurePlan,
       futureCountryName: student.futureCountryName,
       futureuniversityName: student.futureuniversityName,
-      potentialYearOfStudy: student.potentialYearOfStudy,
+      potentialYearOfStudy: formatDate(student.potentialYearOfStudy),
       joinRaffles: student.joinRaffles,
       paymentOption: student.paymentOption,
       status: student.status,
       transactionId: student.transactionId,
+      courseName: student.Courses?.name || "",
     },
   });
 
@@ -116,6 +120,7 @@ const StudentView = () => {
                 <InputText label="Payment Option" name="paymentOption" />
                 <InputText label="Payment Status" name="status" />
                 <InputText label="Transaction ID" name="transactionId" />
+                <InputText label="Course" name="courseName" />
 
                 <div className="pt-4 card-actions">
                   <Link to="/students" className="btn btn-soft">

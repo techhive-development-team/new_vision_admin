@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useGetStudentById } from "../../../hooks/useGetStudent";
 import { useForm, type UseFormReturn } from "react-hook-form";
-import { StudentSchema, type StudentEditForm } from "../StudentValidationSchema";
+import { type StudentEditForm, StudentSchema } from "../StudentValidationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { studentRepository } from "../../../repositories/studentRepository";
 import { useFormState } from "../../../hooks/useFormState";
@@ -52,7 +52,7 @@ export const useStudentEditForm = () => {
         address: studentData.address,
         postalCode: studentData.postalCode,
         phone: studentData.phone,
-        studentImage: studentData.studentImage || undefined,
+        studentImage: studentData.studentImage ?? null,
         school: studentData.school,
         studyAbroad: studentData.studyAbroad,
         futurePlan: studentData.futurePlan,
@@ -66,7 +66,7 @@ export const useStudentEditForm = () => {
         paymentOption: studentData.paymentOption,
         status: studentData.status,
         transactionId: studentData.transactionId || "",
-        coursesId: studentData.courses?.[0]?.id.toString() || "",
+        coursesId: studentData?.courseId || "",
       });
     }
   }, [studentData, reset]);
@@ -81,9 +81,11 @@ export const useStudentEditForm = () => {
     formData.append("address", data.address);
     formData.append("postalCode", data.postalCode);
     formData.append("phone", data.phone);
+
     if (data.studentImage instanceof File) {
       formData.append("studentImage", data.studentImage);
     }
+
     formData.append("school", data.school);
     formData.append("studyAbroad", data.studyAbroad.toString());
     formData.append("futurePlan", data.futurePlan);
@@ -97,7 +99,9 @@ export const useStudentEditForm = () => {
     formData.append("transactionId", data.transactionId || "");
     formData.append("coursesId", data.coursesId || "");
 
-    handleSubmit(() => studentRepository.updateStudent(id?.toString() || "", formData));
+    handleSubmit(() =>
+      studentRepository.updateStudent(id?.toString() || "", formData)
+    );
   };
 
   return { ...methods, onSubmit, loading, success, message, show };

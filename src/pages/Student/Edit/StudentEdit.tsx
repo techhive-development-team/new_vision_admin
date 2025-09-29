@@ -8,10 +8,13 @@ import { Link } from "react-router-dom";
 import Alert from "../../../components/forms/Alert";
 import { useStudentEditForm } from "./useStudentEditForm";
 import { API_URLS, baseUrl } from "../../../enum/urls";
+import { useGetCourse } from "../../../hooks/useGetCourse";
 
 const StudentEdit = () => {
   const { onSubmit, loading, success, message, show, ...methods } =
     useStudentEditForm();
+
+  const { data, isLoading: courseLoading, error: courseError } = useGetCourse();
 
   return (
     <Layout>
@@ -36,14 +39,23 @@ const StudentEdit = () => {
               <InputFile
                 label="Student Image"
                 name="studentImage"
-                defaultImage={`${baseUrl}${API_URLS.UPLOAD}${API_URLS.STUDENT}/${
-                  methods.getValues("studentImage") || ""
-                }`}
+                defaultImage={
+                  methods.getValues("studentImage")
+                    ? `${baseUrl}${API_URLS.UPLOAD}${
+                        API_URLS.STUDENT
+                      }/${methods.getValues("studentImage")}`
+                    : ""
+                }
               />
               <InputText label="Name" name="name" required />
               <InputText label="Parent Name" name="parentName" required />
               <InputText label="Parent Job" name="parentJob" required />
-              <InputText label="Date of Birth" name="dob" type="date" required />
+              <InputText
+                label="Date of Birth"
+                name="dob"
+                type="date"
+                required
+              />
               <InputText label="Email" name="email" type="email" required />
               <InputText label="Address" name="address" required />
               <InputText label="Postal Code" name="postalCode" required />
@@ -59,21 +71,22 @@ const StudentEdit = () => {
                 required
                 items={[
                   { value: "GOVERNMENT", showValue: "Government" },
-                  { value: "PRIVATE", showValue: "Private" },
+                  { value: "INTERNATIONAL", showValue: "International" },
                 ]}
               />
-              <SelectBox
-                label="Study Abroad?"
+              <InputText
+                type="checkbox"
                 name="studyAbroad"
+                label="Study Abroad?"
+                variant="toggle"
                 required
-                items={[
-                  { value: "true", showValue: "Yes" },
-                  { value: "false", showValue: "No" },
-                ]}
               />
               <InputText label="Future Plan" name="futurePlan" required />
               <InputText label="Future Country" name="futureCountryName" />
-              <InputText label="Future University" name="futureuniversityName" />
+              <InputText
+                label="Future University"
+                name="futureuniversityName"
+              />
               <InputText
                 label="Potential Year of Study"
                 name="potentialYearOfStudy"
@@ -111,6 +124,21 @@ const StudentEdit = () => {
               />
               <InputText label="Transaction ID" name="transactionId" />
 
+              <SelectBox
+                label="Course"
+                name="coursesId"
+                items={
+                  courseLoading
+                    ? [{ value: "", showValue: "Loading..." }]
+                    : courseError
+                    ? [{ value: "", showValue: "No courses available" }]
+                    : data?.map((course: { id: string; name: string }) => ({
+                        value: course.id,
+                        showValue: course.name,
+                      }))
+                }
+                required
+              />
               <div className="pt-4 card-actions flex justify-between">
                 <Link to="/students" className="btn btn-soft">
                   Back to Students

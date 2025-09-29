@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetStudent } from "../../hooks/useGetStudent";
 import { API_URLS, baseUrl } from "../../enum/urls";
@@ -25,6 +25,7 @@ export type Student = {
   paymentOption: string;
   status: string;
   transactionId: string;
+  courseId?: string;
   createdAt: string;
 };
 
@@ -86,6 +87,7 @@ const StudentTable = () => {
               <th>Join Raffles</th>
               <th>Payment Option</th>
               <th>Status</th>
+              <th>Course</th>
               <th>Created At</th>
               <th>Action</th>
             </tr>
@@ -113,6 +115,7 @@ const StudentTable = () => {
                   <td>{student.joinRaffles}</td>
                   <td>{student.paymentOption}</td>
                   <td>{student.status}</td>
+                  <td>{student.courseId}</td>
                   <td>{new Date(student.createdAt).toLocaleString()}</td>
                   <td className="flex gap-2">
                     <Link
