@@ -24,6 +24,7 @@ export const useStudentReviewEditForm = () => {
       student_img: null,
       educationPartnerId: "",
       review: "",
+      qualification: "",
     },
   });
 

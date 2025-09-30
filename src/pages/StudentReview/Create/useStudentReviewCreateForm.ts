@@ -22,6 +22,7 @@ export const useStudentReviewCreate = () => {
     formData.append("student_img", data.student_img);
     formData.append("educationPartnerId", data.educationPartnerId);
     formData.append("review", data.review || "");
+    formData.append("qualification", data.qualification || "");
     handleSubmit(async () => await studentReviewRepository.createStudentReview(formData));
   };
   return{
