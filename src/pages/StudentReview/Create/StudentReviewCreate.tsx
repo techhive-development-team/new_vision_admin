@@ -66,6 +66,7 @@ const StudentReviewCreate = () => {
                 />
 
                 <TextArea label="Review" name="review" />
+                <InputText label="Qualification" name="qualification" />
 
                 <div className="flex justify-between mt-4">
                   <Link to="/studentReview" className="btn btn-soft">

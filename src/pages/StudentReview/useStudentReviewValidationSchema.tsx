@@ -33,7 +33,8 @@ export const StudentReviewCreateSchema = z.object({
       checkFileType()
     ),
     educationPartnerId: z.string().min(1, "Education Partner Id is required"),
-    review: z.string().optional()
+    review: z.string().optional(),
+    qualification: z.string().optional(),
 });
 
 export type StudentReviewCreateForm = z.infer<typeof StudentReviewCreateSchema>

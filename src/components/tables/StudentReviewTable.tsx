@@ -10,6 +10,7 @@ type StudentReview = {
   batch: string;
   student_img: string;
   review: string;
+  qualification: string;
   educationPartnerId: string;
   createdAt: string;
 };
@@ -66,6 +67,7 @@ const StudentReviewTable = () => {
               <th>Student Image</th>
               <th>Education Partner ID</th>
               <th>Review</th>
+              <th>Qualification</th>
               <th>Created At</th>
               <th>Action</th>
             </tr>
@@ -81,15 +83,16 @@ const StudentReviewTable = () => {
                     <img
                       className="w-16 h-16 object-cover rounded-md border"
                       src={`${baseUrl}${API_URLS.UPLOAD}${API_URLS.STUDENTREVIEW}/${review.student_img}`}
-      alt={review.name.substring(0, 10)}
+                      alt={review.name.substring(0, 10)}
                     />
                   </td>
                   <td>{review.educationPartnerId}</td>
                   <td>
-                    {review.review?.length > 50
-                      ? review.review.substring(0, 50) + "..."
+                    {review.review?.length > 10
+                      ? review.review.substring(0, 10) + "..."
                       : review.review}
                   </td>
+                  <td>{review.qualification}</td>
                   <td>{new Date(review.createdAt).toLocaleString()}</td>
                   <td className="flex gap-2">
                     <Link
