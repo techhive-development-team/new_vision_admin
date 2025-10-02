@@ -9,7 +9,7 @@ const ACCEPTED_IMAGE_MIME_TYPES = [
   "image/gif",
 ];
 
-const fileValidator = (hasDefault = false, fieldName = "Image") =>
+const fileValidator = (hasDefault = false, fieldName = "studentImage") =>
   z
     .union([z.instanceof(File), z.string().min(1, `${fieldName} is required`)])
     .refine(
@@ -57,7 +57,7 @@ export const StudentSchema = (hasDefaultImage = false) =>
     paymentOption: z.enum(["CASH", "BANK_TRANSFER"]),
     status: z.enum(["NONE", "PENDING", "COMPLETED", "FAILED"]),
     transactionId: z.string().optional(),
-    coursesId: z.string().min(1, "Course is required"), // single course only
+    coursesId: z.string().min(1, "Course is required"), 
   });
 
 export type StudentEditForm = z.infer<ReturnType<typeof StudentSchema>>;
