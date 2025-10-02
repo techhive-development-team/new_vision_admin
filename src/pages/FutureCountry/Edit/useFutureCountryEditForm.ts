@@ -1,17 +1,19 @@
 import { useForm, type UseFormReturn } from "react-hook-form";
 import { useParams } from "react-router-dom";
+import { useGetFutureCountryById } from "../../../hooks/useGetFutureCountry";
+import {
+  type FutureCountryCreateForm as Form,
+  FutureCountryCreateSchema,
+} from "../FutureCountryValidationSchema";
+import { useFormState } from "../../../hooks/useFormState";
+import { futureCountryRepository } from "../../../repositories/futureCountryRepository";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
-import { useFormState } from "../../../hooks/useFormState";
-import { FutureCountryCreateSchema, type FutureCountryCreateForm as Form  } from "../FutureCountryValidationSchema";
-import { futureCountryRepository } from "../../../repositories/futureCountryRepository";
-import { useGetFutureCountryById} from "../../../hooks/useGetFutureCountry";
 
-export const useHappeningTypeEditForm = () => {
+export const useFutureCountryEditForm = () => {
   const { id } = useParams();
-  const { data: FutureCountryData } = useGetFutureCountryById(
-    id?.toString() || ""
-  );
+  const { data: futureCountryData } = useGetFutureCountryById(id?.toString() || "");
+
   const methods: UseFormReturn<Form> = useForm<Form>({
     resolver: zodResolver(FutureCountryCreateSchema),
     defaultValues: {
@@ -20,17 +22,17 @@ export const useHappeningTypeEditForm = () => {
   });
 
   useEffect(() => {
-    if (FutureCountryData) {
-      methods.reset(FutureCountryData);
+    if (futureCountryData) {
+      methods.reset(futureCountryData);
     }
-  }, [FutureCountryData]);
+  }, [futureCountryData]);
 
-  const { loading, success, message, show, handleSubmit } =
-    useFormState<Form>();
+  const { loading, success, message, show, handleSubmit } = useFormState<Form>();
 
   const onSubmit = (data: Form) =>
     handleSubmit(() =>
       futureCountryRepository.updateFutureCountry(id?.toString() || "", data)
     );
+
   return { ...methods, onSubmit, loading, success, message, show };
 };

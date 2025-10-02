@@ -1,15 +1,14 @@
-
-import Breadcrumb from "../../../components/layouts/common/Breadcrumb";
-import { useFutureCountryCreateForm } from "../Create/useFutureCountryCreateForm";
-import { FormProvider } from "react-hook-form";
-import InputText from "../../../components/forms/InputText";
-import Alert from "../../../components/forms/Alert";
-import Layout from "../../../components/layouts/Layout";
 import { Link } from "react-router-dom";
+import Layout from "../../../components/layouts/Layout";
+import Breadcrumb from "../../../components/layouts/common/Breadcrumb";
+import { FormProvider } from "react-hook-form";
+import Alert from "../../../components/forms/Alert";
+import InputText from "../../../components/forms/InputText";
+import { useFutureCountryEditForm } from "./useFutureCountryEditForm";
 
 const FutureCountryEdit = () => {
   const { onSubmit, loading, success, message, show, ...methods } =
-    useFutureCountryCreateForm();
+    useFutureCountryEditForm();
 
   return (
     <Layout>
@@ -20,7 +19,7 @@ const FutureCountryEdit = () => {
               items={[
                 { label: "Home", path: "/" },
                 { label: "Future Country", path: "/futureCountry" },
-                { label: "Edit FutureCountry" },
+                { label: "Edit Future Country" },
               ]}
             />
             <h3 className="text-2xl font-bold my-4">Edit Future Country</h3>
@@ -47,6 +46,6 @@ const FutureCountryEdit = () => {
       </div>
     </Layout>
   );
-}
+};
 
 export default FutureCountryEdit;
