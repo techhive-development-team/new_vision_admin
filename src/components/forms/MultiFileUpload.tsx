@@ -24,7 +24,7 @@ const MultiFileUpload: React.FC<MultiFileUploadProps> = ({
   label,
   defaultUrls = [],
   accept = "*/*",
-  maxSize = 5 * 1024 * 1024, // 5MB default
+  maxSize = 30 * 1024 * 1024,
   allowedTypes = [],
   fileTypeLabel = "files",
   onExistingImagesChange,
