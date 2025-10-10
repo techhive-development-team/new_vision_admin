@@ -21,6 +21,7 @@ export const useCourseCreateForm = () => {
     formData.append("programOverview", data.programOverview);
     formData.append("duration", data.duration);
     formData.append("location", data.location);
+    formData.append("programType", data.programType);
     formData.append("level", data.level);
     if (data.expireDate) formData.append("expireDate", data.expireDate);
     if (data.price) formData.append("price", data.price);

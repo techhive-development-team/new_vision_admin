@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetImage } from "../../hooks/useGetImage";
 import { API_URLS, baseUrl } from "../../enum/urls";

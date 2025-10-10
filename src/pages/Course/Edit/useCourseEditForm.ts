@@ -21,6 +21,7 @@ export const useCourseEditForm = () => {
       duration: "",
       level: "",
       location: "online",
+      programType: "ART_DESIGN",
       expireDate: "",
       price: "",
       quiz: "",
@@ -40,6 +41,10 @@ export const useCourseEditForm = () => {
         duration: courseData.duration,
         level: courseData.level,
         location: courseData.location as "online" | "onsite",
+        programType: courseData.programType as
+          | "ART_DESIGN"
+          | "TECHNOLOGY"
+          | "CHILDRENS_CREATIVE",
         expireDate: courseData.expireDate
           ? courseData.expireDate.split("T")[0]
           : "",
@@ -61,6 +66,7 @@ export const useCourseEditForm = () => {
     formData.append("programOverview", data.programOverview);
     formData.append("duration", data.duration);
     formData.append("location", data.location);
+    formData.append("programType", data.programType);
     formData.append("level", data.level);
     formData.append("isOpened", data.isOpened.toString());
     if (data.expireDate) formData.append("expireDate", data.expireDate);

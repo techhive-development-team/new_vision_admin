@@ -35,6 +35,10 @@ export const CourseCreateSchema = (hasDefaultImage = false) =>
     duration: z.string().min(1, "Duration is required"),
     level: z.string().min(1, "Course level is required"),
     location: z.enum(["online", "onsite"], "Location is required"),
+    programType: z.enum(
+      ["ART_DESIGN", "TECHNOLOGY", "CHILDRENS_CREATIVE"],
+      "programType is required"
+    ),
     expireDate: z
       .string()
       .optional()
@@ -59,6 +63,10 @@ export const CourseEditSchema = (hasDefaultImage = false) =>
     duration: z.string().min(1, "Duration is required"),
     level: z.string().min(1, "Course level is required"),
     location: z.enum(["online", "onsite"], "Location is required"),
+    programType: z.enum(
+      ["ART_DESIGN", "TECHNOLOGY", "CHILDRENS_CREATIVE"],
+      "programType is required"
+    ),
     expireDate: z
       .string()
       .optional()

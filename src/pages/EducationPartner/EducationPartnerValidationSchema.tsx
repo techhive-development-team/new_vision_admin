@@ -33,7 +33,7 @@ export const EducationPartnerSchema = (
   hasDefaultBg = false
 ) =>
   z.object({
-    name: z.string().min(2, "Name is required").max(25),
+    name: z.string().min(2, "Name is required").max(100),
     overview: z.string().min(2, "Overview is required").max(2000),
     location: z.string().min(1, "Location is required"),
     foundedDate: z.string().optional(),

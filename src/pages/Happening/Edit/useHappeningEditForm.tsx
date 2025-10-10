@@ -36,10 +36,10 @@ export const useHappeningEditForm = () => {
   );
 
   // Extract just the image filenames for backend
-  const defaultImageNames = useMemo(
-    () => happeningData?.album?.images?.map((img: AlbumImage) => img.image) || [],
-    [happeningData?.album?.images]
-  );
+  // const defaultImageNames = useMemo(
+  //   () => happeningData?.album?.images?.map((img: AlbumImage) => img.image) || [],
+  //   [happeningData?.album?.images]
+  // );
 
   const methods = useForm<HappeningCreateForm>({
     resolver: zodResolver(

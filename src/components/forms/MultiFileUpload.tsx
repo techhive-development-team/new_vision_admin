@@ -285,8 +285,8 @@ const MultiFileUpload: React.FC<MultiFileUploadProps> = ({
               strokeLinejoin="round"
             />
           </svg>
-          <p className="text-lg">Click or drag & drop {fileTypeLabel} here</p>
-          <p className="text-sm mt-2">
+          <p className="text-sm">Click or drag & drop {fileTypeLabel} here</p>
+          <p className="text-xs mt-2">
             Max size: {formatFileSize(maxSize)}
             {allowedTypes.length > 0 && (
               <span className="block mt-1">

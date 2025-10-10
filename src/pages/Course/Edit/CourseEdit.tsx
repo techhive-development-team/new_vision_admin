@@ -27,7 +27,7 @@ const CourseEdit = () => {
                 items={[
                   { label: "Home", path: "/" },
                   { label: "Courses", path: "/courses" },
-                  { label: "Add Course" },
+                  { label: "Edit Course" },
                 ]}
               />
               <h3 className="text-2xl font-bold my-4">Edit Course</h3>
@@ -61,6 +61,19 @@ const CourseEdit = () => {
                 ]}
                 required
               />
+              <RadioInput
+                name="programType"
+                label="Program Type"
+                options={[
+                  { label: "ART & DESIGN PROGRAMS", value: "ART_DESIGN" },
+                  { label: "TECHNOLOGY PROGRAMS", value: "TECHNOLOGY" },
+                  {
+                    label: "CHILDREN’S CREATIVE PROGRAMS",
+                    value: "CHILDRENS_CREATIVE",
+                  },
+                ]}
+                required
+              />
             </div>
           </div>
           <div className="card card-bordered w-full bg-base-100">
@@ -89,7 +102,13 @@ const CourseEdit = () => {
                   methods.getValues("image") || ""
                 }`}
               />
-              <InputText type="checkbox" name="isOpened" label="Is Opened" variant="toggle" required />
+              <InputText
+                type="checkbox"
+                name="isOpened"
+                label="Is Opened"
+                variant="toggle"
+                required
+              />
               <SkillsInput
                 name="skills"
                 label="Course Skills"

@@ -61,6 +61,19 @@ const CourseCreate = () => {
                 ]}
                 required
               />
+              <RadioInput
+                name="programType"
+                label="Program Type"
+                options={[
+                  { label: "ART & DESIGN PROGRAMS", value: "ART_DESIGN" },
+                  { label: "TECHNOLOGY PROGRAMS", value: "TECHNOLOGY" },
+                  {
+                    label: "CHILDREN’S CREATIVE PROGRAMS",
+                    value: "CHILDRENS_CREATIVE",
+                  },
+                ]}
+                required
+              />
             </div>
           </div>
 

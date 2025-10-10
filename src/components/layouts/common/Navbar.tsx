@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import ThemeSelector from "../../forms/ThemeSelector";
 
 const Navbar = () => {
@@ -37,12 +37,12 @@ const Navbar = () => {
           </svg>
         </label>
 
-        <div className="flex-1">
+        <div className="flex-1 hidden md:block">
           <h1 className="text-xl font-bold">
             New Vision Art & Science Institute
           </h1>
         </div>
-        <div className="flex justify-center items-center gap-2">
+        <div className="flex justify-center items-center gap-2 ">
           <ThemeSelector />
           <button onClick={openLogoutModal} className="btn btn-error">
             Logout

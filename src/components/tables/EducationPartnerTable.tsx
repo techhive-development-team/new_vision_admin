@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetEducationPartner } from "../../hooks/useGetEducationPartner";
 import { API_URLS, baseUrl } from "../../enum/urls";

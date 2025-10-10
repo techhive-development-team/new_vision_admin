@@ -17,7 +17,6 @@ export default function SkillsInput({
   const {
     setValue,
     control,
-    register,
     formState: { errors },
   } = useFormContext();
 
