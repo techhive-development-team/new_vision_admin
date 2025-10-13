@@ -37,6 +37,7 @@ export const useStudentReviewEditForm = () => {
         educationPartnerId:
           studentReviewData.educationPartnerId.toString() || "",
         review: studentReviewData.review,
+        qualification: studentReviewData.qualification,
       });
     }
   }, [studentReviewData, methods]);
@@ -51,6 +52,7 @@ export const useStudentReviewEditForm = () => {
     formData.append("student_img", data.student_img);
     formData.append("educationPartnerId", data.educationPartnerId);
     formData.append("review", data.review || "");
+    formData.append("qualification", data.qualification || "");
 
     handleSubmit(() =>
       studentReviewRepository.updateStudentReview(
