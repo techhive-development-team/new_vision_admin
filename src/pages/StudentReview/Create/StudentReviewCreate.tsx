@@ -59,7 +59,7 @@ const StudentReviewCreate = () => {
                         ]
                       : data?.map((partner: { id: string; name: string }) => ({
                           value: partner.id,
-                          showValue: partner.id,
+                          showValue: partner.name,
                         })) || []
                   }
                   required

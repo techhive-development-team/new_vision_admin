@@ -66,7 +66,7 @@ const StudentReviewEdit = () => {
                   required
                 />
 
-                <TextArea label="Review" name="review" required />
+                <TextArea label="Review" name="review" />
                 <InputText label="Qualification" name="qualification" />
 
                 <div className="pt-4 flex justify-between">

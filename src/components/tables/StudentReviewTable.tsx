@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { API_URLS, baseUrl } from "../../enum/urls";
 import { studentReviewRepository } from "../../repositories/studentReviewRepository";
 import { useGetStudentReview } from "../../hooks/useGetStudentReview";
+import { useGetEducationPartner } from "../../hooks/useGetEducationPartner";
 
 type StudentReview = {
   id: string;
@@ -20,15 +21,10 @@ const PAGE_SIZE = 10;
 const StudentReviewTable = () => {
   const [page, setPage] = useState(1);
   const offset = (page - 1) * PAGE_SIZE;
-  const {
-    data: reviews,
-    total,
-    mutate,
-  } = useGetStudentReview({ offset, limit: PAGE_SIZE });
+  const { data: reviews, total, mutate } = useGetStudentReview({ offset, limit: PAGE_SIZE });
 
-  const [selectedReview, setSelectedReview] = useState<StudentReview | null>(
-    null
-  );
+  const { data: partners } = useGetEducationPartner();
+  const [selectedReview, setSelectedReview] = useState<StudentReview | null>(null);
   const totalPages = total ? Math.ceil(total / PAGE_SIZE) : 1;
 
   const handleDelete = (review: StudentReview) => {
@@ -39,9 +35,7 @@ const StudentReviewTable = () => {
   const confirmDelete = async () => {
     if (!selectedReview) return;
     try {
-      const response = await studentReviewRepository.deleteStudentReview(
-        selectedReview.id
-      );
+      const response = await studentReviewRepository.deleteStudentReview(selectedReview.id);
       if (response?.statusCode === 200) {
         await mutate();
       } else {
@@ -55,6 +49,12 @@ const StudentReviewTable = () => {
     }
   };
 
+  // Helper to get partner name
+  const getPartnerName = (id: string) => {
+    const partner = partners?.find((p: any) => p.id === id);
+    return partner ? partner.name : "Unknown";
+  };
+
   return (
     <div>
       <div className="overflow-x-auto">
@@ -65,7 +65,7 @@ const StudentReviewTable = () => {
               <th>Name</th>
               <th>Batch</th>
               <th>Student Image</th>
-              <th>Education Partner ID</th>
+              <th>Education Partner</th>
               <th>Review</th>
               <th>Qualification</th>
               <th>Created At</th>
@@ -86,7 +86,7 @@ const StudentReviewTable = () => {
                       alt={review.name.substring(0, 10)}
                     />
                   </td>
-                  <td>{review.educationPartnerId}</td>
+                  <td>{getPartnerName(review.educationPartnerId)}</td>
                   <td>
                     {review.review?.length > 10
                       ? review.review.substring(0, 10) + "..."
@@ -112,7 +112,7 @@ const StudentReviewTable = () => {
               ))
             ) : (
               <tr>
-                <td colSpan={8} className="text-center py-4">
+                <td colSpan={9} className="text-center py-4">
                   No reviews found
                 </td>
               </tr>
@@ -121,7 +121,6 @@ const StudentReviewTable = () => {
         </table>
       </div>
 
-      {/* Pagination */}
       <div className="join flex justify-end my-4">
         {[...Array(totalPages)].map((_, idx) => {
           const pageNumber = idx + 1;
@@ -139,7 +138,7 @@ const StudentReviewTable = () => {
         })}
       </div>
 
-      {/* Delete Confirmation Modal */}
+      {/* Delete Modal */}
       <dialog id="delete_modal" className="modal">
         <div className="modal-box">
           <h3 className="font-bold text-lg">Confirm Delete</h3>
