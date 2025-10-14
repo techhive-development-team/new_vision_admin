@@ -93,14 +93,16 @@ const CourseTable = () => {
                   <td>{course.name.substring(0, 50)}</td>
                   <td>{course.programOverview.substring(0, 50)}</td>
                   <td>
-                    <a
-                      href={course.quiz}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-500 underline"
-                    >
-                      Quiz Link
-                    </a>
+                    {course.quiz && (
+                      <a
+                        href={course.quiz}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-500 underline"
+                      >
+                        Quiz Link
+                      </a>
+                    )}
                   </td>
                   <td>
                     {course.skills?.map((skill, i) => (

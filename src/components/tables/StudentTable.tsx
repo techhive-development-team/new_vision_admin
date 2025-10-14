@@ -4,6 +4,11 @@ import { useGetStudent } from "../../hooks/useGetStudent";
 import { API_URLS, baseUrl } from "../../enum/urls";
 import { studentRepository } from "../../repositories/studentRepository";
 
+export type Course = {
+  id: string;
+  name: string;
+};
+
 export type Student = {
   id: string;
   name: string;
@@ -27,6 +32,7 @@ export type Student = {
   transactionId: string;
   courseId?: string;
   createdAt: string;
+  Courses: Course;
 };
 
 const PAGE_SIZE = 10;
@@ -115,7 +121,7 @@ const StudentTable = () => {
                   <td>{student.joinRaffles}</td>
                   <td>{student.paymentOption}</td>
                   <td>{student.status}</td>
-                  <td>{student.courseId}</td>
+                  <td>{student.Courses.name}</td>
                   <td>{new Date(student.createdAt).toLocaleString()}</td>
                   <td className="flex gap-2">
                     <Link
