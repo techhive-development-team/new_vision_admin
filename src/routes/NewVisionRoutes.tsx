@@ -102,6 +102,13 @@ const Student = lazy(() => import("../pages/Student/Student"));
 const StudentEdit = lazy(() => import("../pages/Student/Edit/StudentEdit"));
 const StudentView = lazy(() => import("../pages/Student/View/StudentView"));
 
+// Batches & Registrations
+const BatchPage = lazy(() => import("../pages/Batch/Batch"));
+const BatchCreatePage = lazy(() => import("../pages/Batch/Create/BatchCreate"));
+const RegistrationPage = lazy(
+  () => import("../pages/Registration/Registration")
+);
+
 // Auth & NotFound
 const Login = lazy(() => import("../pages/Auth/Login/Login"));
 const NotFound = lazy(() => import("../pages/NotFound"));
@@ -239,6 +246,10 @@ const routes: AppRoute[] = [
     element: StudentView,
     protected: true,
   },
+
+  { path: "/batches", element: BatchPage, protected: true },
+  { path: "/batches/create", element: BatchCreatePage, protected: true },
+  { path: "/registrations", element: RegistrationPage, protected: true },
 
   { path: "/futureCountry", element: FutureCountryPage, protected: true },
   {

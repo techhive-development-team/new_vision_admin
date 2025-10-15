@@ -11,7 +11,9 @@ export const API_URLS = {
   HAPPENING: "/happenings",
   INQUIRY: "/inquiry",
   STUDENT: "/students",
-  FUTURECOUNTRY: "/futureCountry"
+  FUTURECOUNTRY: "/futureCountry",
+  BATCH: "/batches",
+  REGISTRATION: "/registrations",
 };
 
 export const baseUrl = import.meta.env.VITE_APP_API_BASE_URL;

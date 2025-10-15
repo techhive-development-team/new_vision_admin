@@ -9,6 +9,8 @@ import {
   MessageSquare,
   MailSearch,
   PersonStanding,
+  Layers2,
+  ClipboardList,
 } from "lucide-react";
 
 export interface SidebarRoute {
@@ -42,4 +44,6 @@ export const sidebarRoutes: SidebarRoute[] = [
   { path: "/inquiry", name: "Inquiry", icon: <MailSearch size={18} /> },
   { path: "/students", name: "Student", icon: <PersonStanding size={18} /> },
   {path: "/futureCountry", name: "Future Country", icon: <Users size={18} /> },
+  { path: "/batches", name: "Batches", icon: <Layers2 size={18} /> },
+  { path: "/registrations", name: "Registrations", icon: <ClipboardList size={18} /> },
 ];
