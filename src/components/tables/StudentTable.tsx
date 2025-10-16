@@ -41,12 +41,12 @@ const StudentTable = () => {
   const [page, setPage] = useState(1);
   const offset = (page - 1) * PAGE_SIZE;
 
-  const {
-    data: students,
-    total,
-    mutate,
-  } = useGetStudent({ offset, limit: PAGE_SIZE });
+  const { data: students, total, mutate } = useGetStudent({ offset, limit: PAGE_SIZE });
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
+
+  // For email sending modal
+  const [emailModalMessage, setEmailModalMessage] = useState<string | null>(null);
+  const [loadingEmail, setLoadingEmail] = useState<Record<string, boolean>>({});
 
   const totalPages = total ? Math.ceil(total / PAGE_SIZE) : 1;
 
@@ -58,19 +58,35 @@ const StudentTable = () => {
   const confirmDelete = async () => {
     if (!selectedStudent) return;
     try {
-      const response = await studentRepository.deleteStudent(
-        selectedStudent.id
-      );
-      if (response?.statusCode === 200) {
-        await mutate();
-      } else {
-        console.error("Delete failed:", response);
-      }
+      const response = await studentRepository.deleteStudent(selectedStudent.id);
+      if (response?.statusCode === 200) await mutate();
+      else console.error("Delete failed:", response);
     } catch (err) {
       console.error("Delete failed:", err);
     } finally {
       setSelectedStudent(null);
       (document.getElementById("delete_modal") as HTMLDialogElement).close();
+    }
+  };
+
+  const handleSendEmail = async (studentId: string) => {
+    try {
+      setLoadingEmail((prev) => ({ ...prev, [studentId]: true }));
+      const response = await studentRepository.sendEmail(studentId);
+
+      if (response?.statusCode === 200) {
+        setEmailModalMessage("Email sent successfully!");
+      } else {
+        console.error("Failed to send email:", response);
+        setEmailModalMessage("Failed to send email");
+      }
+    } catch (err) {
+      console.error("Error sending email:", err);
+      setEmailModalMessage("Error sending email");
+    } finally {
+      setLoadingEmail((prev) => ({ ...prev, [studentId]: false }));
+      const modal = document.getElementById("email_modal") as HTMLDialogElement;
+      modal?.showModal();
     }
   };
 
@@ -143,12 +159,19 @@ const StudentTable = () => {
                     >
                       Delete
                     </button>
+                    <button
+                      onClick={() => handleSendEmail(student.id)}
+                      className="btn btn-sm btn-success"
+                      disabled={loadingEmail[student.id]}
+                    >
+                      {loadingEmail[student.id] ? "Sending..." : "Send Email"}
+                    </button>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan={15} className="text-center py-4">
+                <td colSpan={16} className="text-center py-4">
                   No students found
                 </td>
               </tr>
@@ -192,6 +215,24 @@ const StudentTable = () => {
                 Yes, Delete
               </button>
             </form>
+          </div>
+        </div>
+      </dialog>
+
+      <dialog id="email_modal" className="modal">
+        <div className="modal-box">
+          <h3 className="font-bold text-lg">Email Status</h3>
+          <p className="py-4">{emailModalMessage}</p>
+          <div className="modal-action">
+            <button
+              className="btn"
+              onClick={() => {
+                setEmailModalMessage(null);
+                (document.getElementById("email_modal") as HTMLDialogElement).close();
+              }}
+            >
+              OK
+            </button>
           </div>
         </div>
       </dialog>

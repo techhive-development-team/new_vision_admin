@@ -34,9 +34,17 @@ const deleteStudent = async (id: string) => {
   return response;
 };
 
+const sendEmail = async (id: string) => {
+  const response = await client.exec(`${API_URLS.STUDENT}/mail/send/${id}`, {
+    method: "POST",
+  });
+  return response;
+};
+
 export const studentRepository = {
     getAll,
     getStudentById,
     updateStudent,
     deleteStudent,
+    sendEmail,
 }
