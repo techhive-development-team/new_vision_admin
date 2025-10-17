@@ -7,6 +7,7 @@ type Props = {
   variant?: "default" | "toggle";
   placeholder?: string;
   required?: boolean;
+  readonly?: boolean;
 };
 
 const InputText = ({
@@ -16,6 +17,7 @@ const InputText = ({
   variant = "default",
   placeholder,
   required,
+  readonly = false,
 }: Props) => {
   const {
     register,
@@ -38,6 +40,8 @@ const InputText = ({
             className={`${variant === "toggle" ? "toggle" : "checkbox"} ${
               error ? "input-error" : ""
             }`}
+            readOnly={readonly}
+            disabled={readonly}
           />
         </label>
         {error && (
@@ -61,7 +65,11 @@ const InputText = ({
         {...register(name)}
         type={type}
         placeholder={placeholder || `Enter your ${label.toLowerCase()}`}
-        className={`input input-bordered w-full ${error ? "input-error" : ""}`}
+        readOnly={readonly}
+        disabled={readonly}
+        className={`input input-bordered w-full ${error ? "input-error" : ""} ${
+          readonly ? "cursor-not-allowed" : ""
+        }`}
       />
       {error && (
         <label className="label">

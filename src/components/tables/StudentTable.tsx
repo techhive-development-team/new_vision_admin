@@ -99,6 +99,7 @@ const StudentTable = () => {
               <th>No</th>
               <th>Image</th>
               <th>Name</th>
+              <th>Course</th>
               <th>Parent Name</th>
               <th>Parent Job</th>
               <th>Email</th>
@@ -109,7 +110,6 @@ const StudentTable = () => {
               <th>Join Raffles</th>
               <th>Payment Option</th>
               <th>Status</th>
-              <th>Course</th>
               <th>Created At</th>
               <th>Action</th>
             </tr>
@@ -117,29 +117,81 @@ const StudentTable = () => {
           <tbody>
             {students && students.length > 0 ? (
               students.map((student: Student, index: number) => (
-                <tr key={student.id}>
-                  <td>{offset + index + 1}</td>
+                <tr
+                  key={student.id}
+                >
+                  <td className="text-center">{offset + index + 1}</td>
                   <td>
                     <img
-                      className="w-16 h-16 object-cover rounded-md border"
+                      className="w-16 h-16 object-cover rounded-md border border-gray-300"
                       src={`${baseUrl}${API_URLS.UPLOAD}${API_URLS.STUDENT}/${student.studentImage}`}
                       alt={student.name.substring(0, 10)}
                     />
                   </td>
-                  <td>{student.name}</td>
-                  <td>{student.parentName}</td>
-                  <td>{student.parentJob}</td>
-                  <td>{student.email}</td>
-                  <td>{student.phone}</td>
-                  <td>{student.school}</td>
-                  <td>{student.studyAbroad ? "Yes" : "No"}</td>
-                  <td>{student.futurePlan}</td>
-                  <td>{student.joinRaffles}</td>
-                  <td>{student.paymentOption}</td>
-                  <td>{student.status}</td>
-                  <td>{student.Courses.name}</td>
+                  <td className="font-medium truncate max-w-[150px]">
+                    {student.name}
+                  </td>
+                  <td className="whitespace-nowrap">
+                    {student.Courses?.name}
+                  </td>
+                  <td className="truncate max-w-[150px]">
+                    {student.parentName}
+                  </td>
+                  <td className="truncate max-w-[120px]">
+                    {student.parentJob}
+                  </td>
+                  <td className="truncate max-w-[180px]">{student.email}</td>
+                  <td className="truncate">{student.phone}</td>
+                  <td>
+                    <span className="badge badge-info">
+                      {student.school || "NOTHING"}
+                    </span>
+                  </td>
+                  <td>
+                    {student.studyAbroad ? (
+                      <span className="badge badge-success">Yes</span>
+                    ) : (
+                      <span className="badge badge-warning">No</span>
+                    )}
+                  </td>
+                  <td className="truncate max-w-[150px]">
+                    {student.futurePlan}
+                  </td>
+                  <td>
+                    <span
+                      className={`badge ${
+                        student.joinRaffles === "YES"
+                          ? "badge-success"
+                          : student.joinRaffles === "NO"
+                          ? "badge-error"
+                          : "badge-warning"
+                      }`}
+                    >
+                      {student.joinRaffles || "MAYBE"}
+                    </span>
+                  </td>
+                  <td>
+                    <span className="badge badge-primary">
+                      {student.paymentOption || "CASH"}
+                    </span>
+                  </td>
+                  <td>
+                    <span
+                      className={`badge ${
+                        student.status === "COMPLETED"
+                          ? "badge-success"
+                          : student.status === "PENDING"
+                          ? "badge-warning"
+                          : student.status === "FAILED"
+                          ? "badge-error"
+                          : "badge-neutral"
+                      }`}
+                    >
+                      {student.status || "NONE"}
+                    </span>
+                  </td>
                   <td>{new Date(student.createdAt).toLocaleString()}</td>
-                  <td className="flex gap-2">
+                  <td className="flex gap-1">
                     <Link
                       to={`/students/${student.id}/view`}
                       state={{ student }}
