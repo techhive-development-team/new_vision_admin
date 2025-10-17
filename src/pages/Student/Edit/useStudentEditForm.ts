@@ -66,7 +66,7 @@ export const useStudentEditForm = () => {
         paymentOption: studentData.paymentOption,
         status: studentData.status,
         transactionId: studentData.transactionId || "",
-        coursesId: studentData?.courseId || "",
+        coursesId: studentData?.courseId.toString() || "",
       });
     }
   }, [studentData, reset]);

@@ -9,12 +9,14 @@ import Alert from "../../../components/forms/Alert";
 import { useStudentEditForm } from "./useStudentEditForm";
 import { API_URLS, baseUrl } from "../../../enum/urls";
 import { useGetCourse } from "../../../hooks/useGetCourse";
+import { useGetFutureCountry } from "../../../hooks/useGetFutureCountry";
 
 const StudentEdit = () => {
   const { onSubmit, loading, success, message, show, ...methods } =
     useStudentEditForm();
 
-  const { data, isLoading: courseLoading, error: courseError } = useGetCourse();
+  const { data: futureCountries, isLoading: futureCountryLoading, error: futureCountryError } = useGetFutureCountry();
+  const { data: courses, isLoading: courseLoading, error: courseError } = useGetCourse();
 
   return (
     <Layout>
@@ -82,7 +84,24 @@ const StudentEdit = () => {
                 required
               />
               <InputText label="Future Plan" name="futurePlan" required />
-              <InputText label="Future Country" name="futureCountryName" />
+              <SelectBox
+                label="Future Country"
+                name="futureCountryId"
+                items={
+                  futureCountryLoading
+                    ? [{ value: "", showValue: "Loading..." }]
+                    : futureCountryError
+                    ? [{ value: "", showValue: "No countries available" }]
+                    : futureCountries?.map(
+                        (futureCountry: { id: string; country: string }) => ({
+                          value: futureCountry.id,
+                          showValue: futureCountry.country,
+                        })
+                      )
+                }
+              />
+
+              <InputText label="Other Country" name="futureCountryName" />
               <InputText
                 label="Future University"
                 name="futureuniversityName"
@@ -132,7 +151,7 @@ const StudentEdit = () => {
                     ? [{ value: "", showValue: "Loading..." }]
                     : courseError
                     ? [{ value: "", showValue: "No courses available" }]
-                    : data?.map((course: { id: string; name: string }) => ({
+                    : courses?.map((course: { id: string; name: string }) => ({
                         value: course.id,
                         showValue: course.name,
                       }))
