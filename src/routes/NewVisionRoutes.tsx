@@ -147,7 +147,7 @@ const routes: AppRoute[] = [
   { path: "/", element: Dashboard, index: true, protected: true },
 
   { path: "/users", element: UserPage, protected: true },
-  { path: "/users/create", element: UserCreate },
+  { path: "/users/create", element: UserCreate, protected: false},
   { path: "/users/:id/edit", element: UserEdit, protected: true },
 
   { path: "/images", element: ImagePage, protected: true },

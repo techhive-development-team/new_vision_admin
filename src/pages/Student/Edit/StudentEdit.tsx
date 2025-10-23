@@ -158,6 +158,9 @@ const StudentEdit = () => {
                 }
                 required
               />
+              <InputText label="Bank Name" name="bank" />
+              <InputText label="Message" name="message" />
+              
               <div className="pt-4 card-actions flex justify-between">
                 <Link to="/students" className="btn btn-soft">
                   Back to Students

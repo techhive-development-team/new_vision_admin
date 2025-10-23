@@ -19,7 +19,7 @@ export const useHappeningCreateForm = () => {
     formData.append("title", data.title);
     formData.append("description", data.description);
     formData.append("happeningTypeId", data.happeningTypeId);
-
+    if (data.embeddedLink) formData.append("embeddedLink", data.embeddedLink);
     if (data.mainImage instanceof File)
       formData.append("mainImage", data.mainImage);
     if (Array.isArray(data.album_images)) {

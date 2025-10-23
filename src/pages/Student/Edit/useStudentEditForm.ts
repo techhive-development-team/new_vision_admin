@@ -67,6 +67,8 @@ export const useStudentEditForm = () => {
         status: studentData.status,
         transactionId: studentData.transactionId || "",
         coursesId: studentData?.courseId.toString() || "",
+        bank: studentData?.bank || "",
+        message: studentData?.message || "",
       });
     }
   }, [studentData, reset]);
@@ -98,6 +100,8 @@ export const useStudentEditForm = () => {
     formData.append("status", data.status);
     formData.append("transactionId", data.transactionId || "");
     formData.append("coursesId", data.coursesId || "");
+    formData.append("bank", data.bank || "");
+    formData.append("message", data.message || "");
 
     handleSubmit(() =>
       studentRepository.updateStudent(id?.toString() || "", formData)

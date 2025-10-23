@@ -8,6 +8,7 @@ type Props = {
   placeholder?: string;
   required?: boolean;
   readonly?: boolean;
+  min?: string;
 };
 
 const InputText = ({
@@ -18,6 +19,7 @@ const InputText = ({
   placeholder,
   required,
   readonly = false,
+  min,
 }: Props) => {
   const {
     register,
@@ -67,6 +69,7 @@ const InputText = ({
         placeholder={placeholder || `Enter your ${label.toLowerCase()}`}
         readOnly={readonly}
         disabled={readonly}
+        min={type === "date" ? min : undefined}
         className={`input input-bordered w-full ${error ? "input-error" : ""} ${
           readonly ? "cursor-not-allowed" : ""
         }`}

@@ -39,7 +39,7 @@ export const useCourseEditForm = () => {
         name: courseData.name,
         programOverview: courseData.programOverview,
         duration: courseData.duration,
-        level: courseData.level,
+        level: courseData.level || "",
         location: courseData.location as "online" | "onsite",
         programType: courseData.programType as
           | "ART_DESIGN"
@@ -67,13 +67,13 @@ export const useCourseEditForm = () => {
     formData.append("duration", data.duration);
     formData.append("location", data.location);
     formData.append("programType", data.programType);
-    formData.append("level", data.level);
+    formData.append("level", data.level || "");
     formData.append("isOpened", data.isOpened.toString());
     if (data.expireDate) formData.append("expireDate", data.expireDate);
     if (data.price) formData.append("price", data.price);
     if (data.quiz) formData.append("quiz", data.quiz);
     formData.append("image", data.image);
-    if (data.skills.length > 0) {
+    if (data.skills && data.skills.length > 0) {
       data.skills.forEach((skill) => formData.append("skills[]", skill));
     } else {
       formData.append("skills[]", "");

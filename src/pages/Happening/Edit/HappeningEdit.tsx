@@ -40,10 +40,15 @@ const HappeningEdit = () => {
             />
             <h3 className="text-2xl font-bold my-4">Edit Happening</h3>
             <FormProvider {...methods}>
-              <form onSubmit={methods.handleSubmit(onSubmit)}>
+              <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-4">
                 {show && <Alert success={success} message={message} />}
                 <InputText label="Happening Name" name="title" required />
                 <TextArea label="Description" name="description" required />
+                <InputText
+                  label="Embedded Link"
+                  name="embeddedLink"
+                  placeholder="Enter embedded link"
+                />
                 <SelectBox
                   label="Happening Type"
                   name="happeningTypeId"

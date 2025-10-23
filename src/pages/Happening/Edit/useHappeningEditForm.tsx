@@ -48,6 +48,7 @@ export const useHappeningEditForm = () => {
     defaultValues: {
       title: happeningData?.title ?? "",
       description: happeningData?.description ?? "",
+      embeddedLink: happeningData?.embeddedLink ?? "",
       happeningTypeId: happeningData?.happeningTypeId.toString() ?? "",
       mainImage: happeningData?.mainImage,
       album_images: [],
@@ -67,7 +68,7 @@ export const useHappeningEditForm = () => {
     formData.append("title", data.title);
     formData.append("description", data.description);
     formData.append("happeningTypeId", data.happeningTypeId);
-
+    if(data.embeddedLink) formData.append("embeddedLink", data.embeddedLink);
     // Fix: Use 'mainImage' instead of 'bg_image'
     if (data.mainImage instanceof File) {
       formData.append("mainImage", data.mainImage);
@@ -102,6 +103,7 @@ export const useHappeningEditForm = () => {
       methods.reset({
         title: happeningData.title,
         description: happeningData.description,
+        embeddedLink: happeningData.embeddedLink,
         happeningTypeId: happeningData.happeningTypeId.toString(),
         mainImage: happeningData.mainImage,
         album_images: [],
