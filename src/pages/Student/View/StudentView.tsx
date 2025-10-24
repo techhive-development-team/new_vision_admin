@@ -70,6 +70,8 @@ const StudentView = () => {
                 ["Payment Option", student.paymentOption],
                 ["Payment Status", student.status],
                 ["Transaction ID", student.transactionId],
+                ["Bank", student.bank],
+                ["Message", student.message],
               ].map(([label, value]) => (
                 <div
                   key={label}

@@ -45,12 +45,11 @@ const CourseEdit = () => {
                 name="programOverview"
                 required
               />
-              <TextArea label="Course Level" name="level" required />
+              <TextArea label="Course Level" name="level" />
               <InputText
                 label="Course Duration"
                 name="duration"
                 placeholder="Enter course duration"
-                required
               />
               <RadioInput
                 name="location"
@@ -83,6 +82,7 @@ const CourseEdit = () => {
                 name="expireDate"
                 placeholder="Enter course expiration date"
                 type="date"
+                min={new Date().toISOString().split("T")[0]}
               />
               <InputText
                 label="Course Price"
@@ -113,7 +113,6 @@ const CourseEdit = () => {
                 name="skills"
                 label="Course Skills"
                 placeholder="Enter course skills"
-                required
               />
               <div className="pt-4 card-actions flex justify-between">
                 <Link to="/courses" className="btn btn-soft">

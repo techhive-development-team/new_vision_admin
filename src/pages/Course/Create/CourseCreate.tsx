@@ -45,7 +45,7 @@ const CourseCreate = () => {
                 name="programOverview"
                 required
               />
-              <TextArea label="Course Level" name="level" required />
+              <TextArea label="Course Level" name="level" />
               <InputText
                 label="Course Duration"
                 name="duration"
@@ -85,6 +85,7 @@ const CourseCreate = () => {
                 name="expireDate"
                 placeholder="Enter course expiration date"
                 type="date"
+                min={new Date().toISOString().split("T")[0]}
               />
               <InputText
                 label="Course Price"
@@ -101,7 +102,6 @@ const CourseCreate = () => {
                 name="skills"
                 label="Course Skills"
                 placeholder="Enter course skills"
-                required
               />
               <div className="pt-4 card-actions flex justify-between">
                 <Link to="/courses" className="btn btn-soft">

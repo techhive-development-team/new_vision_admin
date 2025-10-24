@@ -33,7 +33,7 @@ const HappeningCreate = () => {
             />
             <h3 className="text-2xl font-bold my-4">Create Happening</h3>
             <FormProvider {...methods}>
-              <form onSubmit={methods.handleSubmit(onSubmit)}>
+              <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-4">
                 {show && <Alert success={success} message={message} />}
                 <InputText
                   required
@@ -42,6 +42,11 @@ const HappeningCreate = () => {
                   placeholder="Enter happening name"
                 />
                 <TextArea label="Description" name="description" required />
+                <InputText
+                  label="Embedded Link"
+                  name="embeddedLink"
+                  placeholder="Enter embedded link"
+                />
                 <SelectBox
                   label="Happening Type"
                   name="happeningTypeId"

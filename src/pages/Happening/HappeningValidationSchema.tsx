@@ -35,6 +35,7 @@ export const HappeningSchema = (hasMainImage = false, hasAlbumImages = false) =>
   z.object({
     title: z.string().min(1, "Title is required").trim(),
     description: z.string().min(1, "Description is required").trim(),
+    embeddedLink: z.string().url().or(z.literal("")).optional(),
     happeningTypeId: z.string().min(1, "Happening Type is required"),
     mainImage: fileValidator(hasMainImage, "Background Image"),
     album_images: hasAlbumImages

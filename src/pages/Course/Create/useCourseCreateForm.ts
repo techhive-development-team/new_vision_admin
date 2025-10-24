@@ -22,12 +22,14 @@ export const useCourseCreateForm = () => {
     formData.append("duration", data.duration);
     formData.append("location", data.location);
     formData.append("programType", data.programType);
-    formData.append("level", data.level);
+    formData.append("level", data.level || "");
     if (data.expireDate) formData.append("expireDate", data.expireDate);
     if (data.price) formData.append("price", data.price);
     if (data.quiz) formData.append("quiz", data.quiz);
     formData.append("image", data.image);
-    data.skills.forEach((skill) => formData.append("skills[]", skill));
+    if (data.skills && data.skills.length > 0) {
+      data.skills.forEach((skill) => formData.append("skills[]", skill));
+    }
     handleSubmit(async () => {
       return await courseRepository.createCourse(formData);
     });

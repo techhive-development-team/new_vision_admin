@@ -58,6 +58,8 @@ export const StudentSchema = (hasDefaultImage = false) =>
     status: z.enum(["NONE", "PENDING", "COMPLETED", "FAILED"]),
     transactionId: z.string().optional(),
     coursesId: z.string().min(1, "Course is required"), 
+    bank: z.string().optional(),
+    message: z.string().optional(),
   });
 
 export type StudentEditForm = z.infer<ReturnType<typeof StudentSchema>>;

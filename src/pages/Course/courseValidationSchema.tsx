@@ -33,7 +33,7 @@ export const CourseCreateSchema = (hasDefaultImage = false) =>
     name: z.string().min(1, "Course name is required"),
     programOverview: z.string().min(1, "Program overview is required"),
     duration: z.string().min(1, "Duration is required"),
-    level: z.string().min(1, "Course level is required"),
+    level: z.string().optional(),
     location: z.enum(["online", "onsite"], "Location is required"),
     programType: z.enum(
       ["ART_DESIGN", "TECHNOLOGY", "CHILDRENS_CREATIVE"],
@@ -44,7 +44,19 @@ export const CourseCreateSchema = (hasDefaultImage = false) =>
       .optional()
       .refine((val) => !val || !isNaN(Date.parse(val)), {
         message: "Invalid date format",
-      }),
+      })
+      .refine(
+        (val) => {
+          if (!val) return true;
+          const selectedDate = new Date(val);
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+          return selectedDate >= today;
+        },
+        {
+          message: "Expiration date cannot be in the past",
+        }
+      ),
     price: z
       .string()
       .optional()
@@ -53,7 +65,7 @@ export const CourseCreateSchema = (hasDefaultImage = false) =>
       }),
     quiz: z.string().url().or(z.literal("")).optional(),
     image: fileValidator(hasDefaultImage, "Image"),
-    skills: z.array(z.string().min(1, "At least one skill is required")),
+    skills: z.array(z.string().min(1)).optional(),
   });
 
 export const CourseEditSchema = (hasDefaultImage = false) =>
@@ -61,7 +73,7 @@ export const CourseEditSchema = (hasDefaultImage = false) =>
     name: z.string().min(1, "Course name is required"),
     programOverview: z.string().min(1, "Program overview is required"),
     duration: z.string().min(1, "Duration is required"),
-    level: z.string().min(1, "Course level is required"),
+    level: z.string().optional(),
     location: z.enum(["online", "onsite"], "Location is required"),
     programType: z.enum(
       ["ART_DESIGN", "TECHNOLOGY", "CHILDRENS_CREATIVE"],
@@ -72,7 +84,19 @@ export const CourseEditSchema = (hasDefaultImage = false) =>
       .optional()
       .refine((val) => !val || !isNaN(Date.parse(val)), {
         message: "Invalid date format",
-      }),
+      })
+      .refine(
+        (val) => {
+          if (!val) return true;
+          const selectedDate = new Date(val);
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+          return selectedDate >= today;
+        },
+        {
+          message: "Expiration date cannot be in the past",
+        }
+      ),
     price: z
       .string()
       .optional()
@@ -81,7 +105,7 @@ export const CourseEditSchema = (hasDefaultImage = false) =>
       }),
     quiz: z.string().url().or(z.literal("")).optional(),
     image: fileValidator(hasDefaultImage, "Image"),
-    skills: z.array(z.string().min(1, "At least one skill is required")),
+    skills: z.array(z.string().min(1)).optional(),
     isOpened: z.boolean(),
   });
 
