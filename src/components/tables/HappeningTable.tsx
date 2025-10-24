@@ -71,7 +71,6 @@ const HappeningTable = () => {
               <th>No</th>
               <th>Title</th>
               <th>Main Image</th>
-              <th>Album Images</th>
               <th>Type</th>
               <th>Created At</th>
               <th>Action</th>
@@ -89,22 +88,6 @@ const HappeningTable = () => {
                       src={`${baseUrl}${API_URLS.UPLOAD}${API_URLS.HAPPENING}/${happening.mainImage}`}
                       alt={happening.title.substring(0, 10)}
                     />
-                  </td>
-                  <td>
-                    <div className="flex flex-wrap gap-1">
-                      {happening.album?.images?.length > 0 ? (
-                        happening.album.images.map((img) => (
-                          <img
-                            key={img.id}
-                            src={`${baseUrl}${API_URLS.UPLOAD}${API_URLS.HAPPENING}/${img.image}`}
-                            alt={img.image.substring(0, 10)}
-                            className="w-12 h-12 object-cover border rounded"
-                          />
-                        ))
-                      ) : (
-                        <span>No images</span>
-                      )}
-                    </div>
                   </td>
                   <td>{happening.happeningType.typeName}</td>
                   <td>{new Date(happening.createdAt).toLocaleString()}</td>

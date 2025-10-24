@@ -2,7 +2,12 @@ import useSWR from "swr";
 import { API_URLS } from "../enum/urls";
 import { userRepository } from "../repositories/userRepository";
 
-export const useGetUser = (params?: { limit?: number; offset?: number }) => {
+export const useGetUser = (params?: {
+  limit?: number;
+  offset?: number;
+  name?: string;
+  email?: string;
+}) => {
   const key = params ? [`${API_URLS.USER}`, params] : API_URLS.USER;
 
   const { data, error, isLoading, mutate } = useSWR(key, () =>

@@ -10,9 +10,14 @@ type User = {
   createdAt: string;
 };
 
+type UserTableProps = {
+  userName?: string;
+  userEmail?: string;
+};
+
 const PAGE_SIZE = 10;
 
-const UserTable: React.FC = () => {
+const UserTable: React.FC<UserTableProps> = ({ userName, userEmail }) => {
   const [page, setPage] = useState(1);
   const offset = (page - 1) * PAGE_SIZE;
 
@@ -20,7 +25,12 @@ const UserTable: React.FC = () => {
     data: users,
     mutate,
     total,
-  } = useGetUser({ limit: PAGE_SIZE, offset });
+  } = useGetUser({
+    limit: PAGE_SIZE,
+    offset,
+    name: userName,
+    email: userEmail,
+  });
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
   const totalPages = total ? Math.ceil(total / PAGE_SIZE) : 1;

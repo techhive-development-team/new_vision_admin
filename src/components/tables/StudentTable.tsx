@@ -33,6 +33,8 @@ export type Student = {
   courseId?: string;
   createdAt: string;
   Courses: Course;
+  bank: string;
+  message: string;
 };
 
 const PAGE_SIZE = 10;
@@ -41,11 +43,17 @@ const StudentTable = () => {
   const [page, setPage] = useState(1);
   const offset = (page - 1) * PAGE_SIZE;
 
-  const { data: students, total, mutate } = useGetStudent({ offset, limit: PAGE_SIZE });
+  const {
+    data: students,
+    total,
+    mutate,
+  } = useGetStudent({ offset, limit: PAGE_SIZE });
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
 
   // For email sending modal
-  const [emailModalMessage, setEmailModalMessage] = useState<string | null>(null);
+  const [emailModalMessage, setEmailModalMessage] = useState<string | null>(
+    null
+  );
   const [loadingEmail, setLoadingEmail] = useState<Record<string, boolean>>({});
 
   const totalPages = total ? Math.ceil(total / PAGE_SIZE) : 1;
@@ -58,7 +66,9 @@ const StudentTable = () => {
   const confirmDelete = async () => {
     if (!selectedStudent) return;
     try {
-      const response = await studentRepository.deleteStudent(selectedStudent.id);
+      const response = await studentRepository.deleteStudent(
+        selectedStudent.id
+      );
       if (response?.statusCode === 200) await mutate();
       else console.error("Delete failed:", response);
     } catch (err) {
@@ -117,9 +127,7 @@ const StudentTable = () => {
           <tbody>
             {students && students.length > 0 ? (
               students.map((student: Student, index: number) => (
-                <tr
-                  key={student.id}
-                >
+                <tr key={student.id}>
                   <td className="text-center">{offset + index + 1}</td>
                   <td>
                     <img
@@ -131,9 +139,7 @@ const StudentTable = () => {
                   <td className="font-medium truncate max-w-[150px]">
                     {student.name}
                   </td>
-                  <td className="whitespace-nowrap">
-                    {student.Courses?.name}
-                  </td>
+                  <td className="whitespace-nowrap">{student.Courses?.name}</td>
                   <td className="truncate max-w-[150px]">
                     {student.parentName}
                   </td>
@@ -191,34 +197,34 @@ const StudentTable = () => {
                     </span>
                   </td>
                   <td>{new Date(student.createdAt).toLocaleString()}</td>
-                  <td className="flex gap-1">
-                    <Link
-                      to={`/students/${student.id}/view`}
-                      state={{ student }}
-                      className="btn btn-sm btn-info"
-                    >
-                      View
-                    </Link>
-                    <Link
-                      to={`/students/${student.id}/edit`}
-                      className="btn btn-sm btn-primary"
-                    >
-                      Edit
-                    </Link>
-                    <button
-                      onClick={() => handleDelete(student)}
-                      className="btn btn-sm btn-error"
-                    >
-                      Delete
-                    </button>
-                    <button
-                      onClick={() => handleSendEmail(student.id)}
-                      className="btn btn-sm btn-success"
-                      disabled={loadingEmail[student.id]}
-                    >
-                      {loadingEmail[student.id] ? "Sending..." : "Send Email"}
-                    </button>
-                  </td>
+                    <td className="flex gap-1">
+                      <Link
+                        to={`/students/${student.id}/view`}
+                        state={{ student }}
+                        className="btn btn-sm btn-info"
+                      >
+                        View
+                      </Link>
+                      <Link
+                        to={`/students/${student.id}/edit`}
+                        className="btn btn-sm btn-primary"
+                      >
+                        Edit
+                      </Link>
+                      <button
+                        onClick={() => handleDelete(student)}
+                        className="btn btn-sm btn-error"
+                      >
+                        Delete
+                      </button>
+                      <button
+                        onClick={() => handleSendEmail(student.id)}
+                        className="btn btn-sm btn-success"
+                        disabled={loadingEmail[student.id]}
+                      >
+                        {loadingEmail[student.id] ? "Sending..." : "Send Email"}
+                      </button>
+                    </td>
                 </tr>
               ))
             ) : (
@@ -280,7 +286,9 @@ const StudentTable = () => {
               className="btn"
               onClick={() => {
                 setEmailModalMessage(null);
-                (document.getElementById("email_modal") as HTMLDialogElement).close();
+                (
+                  document.getElementById("email_modal") as HTMLDialogElement
+                ).close();
               }}
             >
               OK

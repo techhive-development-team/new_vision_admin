@@ -100,7 +100,7 @@ const EducationPartnerTable = () => {
                     )}
                   </td>
                   <td>{partner.name}</td>
-                  <td>{partner.overview}</td>
+                  <td>{partner.overview.substring(0, 100)}...</td>
                   <td>{partner.location}</td>
                   <td>
                     {partner.partnerType === "UNIVERSITY" && (

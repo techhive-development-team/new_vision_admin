@@ -67,7 +67,6 @@ const CourseTable = () => {
               <th>Name</th>
               <th>Program Overview</th>
               <th>Quiz</th>
-              <th>Skills</th>
               <th>Price</th>
               <th>Status</th>
               <th>Expire Date</th>
@@ -103,16 +102,6 @@ const CourseTable = () => {
                         Quiz Link
                       </a>
                     )}
-                  </td>
-                  <td>
-                    {course.skills?.map((skill, i) => (
-                      <span
-                        key={i}
-                        className="px-2 py-1 text-xs bg-success rounded-md mr-1"
-                      >
-                        {skill.substring(0, 50)}
-                      </span>
-                    ))}
                   </td>
                   <td>{course.price} MMK</td>
                   <td>
