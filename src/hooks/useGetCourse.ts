@@ -2,7 +2,15 @@ import useSWR from "swr";
 import { API_URLS } from "../enum/urls";
 import { courseRepository } from "../repositories/courseRepository";
 
-export const useGetCourse = (params?: { limit?: number; offset?: number }) => {
+export const useGetCourse = (params?: {
+  limit?: number;
+  offset?: number;
+  name?: string;
+  programType?: string;
+  fromDate?: string;
+  toDate?: string;
+
+}) => {
   const key = params ? [`${API_URLS.COURSE}`, params] : API_URLS.COURSE;
 
   const { data, error, isLoading, mutate } = useSWR(key, () =>

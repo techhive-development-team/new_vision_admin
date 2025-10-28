@@ -20,9 +20,14 @@ type Happening = {
   createdAt: string;
 };
 
+type HappeningTableProps = {
+  title?: string;
+  happeningTypeId?: string;
+}
+
 const PAGE_SIZE = 10;
 
-const HappeningTable = () => {
+const HappeningTable: React.FC<HappeningTableProps> = ({ title = "", happeningTypeId = ""}) => {
   const [page, setPage] = useState(1);
   const offset = (page - 1) * PAGE_SIZE;
   const {
@@ -32,6 +37,8 @@ const HappeningTable = () => {
   } = useGetHappening({
     offset,
     limit: PAGE_SIZE,
+    title,
+    happeningTypeId,
   });
   const [selectedHappening, setSelectedHappening] = useState<Happening | null>(
     null

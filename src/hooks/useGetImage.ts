@@ -2,7 +2,12 @@ import useSWR from "swr";
 import { API_URLS } from "../enum/urls";
 import { imageRepository } from "../repositories/imageRepository";
 
-export const useGetImage = (params?: { limit?: number; offset?: number }) => {
+export const useGetImage = (params?: {
+  limit?: number;
+  offset?: number;
+  mainText?: string;
+  imageTypeId?: string;
+}) => {
   const key = params ? [`${API_URLS.IMAGE}`, params] : API_URLS.IMAGE;
 
   const { data, error, isLoading, mutate } = useSWR(key, () =>

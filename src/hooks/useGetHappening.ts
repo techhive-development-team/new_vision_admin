@@ -2,7 +2,12 @@ import useSWR from "swr";
 import { API_URLS } from "../enum/urls";
 import { happeningRepository } from "../repositories/happeningRepository";
 
-export const useGetHappening = (params?: { limit?: number; offset?: number }) => {
+export const useGetHappening = (params?: {
+  limit?: number;
+  offset?: number;
+  title?: string;
+  happeningTypeId?: string;
+}) => {
   const key = params ? [`${API_URLS.HAPPENING}`, params] : API_URLS.IMAGE;
 
   const { data, error, isLoading, mutate } = useSWR(key, () =>

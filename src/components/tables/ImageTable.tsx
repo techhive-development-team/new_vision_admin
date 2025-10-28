@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetImage } from "../../hooks/useGetImage";
 import { API_URLS, baseUrl } from "../../enum/urls";
@@ -17,18 +17,31 @@ type Image = {
   createdAt: string;
 };
 
+type ImageTableProps = {
+  mainText?: string;
+  imageTypeId?: string;
+};
+
 const PAGE_SIZE = 10;
 
-const ImageTable = () => {
+const ImageTable: React.FC<ImageTableProps> = ({ mainText = "", imageTypeId = "" }) => {
   const [page, setPage] = useState(1);
   const offset = (page - 1) * PAGE_SIZE;
+
   const {
     data: images,
-    total,
     mutate,
-  } = useGetImage({ offset, limit: PAGE_SIZE });
+    total,
+  } = useGetImage({
+    limit: PAGE_SIZE,
+    offset,
+    mainText,
+    imageTypeId,
+  });
+
   const [selectedImage, setSelectedImage] = useState<Image | null>(null);
   const totalPages = total ? Math.ceil(total / PAGE_SIZE) : 1;
+
   const handleDelete = (image: Image) => {
     setSelectedImage(image);
     (document.getElementById("delete_modal") as HTMLDialogElement).showModal();
@@ -50,8 +63,10 @@ const ImageTable = () => {
       (document.getElementById("delete_modal") as HTMLDialogElement).close();
     }
   };
+
   return (
     <div>
+      {/* Table */}
       <div className="overflow-x-auto">
         <table className="table table-zebra w-full">
           <thead>
@@ -109,7 +124,7 @@ const ImageTable = () => {
               ))
             ) : (
               <tr>
-                <td colSpan={5} className="text-center py-4">
+                <td colSpan={8} className="text-center py-4">
                   No images found
                 </td>
               </tr>
@@ -117,6 +132,8 @@ const ImageTable = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Pagination */}
       <div className="join flex justify-end my-4">
         {[...Array(totalPages)].map((_, idx) => {
           const pageNumber = idx + 1;
@@ -134,6 +151,7 @@ const ImageTable = () => {
         })}
       </div>
 
+      {/* Delete Modal */}
       <dialog id="delete_modal" className="modal">
         <div className="modal-box">
           <h3 className="font-bold text-lg">Confirm Delete</h3>
