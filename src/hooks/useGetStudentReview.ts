@@ -5,6 +5,8 @@ import { studentReviewRepository } from "../repositories/studentReviewRepository
 export const useGetStudentReview = (params?: {
   limit?: number;
   offset?: number;
+  name?: string;
+  educationPartnerId?: string;
 }) => {
   const key = params
     ? [`${API_URLS.STUDENTREVIEW}`, params]

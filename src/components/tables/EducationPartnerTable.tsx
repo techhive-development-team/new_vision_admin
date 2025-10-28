@@ -16,9 +16,14 @@ type Partner = {
   createdAt: string;
 };
 
+type EducationPartnerTableProps = {
+  name ?: string;
+  partnerType ?: string;
+}
+
 const PAGE_SIZE = 10;
 
-const EducationPartnerTable = () => {
+const EducationPartnerTable : React.FC<EducationPartnerTableProps> = ({ name = "", partnerType = ""}) => {
   const [page, setPage] = useState(1);
   const offset = (page - 1) * PAGE_SIZE;
 
@@ -29,6 +34,8 @@ const EducationPartnerTable = () => {
   } = useGetEducationPartner({
     offset,
     limit: PAGE_SIZE,
+    name,
+    partnerType,
   });
 
   const [selectedPartner, setSelectedPartner] = useState<Partner | null>(null);

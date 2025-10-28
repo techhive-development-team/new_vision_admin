@@ -16,12 +16,25 @@ type StudentReview = {
   createdAt: string;
 };
 
+type StudentReviewTableProps = {
+  name?: string;
+  educationPartnerId?: string;
+}
+
 const PAGE_SIZE = 10;
 
-const StudentReviewTable = () => {
+const StudentReviewTable: React.FC<StudentReviewTableProps> = ({ name = "", educationPartnerId = ""}) => {
   const [page, setPage] = useState(1);
   const offset = (page - 1) * PAGE_SIZE;
-  const { data: reviews, total, mutate } = useGetStudentReview({ offset, limit: PAGE_SIZE });
+  const { 
+    data: reviews, 
+    total, 
+    mutate } = 
+    useGetStudentReview({
+      offset, 
+      limit: PAGE_SIZE, 
+      name, 
+      educationPartnerId,});
 
   const { data: partners } = useGetEducationPartner();
   const [selectedReview, setSelectedReview] = useState<StudentReview | null>(null);

@@ -22,14 +22,33 @@ export type Course = {
   image: string;
 };
 
-const CourseTable = () => {
+type CourseTableProps = {
+  name?: string;
+  programType?: string;
+  fromDate?: string;
+  toDate?: string;
+};
+
+const CourseTable: React.FC<CourseTableProps> = ({
+  name = "",
+  programType = "",
+  fromDate = "",
+  toDate = "",
+}) => {
   const [page, setPage] = useState(1);
   const offset = (page - 1) * PAGE_SIZE;
   const {
     data: courses,
     total,
     mutate,
-  } = useGetCourse({ offset, limit: PAGE_SIZE });
+  } = useGetCourse({
+    offset,
+    limit: PAGE_SIZE,
+    name,
+    programType,
+    fromDate,
+    toDate,
+  });
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
 
   const totalPages = total ? Math.ceil(total / PAGE_SIZE) : 1;
