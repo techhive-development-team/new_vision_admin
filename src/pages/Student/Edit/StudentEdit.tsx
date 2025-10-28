@@ -15,8 +15,16 @@ const StudentEdit = () => {
   const { onSubmit, loading, success, message, show, ...methods } =
     useStudentEditForm();
 
-  const { data: futureCountries, isLoading: futureCountryLoading, error: futureCountryError } = useGetFutureCountry();
-  const { data: courses, isLoading: courseLoading, error: courseError } = useGetCourse();
+  const {
+    data: futureCountries,
+    isLoading: futureCountryLoading,
+    error: futureCountryError,
+  } = useGetFutureCountry();
+  const {
+    data: courses,
+    isLoading: courseLoading,
+    error: courseError,
+  } = useGetCourse();
 
   return (
     <Layout>
@@ -126,8 +134,8 @@ const StudentEdit = () => {
                 name="paymentOption"
                 required
                 items={[
-                  { value: "CASH", showValue: "Cash" },
-                  { value: "BANK_TRANSFER", showValue: "Bank Transfer" },
+                  { value: "FULL_PAYMENT", showValue: "Full Payment" },
+                  { value: "HALF_PAYMENT", showValue: "Half Payment (50%)" },
                 ]}
               />
               <SelectBox
@@ -160,7 +168,7 @@ const StudentEdit = () => {
               />
               <InputText label="Bank Name" name="bank" />
               <InputText label="Message" name="message" />
-              
+
               <div className="pt-4 card-actions flex justify-between">
                 <Link to="/students" className="btn btn-soft">
                   Back to Students

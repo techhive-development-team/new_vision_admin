@@ -54,7 +54,7 @@ export const StudentSchema = (hasDefaultImage = false) =>
         message: "Invalid date",
       }),
     joinRaffles: z.enum(["YES", "NO", "MAYBE"]),
-    paymentOption: z.enum(["CASH", "BANK_TRANSFER"]),
+    paymentOption: z.enum(["FULL_PAYMENT", "HALF_PAYMENT"]),
     status: z.enum(["NONE", "PENDING", "COMPLETED", "FAILED"]),
     transactionId: z.string().optional(),
     coursesId: z.string().min(1, "Course is required"), 
