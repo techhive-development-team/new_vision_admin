@@ -37,9 +37,31 @@ export type Student = {
   message: string;
 };
 
+type StudentTableProps = {
+  studentName?: string;
+  courseId?: string;
+  studyAbroad?: string;
+  joinRaffles?: string;
+  studentTransactionId?: string;
+  status?: string;
+  paymentOption?: string;
+  fromDate?: string;
+  toDate?: string;
+};
+
 const PAGE_SIZE = 10;
 
-const StudentTable = () => {
+const StudentTable: React.FC<StudentTableProps> = ({
+  studentName = "",
+  courseId = "",
+  studyAbroad = "",
+  joinRaffles = "",
+  studentTransactionId = "",
+  status = "",
+  paymentOption = "",
+  fromDate = "",
+  toDate = "",
+}) => {
   const [page, setPage] = useState(1);
   const offset = (page - 1) * PAGE_SIZE;
 
@@ -47,10 +69,20 @@ const StudentTable = () => {
     data: students,
     total,
     mutate,
-  } = useGetStudent({ offset, limit: PAGE_SIZE });
+  } = useGetStudent({
+    offset,
+    limit: PAGE_SIZE,
+    studentName,
+    courseId,
+    studyAbroad,
+    joinRaffles,
+    transactionId: studentTransactionId,
+    status,
+    paymentOption,
+    fromDate,
+    toDate,
+  });
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
-
-  // For email sending modal
   const [emailModalMessage, setEmailModalMessage] = useState<string | null>(
     null
   );
@@ -197,34 +229,34 @@ const StudentTable = () => {
                     </span>
                   </td>
                   <td>{new Date(student.createdAt).toLocaleString()}</td>
-                    <td className="flex gap-1">
-                      <Link
-                        to={`/students/${student.id}/view`}
-                        state={{ student }}
-                        className="btn btn-sm btn-info"
-                      >
-                        View
-                      </Link>
-                      <Link
-                        to={`/students/${student.id}/edit`}
-                        className="btn btn-sm btn-primary"
-                      >
-                        Edit
-                      </Link>
-                      <button
-                        onClick={() => handleDelete(student)}
-                        className="btn btn-sm btn-error"
-                      >
-                        Delete
-                      </button>
-                      <button
-                        onClick={() => handleSendEmail(student.id)}
-                        className="btn btn-sm btn-success"
-                        disabled={loadingEmail[student.id]}
-                      >
-                        {loadingEmail[student.id] ? "Sending..." : "Send Email"}
-                      </button>
-                    </td>
+                  <td className="flex gap-1">
+                    <Link
+                      to={`/students/${student.id}/view`}
+                      state={{ student }}
+                      className="btn btn-sm btn-info"
+                    >
+                      View
+                    </Link>
+                    <Link
+                      to={`/students/${student.id}/edit`}
+                      className="btn btn-sm btn-primary"
+                    >
+                      Edit
+                    </Link>
+                    <button
+                      onClick={() => handleDelete(student)}
+                      className="btn btn-sm btn-error"
+                    >
+                      Delete
+                    </button>
+                    <button
+                      onClick={() => handleSendEmail(student.id)}
+                      className="btn btn-sm btn-success"
+                      disabled={loadingEmail[student.id]}
+                    >
+                      {loadingEmail[student.id] ? "Sending..." : "Send Email"}
+                    </button>
+                  </td>
                 </tr>
               ))
             ) : (

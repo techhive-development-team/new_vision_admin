@@ -6,7 +6,7 @@ import StudentReviewTable from "../../components/tables/StudentReviewTable";
 import { educationPartnerRepository } from "../../repositories/educationPartnerRepository";
 
 const Dashboard = () => {
-  const [showSearch, setShowSearch] = useState(false);
+  const [showSearch, setShowSearch] = useState(true);
   const [name, setName] = useState("");
   const [educationPartnerId, setEducationPartnerId] = useState("");
   const [searchName, setSearchName] = useState("");

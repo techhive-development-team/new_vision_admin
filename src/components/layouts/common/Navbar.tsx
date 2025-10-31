@@ -16,10 +16,11 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="w-full navbar bg-base-100 px-4 shadow-md">
+      <div className="w-full navbar bg-base-100 px-6 py-4 border-b border-base-300">
         <label
           htmlFor="my-drawer"
-          className="btn btn-square btn-ghost lg:hidden"
+          className="btn btn-square btn-ghost lg:hidden hover:bg-base-200"
+          aria-label="Toggle menu"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -38,24 +39,52 @@ const Navbar = () => {
         </label>
 
         <div className="flex-1 hidden md:block">
-          <h1 className="text-xl font-bold">
+          <h1 className="text-xl font-semibold text-base-content">
             New Vision Art & Science Institute
           </h1>
         </div>
-        <div className="flex justify-center items-center gap-2 ">
+
+        <div className="flex-1 md:hidden">
+          <h1 className="text-base font-semibold text-base-content truncate">
+            NVASI
+          </h1>
+        </div>
+
+        <div className="flex justify-center items-center gap-3">
           <ThemeSelector />
-          <button onClick={openLogoutModal} className="btn btn-error">
-            Logout
+          <button
+            onClick={openLogoutModal}
+            className="btn btn-ghost btn-sm text-error hover:bg-error hover:text-error-content transition-colors"
+            aria-label="Logout"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+              />
+            </svg>
+            <span className="hidden sm:inline">Logout</span>
           </button>
         </div>
       </div>
+
       <dialog id="logout_modal" className="modal" ref={logoutModalRef}>
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Confirm Logout</h3>
-          <p className="py-4">Are you sure you want to logout?</p>
+          <h3 className="font-semibold text-lg mb-4">Confirm Logout</h3>
+          <p className="text-base-content/70">
+            Are you sure you want to logout?
+          </p>
           <div className="modal-action">
-            <form method="dialog" className="flex gap-2">
-              <button className="btn">Cancel</button>
+            <form method="dialog" className="flex gap-3">
+              <button className="btn btn-ghost">Cancel</button>
               <button
                 type="button"
                 onClick={handleLogout}
@@ -66,6 +95,9 @@ const Navbar = () => {
             </form>
           </div>
         </div>
+        <form method="dialog" className="modal-backdrop">
+          <button>close</button>
+        </form>
       </dialog>
     </>
   );

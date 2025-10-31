@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import CourseTable from "../../components/tables/CourseTable";
 
 const Course = () => {
-  const [showSearch, setShowSearch] = useState(false);
+  const [showSearch, setShowSearch] = useState(true);
   const [name, setName] = useState("");
   const [programType, setProgramType] = useState("");
   const [fromDate, setFromDate] = useState("");
@@ -25,7 +25,6 @@ const Course = () => {
 
   return (
     <Layout>
-      {/* Search Card */}
       <div className="card card-bordered w-full bg-base-100 mb-6">
         <div className="card-body">
           <div className="flex items-center justify-between">
@@ -42,51 +41,54 @@ const Course = () => {
 
           {showSearch && (
             <div className="mt-4 space-y-4">
-              <input
-                type="text"
-                placeholder="Search by name"
-                className="input input-bordered w-full rounded-lg"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <input
+                  type="text"
+                  placeholder="Search by name"
+                  className="input input-bordered w-full rounded-lg"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
 
-              <select
-                className="select select-bordered w-full rounded-lg"
-                value={programType}
-                onChange={(e) => setProgramType(e.target.value)}
-              >
-                <option value="">All Program Types</option>
-                <option value="ART_DESIGN">Art & Design</option>
-                <option value="TECHNOLOGY">Technology</option>
-                <option value="CHILDRENS_CREATIVE">Children's Creative</option>
-              </select>
+                <select
+                  className="select select-bordered w-full rounded-lg"
+                  value={programType}
+                  onChange={(e) => setProgramType(e.target.value)}
+                >
+                  <option value="">All Program Types</option>
+                  <option value="ART_DESIGN">Art & Design</option>
+                  <option value="TECHNOLOGY">Technology</option>
+                  <option value="CHILDRENS_CREATIVE">
+                    Children's Creative
+                  </option>
+                </select>
 
-              <input
-                type="date"
-                className="input input-bordered w-full rounded-lg"
-                value={fromDate}
-                onChange={(e) => setFromDate(e.target.value)}
-              />
+                <input
+                  type="date"
+                  className="input input-bordered w-full rounded-lg"
+                  value={fromDate}
+                  onChange={(e) => setFromDate(e.target.value)}
+                />
 
-              <input
-                type="date"
-                className="input input-bordered w-full rounded-lg"
-                value={toDate}
-                onChange={(e) => setToDate(e.target.value)}
-              />
-
-              <button
-                className="btn btn-primary w-full rounded-lg"
-                onClick={handleSearch}
-              >
-                Search
-              </button>
+                <input
+                  type="date"
+                  className="input input-bordered w-full rounded-lg"
+                  value={toDate}
+                  onChange={(e) => setToDate(e.target.value)}
+                />
+              </div>
+              <div className="flex flex-col md:flex-row gap-2">
+                <button
+                  className="btn btn-primary w-full md:w-auto rounded-lg"
+                  onClick={handleSearch}
+                >
+                  Search
+                </button>
+              </div>
             </div>
           )}
         </div>
       </div>
-
-      {/* Table Card */}
       <div className="card card-bordered w-full bg-base-100">
         <div className="card-body">
           <div className="flex justify-between items-center">
@@ -95,8 +97,6 @@ const Course = () => {
               Create Course
             </Link>
           </div>
-
-          {/* Course Table with filters */}
           <CourseTable
             name={searchName}
             programType={searchProgramType}

@@ -6,15 +6,11 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
-
-      {/* Main content */}
-      <div className="drawer-content flex flex-col min-h-screen">
+      <div className="drawer-content flex flex-col min-h-screen bg-base-200">
         <Navbar />
-        <main className="p-4 flex-1 bg-base-200">{children}</main>
+        <main className="p-6 flex-1">{children}</main>
       </div>
-
-      {/* Sidebar */}
-      <div className="drawer-side">
+      <div className="drawer-side z-40">
         <label htmlFor="my-drawer" className="drawer-overlay"></label>
         <Sidebar />
       </div>

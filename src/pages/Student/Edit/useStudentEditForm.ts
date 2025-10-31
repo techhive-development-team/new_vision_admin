@@ -31,7 +31,7 @@ export const useStudentEditForm = () => {
       futureuniversityName: "",
       potentialYearOfStudy: "",
       joinRaffles: "NO",
-      paymentOption: "CASH",
+      paymentOption: "FULL_PAYMENT",
       status: "NONE",
       transactionId: "",
       coursesId: "",

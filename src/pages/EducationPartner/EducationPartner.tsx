@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import EducationPartnerTable from "../../components/tables/EducationPartnerTable";
 
 const EducationPartnerDashboard = () => {
-  const [showSearch, setShowSearch] = useState(false);
+  const [showSearch, setShowSearch] = useState(true);
   const [name, setName] = useState("");
   const [partnerType, setPartnerType] = useState("");
   const [searchName, setSearchName] = useState("");

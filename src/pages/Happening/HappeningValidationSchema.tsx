@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const MAX_FILE_SIZE = 1024 * 1024 * 20;
+const MAX_FILE_SIZE = 1024 * 1024 * 20; // 20MB
 const ACCEPTED_IMAGE_MIME_TYPES = [
   "image/jpeg",
   "image/jpg",
@@ -42,7 +42,11 @@ export const HappeningSchema = (hasMainImage = false, hasAlbumImages = false) =>
       ? z
           .array(z.custom<File>((val) => isFile(val)))
           .nonempty("At least one album image is required")
-      : z.array(z.custom<File>((val) => isFile(val))).optional(),
+          .max(10, "You can upload up to 10 images only")
+      : z
+          .array(z.custom<File>((val) => isFile(val)))
+          .max(10, "You can upload up to 10 images only")
+          .optional(),
   });
 
 export type HappeningCreateForm = z.infer<ReturnType<typeof HappeningSchema>>;

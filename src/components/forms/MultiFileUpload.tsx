@@ -39,14 +39,12 @@ const MultiFileUpload: React.FC<MultiFileUploadProps> = ({
   const [dragActive, setDragActive] = useState(false);
 
   useEffect(() => {
-    // Initialize previews with default URLs only once or when length changes
     const defaultPreviews: PreviewItem[] = defaultUrls.map((url) => ({
       url,
       isDefault: true,
       name: url.split("/").pop() || "Unknown file",
     }));
     setPreviews((prev) => {
-      // Only update if the number of default URLs changed or if we have no previews yet
       if (
         prev.length === 0 ||
         prev.filter((p) => p.isDefault).length !== defaultUrls.length
@@ -55,15 +53,13 @@ const MultiFileUpload: React.FC<MultiFileUploadProps> = ({
       }
       return prev;
     });
-
-    // Initialize existing images callback
     if (onExistingImagesChange && defaultUrls.length > 0) {
       const imageNames = defaultUrls
         .map((url) => url.split("/").pop() || "")
         .filter(Boolean);
       onExistingImagesChange(imageNames);
     }
-  }, [defaultUrls.length, onExistingImagesChange]); // Only depend on length, not the entire array
+  }, [defaultUrls.length, onExistingImagesChange])
 
   const isValidFileType = (file: File): boolean => {
     if (allowedTypes.length === 0) return true;
@@ -112,13 +108,10 @@ const MultiFileUpload: React.FC<MultiFileUploadProps> = ({
     }
 
     if (validFiles.length > 0) {
-      // Update form value with new files
       const currentFiles = Array.isArray(value)
         ? value.filter((f): f is File => f instanceof File)
         : [];
       onChange([...currentFiles, ...validFiles]);
-
-      // Update previews with new files
       const newPreviews: PreviewItem[] = validFiles.map((file) => ({
         url: isImage(file) ? URL.createObjectURL(file) : "",
         isDefault: false,
@@ -134,7 +127,6 @@ const MultiFileUpload: React.FC<MultiFileUploadProps> = ({
     const itemToRemove = previews[index];
 
     if (itemToRemove.isDefault) {
-      // Remove default URL and notify parent
       const newPreviews = previews.filter((_, idx) => idx !== index);
       setPreviews(newPreviews);
 

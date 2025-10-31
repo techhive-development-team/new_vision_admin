@@ -5,7 +5,7 @@ import Breadcrumb from "../../components/layouts/common/Breadcrumb";
 import { Link } from "react-router-dom";
 
 const Dashboard = () => {
-  const [showSearch, setShowSearch] = useState(false);
+  const [showSearch, setShowSearch] = useState(true);
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [searchName, setSearchName] = useState("");

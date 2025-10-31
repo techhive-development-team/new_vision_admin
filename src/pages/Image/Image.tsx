@@ -6,7 +6,7 @@ import ImageTable from "../../components/tables/ImageTable";
 import { imageTypeRepository } from "../../repositories/imageTypeRepository";
 
 const Dashboard = () => {
-  const [showSearch, setShowSearch] = useState(false);
+  const [showSearch, setShowSearch] = useState(true);
   const [mainText, setMainText] = useState("");
   const [imageType, setImageType] = useState("");
   const [searchMainText, setSearchMainText] = useState("");

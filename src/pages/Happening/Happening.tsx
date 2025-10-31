@@ -6,7 +6,7 @@ import HappeningTable from "../../components/tables/HappeningTable";
 import { happeningTypeRepository } from "../../repositories/happeningTypeRepository";
 
 const Dashboard = () => {
-  const [showSearch, setShowSearch] = useState(false);
+  const [showSearch, setShowSearch] = useState(true);
   const [title, setTitle] = useState("");
   const [happeningType, setHappeningType] = useState("");
   const [searchTitle, setSearchTitle] = useState("");
