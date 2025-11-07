@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetEducationPartner } from "../../hooks/useGetEducationPartner";
-import { API_URLS, baseUrl, imageUrl } from "../../enum/urls";
+import { API_URLS, imageUrl } from "../../enum/urls";
 import { educationPartnerRepository } from "../../repositories/educationPartnerRepository";
 
 type Partner = {

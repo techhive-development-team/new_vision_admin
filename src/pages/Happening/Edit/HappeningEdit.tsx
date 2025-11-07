@@ -9,7 +9,7 @@ import Alert from "../../../components/forms/Alert";
 import { Link } from "react-router-dom";
 import { useHappeningEditForm } from "./useHappeningEditForm";
 import { useGetHappeningType } from "../../../hooks/useGetHappeningType";
-import { API_URLS, baseUrl, imageUrl } from "../../../enum/urls";
+import { API_URLS, imageUrl } from "../../../enum/urls";
 import MultiFileUpload from "../../../components/forms/MultiFileUpload";
 
 const HappeningEdit = () => {
