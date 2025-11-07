@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import Layout from "../../../components/layouts/Layout";
 import Breadcrumb from "../../../components/layouts/common/Breadcrumb";
-import { API_URLS, baseUrl } from "../../../enum/urls";
+import { API_URLS, imageUrl } from "../../../enum/urls";
 
 const StudentView = () => {
   const { state } = useLocation();
@@ -38,7 +38,7 @@ const StudentView = () => {
             {student.studentImage && (
               <div className="flex justify-center mb-6">
                 <img
-                  src={`${baseUrl}${API_URLS.UPLOAD}${API_URLS.STUDENT}/${student.studentImage}`}
+                  src={`${imageUrl}${API_URLS.STUDENT}/${student.studentImage}`}
                   alt="Student"
                   className="w-32 h-32 rounded-full object-cover shadow-md"
                 />
