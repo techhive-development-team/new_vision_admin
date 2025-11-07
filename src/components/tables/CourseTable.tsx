@@ -37,6 +37,7 @@ const CourseTable: React.FC<CourseTableProps> = ({
 }) => {
   const [page, setPage] = useState(1);
   const offset = (page - 1) * PAGE_SIZE;
+
   const {
     data: courses,
     total,
@@ -49,29 +50,48 @@ const CourseTable: React.FC<CourseTableProps> = ({
     fromDate,
     toDate,
   });
+
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
 
   const totalPages = total ? Math.ceil(total / PAGE_SIZE) : 1;
 
   const handleDelete = (course: Course) => {
     setSelectedCourse(course);
+    setDeleteError(null);
     (document.getElementById("delete_modal") as HTMLDialogElement).showModal();
+  };
+
+  const closeModal = () => {
+    setSelectedCourse(null);
+    setDeleteError(null);
+    (document.getElementById("delete_modal") as HTMLDialogElement).close();
   };
 
   const confirmDelete = async () => {
     if (!selectedCourse) return;
+    setDeleteError(null);
+
     try {
       const response = await courseRepository.deleteCourse(selectedCourse.id);
+
       if (response?.statusCode === 200) {
         await mutate();
-      } else {
-        console.error("Delete failed:", response);
+        closeModal();
+        alert(response?.message || "Course deleted successfully.");
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error("Delete failed:", err);
-    } finally {
-      setSelectedCourse(null);
-      (document.getElementById("delete_modal") as HTMLDialogElement).close();
+
+      if (Array.isArray(err.data)) {
+        setDeleteError(err.data.map((d: any) => d.message).join("\n"));
+      } else if (err?.response?.data?.message) {
+        setDeleteError(err.response.data.message);
+      } else if (err?.message) {
+        setDeleteError(err.message);
+      } else {
+        setDeleteError("Cannot delete: something went wrong.");
+      }
     }
   };
 
@@ -133,7 +153,7 @@ const CourseTable: React.FC<CourseTableProps> = ({
                   <td>{new Date(course.expireDate).toLocaleDateString()}</td>
                   <td>{course.duration}</td>
                   <td>
-                    {course.location == "onsite" ? (
+                    {course.location === "onsite" ? (
                       <div className="badge badge-success">Onsite</div>
                     ) : (
                       <div className="badge badge-accent">Online</div>
@@ -167,6 +187,7 @@ const CourseTable: React.FC<CourseTableProps> = ({
           </tbody>
         </table>
       </div>
+
       <div className="join flex justify-end my-4">
         {[...Array(totalPages)].map((_, idx) => {
           const pageNumber = idx + 1;
@@ -184,6 +205,7 @@ const CourseTable: React.FC<CourseTableProps> = ({
         })}
       </div>
 
+      {/* Delete Modal */}
       <dialog id="delete_modal" className="modal">
         <div className="modal-box">
           <h3 className="font-bold text-lg">Confirm Delete</h3>
@@ -191,9 +213,18 @@ const CourseTable: React.FC<CourseTableProps> = ({
             Are you sure you want to delete{" "}
             <span className="font-semibold">{selectedCourse?.name}</span>?
           </p>
+
+          {deleteError && (
+            <p className="text-red-500 bg-red-50 border border-red-200 rounded-md p-2 mb-2 whitespace-pre-line">
+              ⚠️ {deleteError}
+            </p>
+          )}
+
           <div className="modal-action">
             <form method="dialog" className="flex gap-2">
-              <button className="btn">Cancel</button>
+              <button type="button" onClick={closeModal} className="btn">
+                Cancel
+              </button>
               <button
                 type="button"
                 onClick={confirmDelete}

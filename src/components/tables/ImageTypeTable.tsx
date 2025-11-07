@@ -19,34 +19,56 @@ const ImageTypeTable: React.FC = () => {
     data: imagetypes,
     mutate,
     total,
-  } = useGetImageType({ limit: PAGE_SIZE, offset });
+  } = useGetImageType({
+    limit: PAGE_SIZE,
+    offset,
+  });
+
   const [selectedImageType, setSelectedImageType] = useState<ImageType | null>(
     null
   );
+  const [deleteError, setDeleteError] = useState<string | null>(null);
 
   const totalPages = total ? Math.ceil(total / PAGE_SIZE) : 1;
 
-  const handleDelete = (imagetype: ImageType) => {
-    setSelectedImageType(imagetype);
+  const handleDelete = (imageType: ImageType) => {
+    setSelectedImageType(imageType);
+    setDeleteError(null);
     (document.getElementById("delete_modal") as HTMLDialogElement).showModal();
+  };
+
+  const closeModal = () => {
+    setDeleteError(null);
+    setSelectedImageType(null);
+    (document.getElementById("delete_modal") as HTMLDialogElement).close();
   };
 
   const confirmDelete = async () => {
     if (!selectedImageType) return;
+    setDeleteError(null);
+
     try {
       const response = await imageTypeRepository.deleteImageType(
         selectedImageType.id
       );
+
       if (response?.statusCode === 200) {
         await mutate();
-      } else {
-        console.error("Delete failed:", response);
+        closeModal();
+        alert(response?.message || "ImageType deleted successfully.");
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error("Delete failed:", err);
-    } finally {
-      setSelectedImageType(null);
-      (document.getElementById("delete_modal") as HTMLDialogElement).close();
+
+      if (Array.isArray(err.data)) {
+        setDeleteError(err.data.map((d: any) => d.message).join("\n"));
+      } else if (err?.response?.data?.message) {
+        setDeleteError(err.response.data.message);
+      } else if (err?.message) {
+        setDeleteError(err.message);
+      } else {
+        setDeleteError("Cannot delete: something went wrong.");
+      }
     }
   };
 
@@ -66,7 +88,7 @@ const ImageTypeTable: React.FC = () => {
             {imagetypes && imagetypes.length > 0 ? (
               imagetypes.map((imageType: ImageType, index: number) => (
                 <tr key={imageType.id}>
-                  <th>{offset + index + 1}</th>
+                  <td>{offset + index + 1}</td>
                   <td>{imageType.typeName}</td>
                   <td>{new Date(imageType.createdAt).toLocaleString()}</td>
                   <td className="flex gap-2">
@@ -87,8 +109,8 @@ const ImageTypeTable: React.FC = () => {
               ))
             ) : (
               <tr>
-                <td colSpan={5} className="text-center py-4">
-                  No Image Type found
+                <td colSpan={4} className="text-center py-4">
+                  No image types found
                 </td>
               </tr>
             )}
@@ -96,6 +118,7 @@ const ImageTypeTable: React.FC = () => {
         </table>
       </div>
 
+      {/* Pagination */}
       <div className="join flex justify-end my-4">
         {[...Array(totalPages)].map((_, idx) => {
           const pageNumber = idx + 1;
@@ -113,6 +136,7 @@ const ImageTypeTable: React.FC = () => {
         })}
       </div>
 
+      {/* Delete Modal */}
       <dialog id="delete_modal" className="modal">
         <div className="modal-box">
           <h3 className="font-bold text-lg">Confirm Delete</h3>
@@ -121,9 +145,18 @@ const ImageTypeTable: React.FC = () => {
             <span className="font-semibold">{selectedImageType?.typeName}</span>
             ?
           </p>
+
+          {deleteError && (
+            <p className="text-red-500 bg-red-50 border border-red-200 rounded-md p-2 mb-2 whitespace-pre-line">
+              ⚠️ {deleteError}
+            </p>
+          )}
+
           <div className="modal-action">
             <form method="dialog" className="flex gap-2">
-              <button className="btn">Cancel</button>
+              <button type="button" onClick={closeModal} className="btn">
+                Cancel
+              </button>
               <button
                 type="button"
                 onClick={confirmDelete}

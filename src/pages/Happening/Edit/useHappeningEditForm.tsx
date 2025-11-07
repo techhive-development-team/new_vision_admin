@@ -22,10 +22,8 @@ export const useHappeningEditForm = () => {
   const { id } = useParams<{ id: string }>();
   const { data: happeningData } = useGetHappeningById(id ?? "");
 
-  // Track which existing images should be kept
   const [existingImages, setExistingImages] = useState<string[]>([]);
 
-  // Memoize to prevent unnecessary re-renders
   const defaultAlbumUrls = useMemo(
     () =>
       happeningData?.album?.images?.map(
@@ -34,12 +32,6 @@ export const useHappeningEditForm = () => {
       ) || [],
     [happeningData?.album?.images]
   );
-
-  // Extract just the image filenames for backend
-  // const defaultImageNames = useMemo(
-  //   () => happeningData?.album?.images?.map((img: AlbumImage) => img.image) || [],
-  //   [happeningData?.album?.images]
-  // );
 
   const methods = useForm<HappeningCreateForm>({
     resolver: zodResolver(
@@ -58,7 +50,6 @@ export const useHappeningEditForm = () => {
   const { loading, success, message, show, handleSubmit } =
     useFormState<HappeningCreateForm>();
 
-  // Callback to handle existing images changes
   const handleExistingImagesChange = useCallback((images: string[]) => {
     setExistingImages(images);
   }, []);
@@ -69,17 +60,14 @@ export const useHappeningEditForm = () => {
     formData.append("description", data.description);
     formData.append("happeningTypeId", data.happeningTypeId);
     if(data.embeddedLink) formData.append("embeddedLink", data.embeddedLink);
-    // Fix: Use 'mainImage' instead of 'bg_image'
     if (data.mainImage instanceof File) {
       formData.append("mainImage", data.mainImage);
     }
 
-    // Handle existing album images that should be kept
     existingImages.forEach(imageName => {
       formData.append("existingAlbum[]", imageName);
     });
 
-    // Handle new album images
     if (Array.isArray(data.album_images)) {
       data.album_images.forEach((file) => {
         if (file instanceof File) {
@@ -91,7 +79,6 @@ export const useHappeningEditForm = () => {
     handleSubmit(() => happeningRepository.updateHappening(id ?? "", formData));
   };
 
-  // Initialize existing images when data loads
   useEffect(() => {
     if (happeningData?.album?.images) {
       setExistingImages(happeningData.album.images.map((img: AlbumImage) => img.image));

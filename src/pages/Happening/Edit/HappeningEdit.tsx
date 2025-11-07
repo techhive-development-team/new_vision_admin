@@ -11,7 +11,7 @@ import { useHappeningEditForm } from "./useHappeningEditForm";
 import { useGetHappeningType } from "../../../hooks/useGetHappeningType";
 import { API_URLS, baseUrl } from "../../../enum/urls";
 import MultiFileUpload from "../../../components/forms/MultiFileUpload";
-// In your HappeningEdit component
+
 const HappeningEdit = () => {
   const {
     onSubmit,
