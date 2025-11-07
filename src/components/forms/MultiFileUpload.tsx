@@ -38,28 +38,25 @@ const MultiFileUpload: React.FC<MultiFileUploadProps> = ({
   const [previews, setPreviews] = useState<PreviewItem[]>([]);
   const [dragActive, setDragActive] = useState(false);
 
+  // Initialize previews from defaultUrls
   useEffect(() => {
-    const defaultPreviews: PreviewItem[] = defaultUrls.map((url) => ({
-      url,
-      isDefault: true,
-      name: url.split("/").pop() || "Unknown file",
-    }));
-    setPreviews((prev) => {
-      if (
-        prev.length === 0 ||
-        prev.filter((p) => p.isDefault).length !== defaultUrls.length
-      ) {
-        return defaultPreviews;
+    if (defaultUrls.length > 0) {
+      const defaultPreviews: PreviewItem[] = defaultUrls.map((url) => ({
+        url,
+        isDefault: true,
+        name: url.split("/").pop() || "Unknown file",
+      }));
+      setPreviews(defaultPreviews);
+
+      // Initialize existing images callback
+      if (onExistingImagesChange) {
+        const imageNames = defaultUrls
+          .map((url) => url.split("/").pop() || "")
+          .filter(Boolean);
+        onExistingImagesChange(imageNames);
       }
-      return prev;
-    });
-    if (onExistingImagesChange && defaultUrls.length > 0) {
-      const imageNames = defaultUrls
-        .map((url) => url.split("/").pop() || "")
-        .filter(Boolean);
-      onExistingImagesChange(imageNames);
     }
-  }, [defaultUrls.length, onExistingImagesChange])
+  }, [defaultUrls, onExistingImagesChange]);
 
   const isValidFileType = (file: File): boolean => {
     if (allowedTypes.length === 0) return true;
@@ -87,6 +84,17 @@ const MultiFileUpload: React.FC<MultiFileUploadProps> = ({
     const validFiles: File[] = [];
     const errors: string[] = [];
 
+    // Check total count (existing + new)
+    const currentTotal = previews.length;
+    const newTotal = currentTotal + fileArray.length;
+
+    if (newTotal > 10) {
+      alert(
+        `You can upload a maximum of 10 images. You currently have ${currentTotal} images.`
+      );
+      return;
+    }
+
     fileArray.forEach((file) => {
       if (!isValidFileType(file)) {
         errors.push(`${file.name}: Invalid file type`);
@@ -112,6 +120,7 @@ const MultiFileUpload: React.FC<MultiFileUploadProps> = ({
         ? value.filter((f): f is File => f instanceof File)
         : [];
       onChange([...currentFiles, ...validFiles]);
+
       const newPreviews: PreviewItem[] = validFiles.map((file) => ({
         url: isImage(file) ? URL.createObjectURL(file) : "",
         isDefault: false,
@@ -127,6 +136,7 @@ const MultiFileUpload: React.FC<MultiFileUploadProps> = ({
     const itemToRemove = previews[index];
 
     if (itemToRemove.isDefault) {
+      // Remove from previews
       const newPreviews = previews.filter((_, idx) => idx !== index);
       setPreviews(newPreviews);
 
@@ -134,12 +144,12 @@ const MultiFileUpload: React.FC<MultiFileUploadProps> = ({
       if (onExistingImagesChange) {
         const remainingExistingImages = newPreviews
           .filter((p) => p.isDefault)
-          .map((p) => p.name?.split("/").pop() || p.url.split("/").pop() || "")
+          .map((p) => p.url.split("/").pop() || "")
           .filter(Boolean);
         onExistingImagesChange(remainingExistingImages);
       }
     } else {
-      // Remove file from form value and previews
+      // Remove new file from form value
       const currentFiles = Array.isArray(value)
         ? value.filter((f): f is File => f instanceof File)
         : [];
@@ -279,7 +289,7 @@ const MultiFileUpload: React.FC<MultiFileUploadProps> = ({
           </svg>
           <p className="text-sm">Click or drag & drop {fileTypeLabel} here</p>
           <p className="text-xs mt-2">
-            Max size: {formatFileSize(maxSize)}
+            Max size: {formatFileSize(maxSize)} | Max 10 images total
             {allowedTypes.length > 0 && (
               <span className="block mt-1">
                 Allowed types: {allowedTypes.join(", ")}
@@ -301,7 +311,7 @@ const MultiFileUpload: React.FC<MultiFileUploadProps> = ({
       {previews.length > 0 && (
         <div className="mt-6">
           <h4 className="text-sm font-medium mb-3">
-            Selected Files ({previews.length})
+            Selected Files ({previews.length}/10)
           </h4>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
             {previews.map((item, index) => (

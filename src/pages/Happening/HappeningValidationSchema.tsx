@@ -31,22 +31,16 @@ const fileValidator = (hasDefault = false, fieldName = "") =>
       `${fieldName} must be less than ${MAX_FILE_SIZE / (1024 * 1024)}MB`
     );
 
-export const HappeningSchema = (hasMainImage = false, hasAlbumImages = false) =>
+export const HappeningSchema = (hasMainImage = false) =>
   z.object({
     title: z.string().min(1, "Title is required").trim(),
     description: z.string().min(1, "Description is required").trim(),
     embeddedLink: z.string().url().or(z.literal("")).optional(),
     happeningTypeId: z.string().min(1, "Happening Type is required"),
     mainImage: fileValidator(hasMainImage, "Background Image"),
-    album_images: hasAlbumImages
-      ? z
-          .array(z.custom<File>((val) => isFile(val)))
-          .nonempty("At least one album image is required")
-          .max(10, "You can upload up to 10 images only")
-      : z
-          .array(z.custom<File>((val) => isFile(val)))
-          .max(10, "You can upload up to 10 images only")
-          .optional(),
+    album_images: z
+      .array(z.custom<File>((val) => isFile(val)))
+      .max(10, "You can upload up to 10 images only"),
   });
 
 export type HappeningCreateForm = z.infer<ReturnType<typeof HappeningSchema>>;

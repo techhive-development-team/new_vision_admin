@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetImage } from "../../hooks/useGetImage";
-import { API_URLS, baseUrl } from "../../enum/urls";
+import { API_URLS, imageUrl } from "../../enum/urls";
 import { imageRepository } from "../../repositories/imageRepository";
 
 type Image = {
@@ -89,7 +89,7 @@ const ImageTable: React.FC<ImageTableProps> = ({ mainText = "", imageTypeId = ""
                   <td>
                     <img
                       className="w-16 h-16 object-cover rounded-md border"
-                      src={`${baseUrl}${API_URLS.UPLOAD}${API_URLS.IMAGE}/${image.bg_img}`}
+                      src={`${imageUrl}${API_URLS.IMAGE}/${image.bg_img}`}
                       alt={image.mainText.substring(0, 10)}
                     />
                   </td>
