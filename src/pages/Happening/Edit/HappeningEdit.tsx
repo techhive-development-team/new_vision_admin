@@ -9,7 +9,7 @@ import Alert from "../../../components/forms/Alert";
 import { Link } from "react-router-dom";
 import { useHappeningEditForm } from "./useHappeningEditForm";
 import { useGetHappeningType } from "../../../hooks/useGetHappeningType";
-import { API_URLS, baseUrl } from "../../../enum/urls";
+import { API_URLS, baseUrl, imageUrl } from "../../../enum/urls";
 import MultiFileUpload from "../../../components/forms/MultiFileUpload";
 
 const HappeningEdit = () => {
@@ -68,9 +68,7 @@ const HappeningEdit = () => {
                   label="Background Image"
                   name="mainImage"
                   required
-                  defaultImage={`${baseUrl}${API_URLS.UPLOAD}${
-                    API_URLS.HAPPENING
-                  }/${methods.getValues("mainImage")}`}
+                  defaultImage={`${imageUrl}${API_URLS.HAPPENING}/${methods.getValues("mainImage")}`}
                 />
 
                 <MultiFileUpload

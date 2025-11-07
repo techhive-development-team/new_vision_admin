@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetEducationPartner } from "../../hooks/useGetEducationPartner";
-import { API_URLS, baseUrl } from "../../enum/urls";
+import { API_URLS, baseUrl, imageUrl } from "../../enum/urls";
 import { educationPartnerRepository } from "../../repositories/educationPartnerRepository";
 
 type Partner = {
@@ -91,7 +91,7 @@ const EducationPartnerTable : React.FC<EducationPartnerTableProps> = ({ name = "
                   <td>
                     {partner.logo_img && (
                       <img
-                        src={`${baseUrl}${API_URLS.UPLOAD}${API_URLS.EDUCATION_PARTNER}/${partner.logo_img}`}
+                        src={`${imageUrl}${API_URLS.EDUCATION_PARTNER}/${partner.logo_img}`}
                         alt="Logo"
                         className="w-16 h-16 object-cover rounded-md border"
                       />
@@ -100,7 +100,7 @@ const EducationPartnerTable : React.FC<EducationPartnerTableProps> = ({ name = "
                   <td>
                     {partner.bg_img && (
                       <img
-                        src={`${baseUrl}${API_URLS.UPLOAD}${API_URLS.EDUCATION_PARTNER}/${partner.bg_img}`}
+                        src={`${imageUrl}${API_URLS.EDUCATION_PARTNER}/${partner.bg_img}`}
                         alt="Background"
                         className="w-16 h-16 object-cover rounded-md border"
                       />

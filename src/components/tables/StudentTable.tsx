@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetStudent } from "../../hooks/useGetStudent";
-import { API_URLS, baseUrl } from "../../enum/urls";
+import { API_URLS, imageUrl } from "../../enum/urls";
 import { studentRepository } from "../../repositories/studentRepository";
 
 export type Course = {
@@ -164,7 +164,7 @@ const StudentTable: React.FC<StudentTableProps> = ({
                   <td>
                     <img
                       className="w-16 h-16 object-cover rounded-md border border-gray-300"
-                      src={`${baseUrl}${API_URLS.UPLOAD}${API_URLS.STUDENT}/${student.studentImage}`}
+                      src={`${imageUrl}${API_URLS.STUDENT}/${student.studentImage}`}
                       alt={student.name.substring(0, 10)}
                     />
                   </td>

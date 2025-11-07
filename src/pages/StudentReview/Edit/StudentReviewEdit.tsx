@@ -7,7 +7,7 @@ import Alert from "../../../components/forms/Alert";
 import InputFile from "../../../components/forms/InputFile";
 import TextArea from "../../../components/forms/TextArea";
 import SelectBox from "../../../components/forms/SelectBox";
-import { API_URLS, baseUrl } from "../../../enum/urls";
+import { API_URLS, baseUrl, imageUrl } from "../../../enum/urls";
 import { useStudentReviewEditForm } from "./useStudentReviewEditForm";
 import { useGetEducationPartner } from "../../../hooks/useGetEducationPartner";
 
@@ -45,7 +45,7 @@ const StudentReviewEdit = () => {
                   label="Student Image"
                   name="student_img"
                   required
-                  defaultImage={`${baseUrl}${API_URLS.UPLOAD}${API_URLS.STUDENTREVIEW}/${methods.getValues("student_img") || ""}`}
+                  defaultImage={`${imageUrl}${API_URLS.STUDENTREVIEW}/${methods.getValues("student_img") || ""}`}
                 />
                 <InputText label="Name" name="name" required />
                 <InputText label="Batch" name="batch" required />

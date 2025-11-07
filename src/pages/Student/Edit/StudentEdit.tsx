@@ -7,7 +7,7 @@ import SelectBox from "../../../components/forms/SelectBox";
 import { Link } from "react-router-dom";
 import Alert from "../../../components/forms/Alert";
 import { useStudentEditForm } from "./useStudentEditForm";
-import { API_URLS, baseUrl } from "../../../enum/urls";
+import { API_URLS, imageUrl } from "../../../enum/urls";
 import { useGetCourse } from "../../../hooks/useGetCourse";
 import { useGetFutureCountry } from "../../../hooks/useGetFutureCountry";
 
@@ -51,9 +51,7 @@ const StudentEdit = () => {
                 name="studentImage"
                 defaultImage={
                   methods.getValues("studentImage")
-                    ? `${baseUrl}${API_URLS.UPLOAD}${
-                        API_URLS.STUDENT
-                      }/${methods.getValues("studentImage")}`
+                    ? `${imageUrl}${API_URLS.STUDENT}/${methods.getValues("studentImage")}`
                     : ""
                 }
               />

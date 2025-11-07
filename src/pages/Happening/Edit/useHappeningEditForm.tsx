@@ -9,7 +9,7 @@ import {
   HappeningSchema,
   type HappeningCreateForm,
 } from "../HappeningValidationSchema";
-import { API_URLS, baseUrl } from "../../../enum/urls";
+import { API_URLS, imageUrl } from "../../../enum/urls";
 
 export interface AlbumImage {
   id: number;
@@ -31,7 +31,7 @@ export const useHappeningEditForm = () => {
     () =>
       happeningData?.album?.images?.map(
         (img: AlbumImage) =>
-          `${baseUrl}${API_URLS.UPLOAD}${API_URLS.HAPPENING}/${img.image}`
+          `${imageUrl}${API_URLS.HAPPENING}/${img.image}`
       ) || [],
     [happeningData?.album?.images]
   );

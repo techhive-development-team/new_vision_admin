@@ -9,7 +9,7 @@ import RadioInput from "../../../components/forms/RadioInput";
 import { Link } from "react-router-dom";
 import Alert from "../../../components/forms/Alert";
 import { useCourseEditForm } from "./useCourseEditForm";
-import { API_URLS, baseUrl } from "../../../enum/urls";
+import { API_URLS, imageUrl } from "../../../enum/urls";
 
 const CourseEdit = () => {
   const { onSubmit, loading, success, message, show, ...methods } =
@@ -98,7 +98,7 @@ const CourseEdit = () => {
                 label="Background Image"
                 name="image"
                 required
-                defaultImage={`${baseUrl}${API_URLS.UPLOAD}${API_URLS.COURSE}/${
+                defaultImage={`${imageUrl}${API_URLS.COURSE}/${
                   methods.getValues("image") || ""
                 }`}
               />

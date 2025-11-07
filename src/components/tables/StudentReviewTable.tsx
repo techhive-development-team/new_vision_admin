@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { API_URLS, baseUrl } from "../../enum/urls";
+import { API_URLS, imageUrl } from "../../enum/urls";
 import { studentReviewRepository } from "../../repositories/studentReviewRepository";
 import { useGetStudentReview } from "../../hooks/useGetStudentReview";
 import { useGetEducationPartner } from "../../hooks/useGetEducationPartner";
@@ -95,7 +95,7 @@ const StudentReviewTable: React.FC<StudentReviewTableProps> = ({ name = "", educ
                   <td>
                     <img
                       className="w-16 h-16 object-cover rounded-md border"
-                      src={`${baseUrl}${API_URLS.UPLOAD}${API_URLS.STUDENTREVIEW}/${review.student_img}`}
+                      src={`${imageUrl}${API_URLS.STUDENTREVIEW}/${review.student_img}`}
                       alt={review.name.substring(0, 10)}
                     />
                   </td>

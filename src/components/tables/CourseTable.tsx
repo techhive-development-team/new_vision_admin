@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useGetCourse } from "../../hooks/useGetCourse";
-import { API_URLS, baseUrl } from "../../enum/urls";
+import { API_URLS, imageUrl } from "../../enum/urls";
 import { courseRepository } from "../../repositories/courseRepository";
 import { Link } from "react-router-dom";
 
@@ -124,7 +124,7 @@ const CourseTable: React.FC<CourseTableProps> = ({
                   <td>
                     <img
                       className="w-16 h-16 object-cover rounded-md border"
-                      src={`${baseUrl}${API_URLS.UPLOAD}${API_URLS.COURSE}/${course.image}`}
+                      src={`${imageUrl}${API_URLS.COURSE}/${course.image}`}
                       alt={course.name.substring(0, 10)}
                     />
                   </td>

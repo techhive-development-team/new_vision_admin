@@ -7,7 +7,7 @@ import Alert from "../../../components/forms/Alert";
 import InputFile from "../../../components/forms/InputFile";
 import TextArea from "../../../components/forms/TextArea";
 import { useEducationPartnerEditForm } from "./useEducationPartnerEditForm";
-import { API_URLS, baseUrl } from "../../../enum/urls";
+import { API_URLS, imageUrl } from "../../../enum/urls";
 import RadioInput from "../../../components/forms/RadioInput";
 
 const EducationPartnerEdit = () => {
@@ -38,17 +38,13 @@ const EducationPartnerEdit = () => {
                   label="Logo Image"
                   name="logo_img"
                   required
-                  defaultImage={`${baseUrl}${API_URLS.UPLOAD}${
-                    API_URLS.EDUCATION_PARTNER
-                  }/${methods.getValues("logo_img") || ""}`}
+                  defaultImage={`${imageUrl}${API_URLS.EDUCATION_PARTNER}/${methods.getValues("logo_img") || ""}`}
                 />
                 <InputFile
                   label="Background Image"
                   name="bg_img"
                   required
-                  defaultImage={`${baseUrl}${API_URLS.UPLOAD}${
-                    API_URLS.EDUCATION_PARTNER
-                  }/${methods.getValues("bg_img") || ""}`}
+                  defaultImage={`${imageUrl}${API_URLS.EDUCATION_PARTNER}/${methods.getValues("bg_img") || ""}`}
                 />
                 <InputText label="Name" name="name"required />
                 <TextArea label="Overview" name="overview" required />

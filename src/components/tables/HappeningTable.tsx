@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { API_URLS, baseUrl } from "../../enum/urls";
+import { API_URLS, baseUrl, imageUrl } from "../../enum/urls";
 import { happeningRepository } from "../../repositories/happeningRepository";
 import { useGetHappening } from "../../hooks/useGetHappening";
 
@@ -92,7 +92,7 @@ const HappeningTable: React.FC<HappeningTableProps> = ({ title = "", happeningTy
                   <td>
                     <img
                       className="w-16 h-16 object-cover rounded-md border"
-                      src={`${baseUrl}${API_URLS.UPLOAD}${API_URLS.HAPPENING}/${happening.mainImage}`}
+                      src={`${imageUrl}${API_URLS.HAPPENING}/${happening.mainImage}`}
                       alt={happening.title.substring(0, 10)}
                     />
                   </td>
