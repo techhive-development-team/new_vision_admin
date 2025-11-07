@@ -8,7 +8,7 @@ export const useGetHappening = (params?: {
   title?: string;
   happeningTypeId?: string;
 }) => {
-  const key = params ? [`${API_URLS.HAPPENING}`, params] : API_URLS.IMAGE;
+  const key = params ? [`${API_URLS.HAPPENING}`, params] : API_URLS.HAPPENING;
 
   const { data, error, isLoading, mutate } = useSWR(key, () =>
     happeningRepository.getAll(params)
