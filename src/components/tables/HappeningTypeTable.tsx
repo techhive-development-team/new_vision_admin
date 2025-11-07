@@ -47,21 +47,20 @@ const HappeningTypeTable: React.FC = () => {
     setDeleteError(null);
 
     try {
-      await happeningTypeRepository.deleteHappeningType(
-        selectedHappeningType.id
-      );
-      await mutate();
-      closeModal();
+     const response = await happeningTypeRepository.deleteHappeningType(selectedHappeningType.id);
+      if (response?.statusCode === 200) {
+        await mutate();
+        closeModal();
+        alert(response?.message || "Course deleted successfully.");
+      }
     } catch (err: any) {
       console.error("Delete failed:", err);
 
-      if (Array.isArray(err?.response?.data)) {
-        setDeleteError(err.response.data.map((d: any) => d.message).join("\n"));
-      }
-      else if (err?.response?.data?.message) {
+      if (Array.isArray(err.data)) {
+        setDeleteError(err.data.map((d: any) => d.message).join("\n"));
+      } else if (err?.response?.data?.message) {
         setDeleteError(err.response.data.message);
-      }
-      else if (err?.message) {
+      } else if (err?.message) {
         setDeleteError(err.message);
       } else {
         setDeleteError("Cannot delete: something went wrong.");

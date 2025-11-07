@@ -44,21 +44,18 @@ const ImageTypeTable: React.FC = () => {
   };
 
   const confirmDelete = async () => {
-    if (!selectedImageType) return;
-    setDeleteError(null);
+  if (!selectedImageType) return;
+  setDeleteError(null);
 
-    try {
-      const response = await imageTypeRepository.deleteImageType(
-        selectedImageType.id
-      );
-
-      if (response?.statusCode === 200) {
+  try {
+    const response = await imageTypeRepository.deleteImageType(selectedImageType.id);
+    if (response?.statusCode === 200) {
         await mutate();
         closeModal();
-        alert(response?.message || "ImageType deleted successfully.");
+        alert(response?.message || "Course deleted successfully.");
       }
-    } catch (err: any) {
-      console.error("Delete failed:", err);
+  } catch (err: any) {
+    console.error("Delete failed:", err);
 
       if (Array.isArray(err.data)) {
         setDeleteError(err.data.map((d: any) => d.message).join("\n"));
@@ -69,8 +66,9 @@ const ImageTypeTable: React.FC = () => {
       } else {
         setDeleteError("Cannot delete: something went wrong.");
       }
-    }
-  };
+  }
+};
+
 
   return (
     <div>
