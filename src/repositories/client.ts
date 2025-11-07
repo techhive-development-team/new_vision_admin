@@ -13,7 +13,11 @@ const exec = async (endPoint: RequestInfo, config?: RequestInit) => {
       ...config?.headers,
     },
   });
-  return await response.json();
+  const data = await response.json();
+  if (!response.ok) {
+    throw data;
+  }
+  return data;
 };
 
 const execFormData = async (
