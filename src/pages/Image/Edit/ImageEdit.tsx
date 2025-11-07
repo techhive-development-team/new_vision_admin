@@ -9,7 +9,7 @@ import { useGetImageType } from "../../../hooks/useGetImageType";
 import InputFile from "../../../components/forms/InputFile";
 import TextArea from "../../../components/forms/TextArea";
 import SelectBox from "../../../components/forms/SelectBox";
-import { API_URLS, baseUrl } from "../../../enum/urls";
+import { API_URLS, imageUrl } from "../../../enum/urls";
 
 const ImageEdit = () => {
   const { onSubmit, loading, success, message, show, ...methods } =
@@ -44,7 +44,9 @@ const ImageEdit = () => {
                   label="Background Image"
                   name="bg_img"
                   required
-                  defaultImage={`${baseUrl}${API_URLS.UPLOAD}${API_URLS.IMAGE}/${methods.getValues("bg_img") || ""}`}
+                  defaultImage={`${imageUrl}${API_URLS.IMAGE}/${
+                    methods.getValues("bg_img") || ""
+                  }`}
                 />
                 <TextArea label="Main Text" name="mainText" required />
                 <TextArea label="Sub Text" name="subText" />
@@ -68,9 +70,7 @@ const ImageEdit = () => {
                   <Link to="/images" className="btn btn-soft">
                     Back to Images
                   </Link>
-                  <button className="btn btn-primary">
-                    Edit Image
-                  </button>
+                  <button className="btn btn-primary">Edit Image</button>
                 </div>
               </form>
             </FormProvider>
