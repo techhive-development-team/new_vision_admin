@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { API_URLS, baseUrl, imageUrl } from "../../enum/urls";
+import { API_URLS, imageUrl } from "../../enum/urls";
 import { happeningRepository } from "../../repositories/happeningRepository";
 import { useGetHappening } from "../../hooks/useGetHappening";
 

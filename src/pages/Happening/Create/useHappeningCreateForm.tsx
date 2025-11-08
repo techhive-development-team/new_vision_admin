@@ -9,7 +9,7 @@ import { happeningRepository } from "../../../repositories/happeningRepository";
 
 export const useHappeningCreateForm = () => {
   const methods = useForm<HappeningCreateForm>({
-    resolver: zodResolver(HappeningSchema(false, false)),
+    resolver: zodResolver(HappeningSchema(false)),
   });
 
   const { loading, success, message, show, handleSubmit } =
