@@ -17,10 +17,10 @@ npm install
 echo -e "${GREEN}⚡ BUILDING THE PROJECT ${RESET}"
 npm run build
 
-if pm2 list | grep -q "react-frontend"; then
+if pm2 list | grep -q "react-admin"; then
   echo -e "${GREEN}⚡ RESTARTING PM2 ${RESET}"
-  pm2 restart react-frontend --namespace new-vision-frontend --update-env
+  pm2 restart react-admin --namespace new-vision-frontend --update-env
 else
   echo -e "${GREEN}⚡ STARTING PM2 ${RESET}"
-  pm2 start "serve -s dist -l 3000" --name react-frontend --namespace new-vision-frontend --update-env
+  pm2 start "serve -s dist -l 3000" --name react-admin --namespace new-vision-frontend --update-env
 fi
