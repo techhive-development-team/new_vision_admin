@@ -22,7 +22,8 @@ export const useStudentReviewEditForm = () => {
       name: "",
       batch: "",
       student_img: null,
-      educationPartnerId: "",
+      universityLogo: null,
+      university: "",
       review: "",
       qualification: "",
     },
@@ -34,8 +35,8 @@ export const useStudentReviewEditForm = () => {
         name: studentReviewData.name,
         batch: studentReviewData.batch,
         student_img: studentReviewData.student_img,
-        educationPartnerId:
-          studentReviewData.educationPartnerId.toString() || "",
+        universityLogo: studentReviewData.universityLogo,
+        university: studentReviewData.university,
         review: studentReviewData.review,
         qualification: studentReviewData.qualification,
       });
@@ -46,11 +47,13 @@ export const useStudentReviewEditForm = () => {
     useFormState<Form>();
 
   const onSubmit = async (data: Form) => {
+    console.log(data.university)
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("batch", data.batch);
     formData.append("student_img", data.student_img);
-    formData.append("educationPartnerId", data.educationPartnerId);
+    formData.append("universityLogo", data.universityLogo);
+    formData.append("university", data.university);
     formData.append("review", data.review || "");
     formData.append("qualification", data.qualification || "");
 

@@ -1,29 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Layout from "../../components/layouts/Layout";
 import Breadcrumb from "../../components/layouts/common/Breadcrumb";
 import { Link } from "react-router-dom";
 import StudentReviewTable from "../../components/tables/StudentReviewTable";
-import { educationPartnerRepository } from "../../repositories/educationPartnerRepository";
 
 const Dashboard = () => {
   const [showSearch, setShowSearch] = useState(true);
   const [name, setName] = useState("");
-  const [educationPartnerId, setEducationPartnerId] = useState("");
   const [searchName, setSearchName] = useState("");
-  const [searchEducationPartnerId, setSearchEducationPartnerId] = useState("");
-  const [partners, setPartners] = useState<{ id: string; name: string }[]>([]);
-
-  useEffect(() => {
-    const fetchPartners = async () => {
-      const res = await educationPartnerRepository.getAll();
-      if (res?.data) setPartners(res.data);
-    };
-    fetchPartners();
-  }, []);
 
   const handleSearch = () => {
     setSearchName(name);
-    setSearchEducationPartnerId(educationPartnerId);
   };
 
   return (
@@ -51,20 +38,6 @@ const Dashboard = () => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
-
-              <select
-                className="select select-bordered w-full md:max-w-xs rounded-lg"
-                value={educationPartnerId}
-                onChange={(e) => setEducationPartnerId(e.target.value)}
-              >
-                <option value="">All Education Partners</option>
-                {partners.map((p) => (
-                  <option key={p.id} value={p.id}>
-                    {p.name}
-                  </option>
-                ))}
-              </select>
-
               <button
                 className="btn btn-primary w-full md:w-auto rounded-lg"
                 onClick={handleSearch}
@@ -75,8 +48,6 @@ const Dashboard = () => {
           )}
         </div>
       </div>
-
-      {/* Table Section */}
       <div className="card card-bordered w-full bg-base-100">
         <div className="card-body">
           <div className="flex justify-between items-center">
@@ -88,7 +59,6 @@ const Dashboard = () => {
 
           <StudentReviewTable
             name={searchName}
-            educationPartnerId={searchEducationPartnerId}
           />
         </div>
       </div>

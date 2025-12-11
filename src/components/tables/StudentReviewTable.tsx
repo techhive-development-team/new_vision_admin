@@ -3,40 +3,37 @@ import { Link } from "react-router-dom";
 import { API_URLS, imageUrl } from "../../enum/urls";
 import { studentReviewRepository } from "../../repositories/studentReviewRepository";
 import { useGetStudentReview } from "../../hooks/useGetStudentReview";
-import { useGetEducationPartner } from "../../hooks/useGetEducationPartner";
 
 type StudentReview = {
   id: string;
   name: string;
   batch: string;
   student_img: string;
+  university: string;
   review: string;
   qualification: string;
-  educationPartnerId: string;
   createdAt: string;
 };
 
 type StudentReviewTableProps = {
-  name?: string;
-  educationPartnerId?: string;
+  name?: string
 }
 
 const PAGE_SIZE = 10;
 
-const StudentReviewTable: React.FC<StudentReviewTableProps> = ({ name = "", educationPartnerId = ""}) => {
+const StudentReviewTable: React.FC<StudentReviewTableProps> = ({ name = "" }) => {
   const [page, setPage] = useState(1);
   const offset = (page - 1) * PAGE_SIZE;
-  const { 
-    data: reviews, 
-    total, 
-    mutate } = 
+  const {
+    data: reviews,
+    total,
+    mutate } =
     useGetStudentReview({
-      offset, 
-      limit: PAGE_SIZE, 
-      name, 
-      educationPartnerId,});
+      offset,
+      limit: PAGE_SIZE,
+      name,
+    });
 
-  const { data: partners } = useGetEducationPartner();
   const [selectedReview, setSelectedReview] = useState<StudentReview | null>(null);
   const totalPages = total ? Math.ceil(total / PAGE_SIZE) : 1;
 
@@ -62,12 +59,6 @@ const StudentReviewTable: React.FC<StudentReviewTableProps> = ({ name = "", educ
     }
   };
 
-  // Helper to get partner name
-  const getPartnerName = (id: string) => {
-    const partner = partners?.find((p: any) => p.id === id);
-    return partner ? partner.name : "Unknown";
-  };
-
   return (
     <div>
       <div className="overflow-x-auto">
@@ -78,7 +69,7 @@ const StudentReviewTable: React.FC<StudentReviewTableProps> = ({ name = "", educ
               <th>Name</th>
               <th>Batch</th>
               <th>Student Image</th>
-              <th>Education Partner</th>
+              <th>University Name</th>
               <th>Review</th>
               <th>Qualification</th>
               <th>Created At</th>
@@ -99,7 +90,9 @@ const StudentReviewTable: React.FC<StudentReviewTableProps> = ({ name = "", educ
                       alt={review.name.substring(0, 10)}
                     />
                   </td>
-                  <td>{getPartnerName(review.educationPartnerId)}</td>
+                  <td>
+                    {review.university}
+                  </td>
                   <td>
                     {review.review?.length > 10
                       ? review.review.substring(0, 10) + "..."

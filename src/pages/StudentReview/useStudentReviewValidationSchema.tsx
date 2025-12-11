@@ -34,7 +34,22 @@ export const StudentReviewCreateSchema = z.object({
         ACCEPTED_IMAGE_MIME_TYPES.includes(file.type),
       checkFileType()
     ),
-  educationPartnerId: z.string().min(1, "Education Partner Id is required"),
+  university: z.string().min(2, "University is required"),
+  universityLogo: z
+    .any()
+    .refine((file) => file instanceof File || typeof file === "string", {
+      message: "University Logo is required",
+    })
+    .refine(
+      (file) => !(file instanceof File) || file.size <= MAX_FILE_SIZE,
+      checkFileSize()
+    )
+    .refine(
+      (file) =>
+        !(file instanceof File) ||
+        ACCEPTED_IMAGE_MIME_TYPES.includes(file.type),
+      checkFileType()
+    ),
   review: z.string().optional(),
   qualification: z.string().optional(),
 });

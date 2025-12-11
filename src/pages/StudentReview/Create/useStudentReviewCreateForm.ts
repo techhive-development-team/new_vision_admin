@@ -20,12 +20,13 @@ export const useStudentReviewCreate = () => {
     formData.append("name", data.name);
     formData.append("batch", data.batch);
     formData.append("student_img", data.student_img);
-    formData.append("educationPartnerId", data.educationPartnerId);
+    formData.append("university", data.university);
+    formData.append("universityLogo", data.universityLogo);
     formData.append("review", data.review || "");
     formData.append("qualification", data.qualification || "");
     handleSubmit(async () => await studentReviewRepository.createStudentReview(formData));
   };
-  return{
+  return {
     ...methods,
     onSubmit,
     loading,

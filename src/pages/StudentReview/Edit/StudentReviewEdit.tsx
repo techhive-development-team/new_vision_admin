@@ -6,20 +6,12 @@ import { FormProvider } from "react-hook-form";
 import Alert from "../../../components/forms/Alert";
 import InputFile from "../../../components/forms/InputFile";
 import TextArea from "../../../components/forms/TextArea";
-import SelectBox from "../../../components/forms/SelectBox";
 import { API_URLS, imageUrl } from "../../../enum/urls";
 import { useStudentReviewEditForm } from "./useStudentReviewEditForm";
-import { useGetEducationPartner } from "../../../hooks/useGetEducationPartner";
 
 const StudentReviewEdit = () => {
   const { onSubmit, loading, success, message, show, ...methods } =
     useStudentReviewEditForm();
-
-  const {
-    data,
-    isLoading: partnerLoading,
-    error: partnerError,
-  } = useGetEducationPartner();
 
   return (
     <Layout>
@@ -49,23 +41,13 @@ const StudentReviewEdit = () => {
                 />
                 <InputText label="Name" name="name" required />
                 <InputText label="Batch" name="batch" required />
-
-                <SelectBox
-                  label="Education Partner"
-                  name="educationPartnerId"
-                  items={
-                    partnerLoading
-                      ? [{ value: "", showValue: "Loading..." }]
-                      : partnerError
-                      ? [{ value: "", showValue: "Failed to load partners" }]
-                      : data?.map((partner: { id: string; name: string }) => ({
-                          value: partner.id,
-                          showValue: partner.name,
-                        })) || []
-                  }
+                <InputFile
+                  label="University Logo"
+                  name="universityLogo"
                   required
+                  defaultImage={`${imageUrl}${API_URLS.STUDENTREVIEW}/${methods.getValues("universityLogo") || ""}`}
                 />
-
+                <InputText label="University" name="university" required />
                 <TextArea label="Review" name="review" />
                 <InputText label="Qualification" name="qualification" />
 
