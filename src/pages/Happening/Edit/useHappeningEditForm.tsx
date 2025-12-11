@@ -74,10 +74,7 @@ export const useHappeningEditForm = () => {
     formData.append("title", data.title);
     formData.append("description", data.description);
     formData.append("happeningTypeId", data.happeningTypeId);
-    
-    if (data.embeddedLink) {
-      formData.append("embeddedLink", data.embeddedLink);
-    }
+    formData.append("embeddedLink", data.embeddedLink ?? "");
 
     // Handle main image - only append if it's a new file
     if (data.mainImage instanceof File) {
