@@ -1,109 +1,216 @@
 import { FormProvider } from "react-hook-form";
 import InputText from "../../../components/forms/InputText";
-import SkillsInput from "../../../components/forms/SkillsInput";
-import Breadcrumb from "../../../components/layouts/common/Breadcrumb";
 import Layout from "../../../components/layouts/Layout";
 import { useCourseCreateForm } from "./useCourseCreateForm";
 import TextArea from "../../../components/forms/TextArea";
 import InputFile from "../../../components/forms/InputFile";
 import RadioInput from "../../../components/forms/RadioInput";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import Breadcrumb from "../../../components/layouts/common/Breadcrumb";
 import Alert from "../../../components/forms/Alert";
+
+const DAYS_OPTIONS = [
+  { label: "Monday", value: "MONDAY" },
+  { label: "Tuesday", value: "TUESDAY" },
+  { label: "Wednesday", value: "WEDNESDAY" },
+  { label: "Thursday", value: "THURSDAY" },
+  { label: "Friday", value: "FRIDAY" },
+  { label: "Saturday", value: "SATURDAY" },
+  { label: "Sunday", value: "SUNDAY" },
+];
 
 const CourseCreate = () => {
   const { onSubmit, loading, success, message, show, ...methods } =
     useCourseCreateForm();
 
+  const [selectedDays, setSelectedDays] = useState<Set<string>>(new Set());
+
+  const handleDayCheckbox = (dayValue: string, checked: boolean) => {
+    setSelectedDays((prev) => {
+      const newSet = new Set(prev);
+      if (checked) {
+        newSet.add(dayValue);
+      } else {
+        newSet.delete(dayValue);
+      }
+      return newSet;
+    });
+  };
+
   return (
     <Layout>
       <FormProvider {...methods}>
-        <form
-          className="grid grid-cols-1 lg:grid-cols-2 gap-0 lg:gap-6"
-          onSubmit={methods.handleSubmit(onSubmit)}
-        >
-          <div className="card card-bordered w-full bg-base-100">
-            <div className="card-body">
-              <Breadcrumb
-                items={[
-                  { label: "Home", path: "/" },
-                  { label: "Courses", path: "/courses" },
-                  { label: "Add Course" },
-                ]}
-              />
-              <h3 className="text-2xl font-bold my-4">Create Course</h3>
+        <form onSubmit={methods.handleSubmit(onSubmit)}>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 lg:gap-6">
+            <div className="card card-bordered w-full bg-base-100">
+              <div className="card-body">
+                <Breadcrumb
+                  items={[
+                    { label: "Home", path: "/" },
+                    { label: "Courses", path: "/courses" },
+                    { label: "Add Course" },
+                  ]}
+                />
+                <h3 className="text-2xl font-bold my-4">Create Course</h3>
 
-              {show && <Alert success={success} message={message} />}
+                {show && <Alert success={success} message={message} />}
 
-              <InputText
-                label="Course Name"
-                name="name"
-                placeholder="Enter course name"
-                required
-              />
-              <TextArea
-                label="Program Overview"
-                name="programOverview"
-                required
-              />
-              <TextArea label="Course Level" name="level" />
-              <InputText
-                label="Course Duration"
-                name="duration"
-                placeholder="Enter course duration"
-                required
-              />
-              <RadioInput
-                name="location"
-                label="Location"
-                options={[
-                  { label: "Online", value: "online" },
-                  { label: "Onsite", value: "onsite" },
-                ]}
-                required
-              />
-              <RadioInput
-                name="programType"
-                label="Program Type"
-                options={[
-                  { label: "ART & DESIGN PROGRAMS", value: "ART_DESIGN" },
-                  { label: "TECHNOLOGY PROGRAMS", value: "TECHNOLOGY" },
-                  {
-                    label: "CHILDREN’S CREATIVE PROGRAMS",
-                    value: "CHILDRENS_CREATIVE",
-                  },
-                ]}
-                required
-              />
+                <InputText
+                  label="Course Name"
+                  name="name"
+                  placeholder="Enter course name"
+                  required
+                />
+                <TextArea
+                  label="Program Overview"
+                  name="programOverview"
+                  required
+                />
+                <TextArea label="Course Level" name="level" />
+                <InputText
+                  label="Course Duration"
+                  name="duration"
+                  placeholder="Enter course duration"
+                  required
+                />
+                <RadioInput
+                  name="location"
+                  label="Location"
+                  options={[
+                    { label: "Online", value: "online" },
+                    { label: "Onsite", value: "onsite" },
+                  ]}
+                  required
+                />
+                <RadioInput
+                  name="programType"
+                  label="Program Type"
+                  options={[
+                    { label: "ART & DESIGN PROGRAMS", value: "ART_DESIGN" },
+                    { label: "TECHNOLOGY PROGRAMS", value: "TECHNOLOGY" },
+                    {
+                      label: "CHILDREN'S CREATIVE PROGRAMS",
+                      value: "CHILDRENS_CREATIVE",
+                    },
+                  ]}
+                  required
+                />
+              </div>
+            </div>
+            <div className="card card-bordered w-full bg-base-100 shadow-sm">
+              <div className="card-body">
+                <InputText
+                  label="Course Expiration Date"
+                  name="expireDate"
+                  placeholder="Enter course expiration date"
+                  type="date"
+                  min={new Date().toISOString().split("T")[0]}
+                />
+                <InputText
+                  label="Course Price"
+                  name="price"
+                  placeholder="Enter course price"
+                />
+                <InputText
+                  label="Course quiz link"
+                  name="quiz"
+                  placeholder="Enter course quiz link"
+                />
+                <InputFile label="Background Image" name="image" required />
+              </div>
             </div>
           </div>
 
-          {/* RIGHT SIDE */}
-          <div className="card card-bordered w-full bg-base-100">
+          <div className="card card-bordered w-full bg-base-100 mt-6 shadow-sm">
             <div className="card-body">
-              <InputText
-                label="Course Expiration Date"
-                name="expireDate"
-                placeholder="Enter course expiration date"
-                type="date"
-                min={new Date().toISOString().split("T")[0]}
-              />
-              <InputText
-                label="Course Price"
-                name="price"
-                placeholder="Enter course price"
-              />
-              <InputText
-                label="Course quiz link"
-                name="quiz"
-                placeholder="Enter course quiz link"
-              />
-              <InputFile label="Background Image" name="image" required />
-              <SkillsInput
-                name="skills"
-                label="Course Skills"
-                placeholder="Enter course skills"
-              />
-              <div className="pt-4 card-actions flex justify-between">
+              <div className="flex items-center gap-2 mb-4">
+                <h4 className="text-lg font-semibold">Course Schedule</h4>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="table table-zebra w-full">
+                  <thead>
+                    <tr>
+                      <th>Select</th>
+                      <th>Day</th>
+                      <th>Start Time</th>
+                      <th>End Time</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {DAYS_OPTIONS.map((day, index) => {
+                      const isSelected = selectedDays.has(day.value);
+                      return (
+                        <tr key={day.value}>
+                          <td>
+                            <input
+                              type="checkbox"
+                              className="checkbox checkbox-primary"
+                              checked={isSelected}
+                              onChange={(e) =>
+                                handleDayCheckbox(day.value, e.target.checked)
+                              }
+                            />
+                          </td>
+                          <td>
+                            <span className="font-medium">{day.label}</span>
+                            <input
+                              type="hidden"
+                              {...methods.register(`schedules.${index}.day`)}
+                              value={day.value}
+                            />
+                          </td>
+                          <td>
+                            <input
+                              type="time"
+                              className={`input input-bordered input-sm w-full max-w-xs ${!isSelected ? "opacity-50" : ""
+                                }`}
+                              placeholder="09:00"
+                              disabled={!isSelected}
+                              {...methods.register(
+                                `schedules.${index}.startTime`
+                              )}
+                            />
+                            {methods.formState.errors.schedules?.[index]
+                              ?.startTime && (
+                                <span className="text-error text-xs mt-1">
+                                  {
+                                    methods.formState.errors.schedules[index]
+                                      ?.startTime?.message
+                                  }
+                                </span>
+                              )}
+                          </td>
+                          <td>
+                            <input
+                              type="time"
+                              className={`input input-bordered input-sm w-full max-w-xs ${!isSelected ? "opacity-50" : ""
+                                }`}
+                              placeholder="17:00"
+                              disabled={!isSelected}
+                              {...methods.register(`schedules.${index}.endTime`)}
+                            />
+                            {methods.formState.errors.schedules?.[index]
+                              ?.endTime && (
+                                <span className="text-error text-xs mt-1">
+                                  {
+                                    methods.formState.errors.schedules[index]
+                                      ?.endTime?.message
+                                  }
+                                </span>
+                              )}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div className="card card-bordered w-full bg-base-100 mt-6 shadow-sm">
+            <div className="card-body">
+              <div className="flex justify-between items-center">
                 <Link to="/courses" className="btn btn-soft">
                   Back to Courses
                 </Link>

@@ -10,8 +10,26 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { courseRepository } from "../../../repositories/courseRepository";
 import { useFormState } from "../../../hooks/useFormState";
 
+const DAYS_OPTIONS = [
+  { label: "Monday", value: "MONDAY" },
+  { label: "Tuesday", value: "TUESDAY" },
+  { label: "Wednesday", value: "WEDNESDAY" },
+  { label: "Thursday", value: "THURSDAY" },
+  { label: "Friday", value: "FRIDAY" },
+  { label: "Saturday", value: "SATURDAY" },
+  { label: "Sunday", value: "SUNDAY" },
+] as const;
+
+type DayType = "MONDAY" | "TUESDAY" | "WEDNESDAY" | "THURSDAY" | "FRIDAY" | "SATURDAY" | "SUNDAY";
+
+interface Schedule {
+  day: DayType;
+  startTime?: string;
+  endTime?: string;
+}
+
 export const useCourseEditForm = () => {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const { data: courseData } = useGetCourseById(id?.toString() || "");
   const methods: UseFormReturn<CourseEditForm> = useForm<CourseEditForm>({
     resolver: zodResolver(CourseEditSchema(!!courseData?.image)),
@@ -26,8 +44,8 @@ export const useCourseEditForm = () => {
       price: "",
       quiz: "",
       image: undefined,
-      skills: [],
       isOpened: false,
+      schedules: [],
     },
   });
 
@@ -35,6 +53,24 @@ export const useCourseEditForm = () => {
 
   useEffect(() => {
     if (courseData) {
+      // Create a map of existing schedules by day
+      const scheduleMap = new Map<DayType, Schedule>();
+      if (courseData.schedules && Array.isArray(courseData.schedules) && courseData.schedules.length > 0) {
+        courseData.schedules.forEach((schedule: any) => {
+          scheduleMap.set(schedule.day as DayType, schedule);
+        });
+      }
+
+      // Create schedules array matching DAYS_OPTIONS order
+      const schedulesArray: Schedule[] = DAYS_OPTIONS.map((day) => {
+        const existingSchedule = scheduleMap.get(day.value as DayType);
+        return {
+          day: day.value as DayType,
+          startTime: existingSchedule?.startTime || "",
+          endTime: existingSchedule?.endTime || "",
+        };
+      });
+
       reset({
         name: courseData.name,
         programOverview: courseData.programOverview,
@@ -51,8 +87,8 @@ export const useCourseEditForm = () => {
         price: courseData.price?.toString() || "",
         quiz: courseData.quiz || "",
         image: courseData.image,
-        skills: courseData.skills || [],
         isOpened: courseData.isOpened,
+        schedules: schedulesArray,
       });
     }
   }, [courseData, reset]);
@@ -73,11 +109,16 @@ export const useCourseEditForm = () => {
     if (data.price) formData.append("price", data.price);
     if (data.quiz) formData.append("quiz", data.quiz);
     formData.append("image", data.image);
-    if (data.skills && data.skills.length > 0) {
-      data.skills.forEach((skill) => formData.append("skills[]", skill));
-    } else {
-      formData.append("skills[]", "");
+    if (data.schedules && data.schedules.length > 0) {
+      const activeSchedules = data.schedules.filter(
+        (schedule) => schedule.startTime || schedule.endTime
+      );
+
+      if (activeSchedules.length > 0) {
+        formData.append("schedules", JSON.stringify(activeSchedules));
+      }
     }
+
     handleSubmit(async () => {
       return await courseRepository.updateCourse(
         id?.toString() || "",
@@ -85,5 +126,6 @@ export const useCourseEditForm = () => {
       );
     });
   };
+
   return { ...methods, onSubmit, loading, success, message, show };
 };

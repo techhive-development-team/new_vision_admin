@@ -8,8 +8,19 @@ import { useFormState } from "../../../hooks/useFormState";
 import { courseRepository } from "../../../repositories/courseRepository";
 
 export const useCourseCreateForm = () => {
-  const methods = useForm({
+  const methods = useForm<CourseCreateForm>({
     resolver: zodResolver(CourseCreateSchema(false)),
+    defaultValues: {
+      schedules: [
+        { day: "MONDAY", startTime: "", endTime: "" },
+        { day: "TUESDAY", startTime: "", endTime: "" },
+        { day: "WEDNESDAY", startTime: "", endTime: "" },
+        { day: "THURSDAY", startTime: "", endTime: "" },
+        { day: "FRIDAY", startTime: "", endTime: "" },
+        { day: "SATURDAY", startTime: "", endTime: "" },
+        { day: "SUNDAY", startTime: "", endTime: "" },
+      ],
+    },
   });
 
   const { loading, success, message, show, handleSubmit } =
@@ -27,12 +38,19 @@ export const useCourseCreateForm = () => {
     if (data.price) formData.append("price", data.price);
     if (data.quiz) formData.append("quiz", data.quiz);
     formData.append("image", data.image);
-    if (data.skills && data.skills.length > 0) {
-      data.skills.forEach((skill) => formData.append("skills[]", skill));
+    if (data.schedules && data.schedules.length > 0) {
+      const validSchedules = data.schedules.filter(
+        (schedule) => schedule.startTime && schedule.endTime
+      );
+      if (validSchedules.length > 0) {
+        formData.append("schedules", JSON.stringify(validSchedules));
+      }
     }
+
     handleSubmit(async () => {
       return await courseRepository.createCourse(formData);
     });
   };
+
   return { ...methods, loading, success, message, show, onSubmit };
 };

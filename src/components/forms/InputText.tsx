@@ -3,7 +3,7 @@ import { useFormContext } from "react-hook-form";
 type Props = {
   label: string;
   name: string;
-  type?: "text" | "email" | "password" | "checkbox" | "date";
+  type?: "text" | "email" | "password" | "checkbox" | "date" | "time";
   variant?: "default" | "toggle";
   placeholder?: string;
   required?: boolean;
@@ -39,9 +39,8 @@ const InputText = ({
           <input
             {...register(name)}
             type="checkbox"
-            className={`${variant === "toggle" ? "toggle" : "checkbox"} ${
-              error ? "input-error" : ""
-            }`}
+            className={`${variant === "toggle" ? "toggle" : "checkbox"} ${error ? "input-error" : ""
+              }`}
             readOnly={readonly}
             disabled={readonly}
           />
@@ -70,9 +69,8 @@ const InputText = ({
         readOnly={readonly}
         disabled={readonly}
         min={type === "date" ? min : undefined}
-        className={`input input-bordered w-full ${error ? "input-error" : ""} ${
-          readonly ? "cursor-not-allowed" : ""
-        }`}
+        className={`input input-bordered w-full ${error ? "input-error" : ""} ${readonly ? "cursor-not-allowed" : ""
+          }`}
       />
       {error && (
         <label className="label">

@@ -28,6 +28,42 @@ const fileValidator = (hasDefault = false, fieldName = "Image") =>
       `${fieldName} must be less than ${MAX_FILE_SIZE / (1024 * 1024)}MB`
     );
 
+const ScheduleSchema = z.object({
+  day: z.enum([
+    "MONDAY",
+    "TUESDAY",
+    "WEDNESDAY",
+    "THURSDAY",
+    "FRIDAY",
+    "SATURDAY",
+    "SUNDAY",
+  ]),
+  startTime: z.string().optional(),
+  endTime: z.string().optional(),
+}).refine(
+  (data) => {
+    if (data.startTime || data.endTime) {
+      return data.startTime && data.endTime;
+    }
+    return true;
+  },
+  {
+    message: "Both start time and end time must be provided",
+    path: ["startTime"],
+  }
+).refine(
+  (data) => {
+    if (data.startTime && data.endTime) {
+      return data.endTime > data.startTime;
+    }
+    return true;
+  },
+  {
+    message: "End time must be after start time",
+    path: ["endTime"],
+  }
+);
+
 export const CourseCreateSchema = (hasDefaultImage = false) =>
   z.object({
     name: z.string().min(1, "Course name is required"),
@@ -37,7 +73,7 @@ export const CourseCreateSchema = (hasDefaultImage = false) =>
     location: z.enum(["online", "onsite"], "Location is required"),
     programType: z.enum(
       ["ART_DESIGN", "TECHNOLOGY", "CHILDRENS_CREATIVE"],
-      "programType is required"
+      "Program type is required"
     ),
     expireDate: z
       .string()
@@ -65,7 +101,7 @@ export const CourseCreateSchema = (hasDefaultImage = false) =>
       }),
     quiz: z.string().url().or(z.literal("")).optional(),
     image: fileValidator(hasDefaultImage, "Image"),
-    skills: z.array(z.string().min(1)).optional(),
+    schedules: z.array(ScheduleSchema).optional(),
   });
 
 export const CourseEditSchema = (hasDefaultImage = false) =>
@@ -77,7 +113,7 @@ export const CourseEditSchema = (hasDefaultImage = false) =>
     location: z.enum(["online", "onsite"], "Location is required"),
     programType: z.enum(
       ["ART_DESIGN", "TECHNOLOGY", "CHILDRENS_CREATIVE"],
-      "programType is required"
+      "Program type is required"
     ),
     expireDate: z
       .string()
@@ -105,8 +141,8 @@ export const CourseEditSchema = (hasDefaultImage = false) =>
       }),
     quiz: z.string().url().or(z.literal("")).optional(),
     image: fileValidator(hasDefaultImage, "Image"),
-    skills: z.array(z.string().min(1)).optional(),
     isOpened: z.boolean(),
+    schedules: z.array(ScheduleSchema).optional(),
   });
 
 export type CourseCreateForm = z.infer<ReturnType<typeof CourseCreateSchema>>;

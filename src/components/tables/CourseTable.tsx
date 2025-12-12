@@ -11,7 +11,6 @@ export type Course = {
   name: string;
   programOverview: string;
   quiz: string;
-  skills: string[];
   price: number;
   isOpened: boolean;
   expireDate: string;
