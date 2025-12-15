@@ -77,7 +77,6 @@ const CourseTable: React.FC<CourseTableProps> = ({
       if (response?.statusCode === 200) {
         await mutate();
         closeModal();
-        alert(response?.message || "Course deleted successfully.");
       }
     } catch (err: any) {
       console.error("Delete failed:", err);
@@ -141,7 +140,7 @@ const CourseTable: React.FC<CourseTableProps> = ({
                       </a>
                     )}
                   </td>
-                  <td>{course.price} MMK</td>
+                  <td>{course?.price ? `${course.price} MMK` : ""}</td>
                   <td>
                     {course.isOpened ? (
                       <div className="badge badge-primary">Open</div>
@@ -149,7 +148,7 @@ const CourseTable: React.FC<CourseTableProps> = ({
                       <div className="badge badge-error">Closed</div>
                     )}
                   </td>
-                  <td>{new Date(course.expireDate).toLocaleDateString()}</td>
+                  <td>{course.expireDate && new Date(course.expireDate).toLocaleDateString()}</td>
                   <td>{course.duration}</td>
                   <td>
                     {course.location === "onsite" ? (
