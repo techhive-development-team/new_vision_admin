@@ -26,6 +26,13 @@ const Dashboard = () => {
     setSearchImageType(imageType);
   };
 
+  const handleReset = () => {
+    setMainText("");
+    setImageType("");
+    setSearchMainText("");
+    setSearchImageType("");
+  };
+
   return (
     <Layout>
       <div className="card card-bordered w-full bg-base-100 mb-6">
@@ -69,6 +76,13 @@ const Dashboard = () => {
                 onClick={handleSearch}
               >
                 Search
+              </button>
+
+              <button
+                className="btn btn-secondary w-full md:w-auto rounded-lg"
+                onClick={handleReset}
+              >
+                Reset
               </button>
             </div>
           )}

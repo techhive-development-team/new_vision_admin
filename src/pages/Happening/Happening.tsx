@@ -26,6 +26,13 @@ const Dashboard = () => {
     setSearchHappeningType(happeningType);
   };
 
+  const handleReset = () => {
+    setTitle("");
+    setHappeningType("");
+    setSearchTitle("");
+    setSearchHappeningType("");
+  };
+
   return (
     <Layout>
       <div className="card card-bordered w-full bg-base-100 mb-6">
@@ -71,10 +78,17 @@ const Dashboard = () => {
               >
                 Search
               </button>
+              <button
+                className="btn btn-secondary w-full md:w-auto rounded-lg"
+                onClick={handleReset}
+              >
+                Reset
+              </button>
             </div>
           )}
         </div>
       </div>
+
       <div className="card card-bordered w-full bg-base-100">
         <div className="card-body">
           <div className="flex justify-between items-center">

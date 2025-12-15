@@ -16,6 +16,13 @@ const EducationPartnerDashboard = () => {
     setSearchPartnerType(partnerType);
   };
 
+  const handleReset = () => {
+    setName("");
+    setPartnerType("");
+    setSearchName("");
+    setSearchPartnerType("");
+  };
+
   return (
     <Layout>
       <div className="card card-bordered w-full bg-base-100 mb-6">
@@ -62,12 +69,18 @@ const EducationPartnerDashboard = () => {
               >
                 Search
               </button>
+
+              <button
+                className="btn btn-secondary w-full md:w-auto rounded-lg"
+                onClick={handleReset}
+              >
+                Reset
+              </button>
             </div>
           )}
         </div>
       </div>
 
-      {/* Table Section */}
       <div className="card card-bordered w-full bg-base-100">
         <div className="card-body">
           <div className="flex justify-between items-center">
@@ -80,7 +93,6 @@ const EducationPartnerDashboard = () => {
             </Link>
           </div>
 
-          {/* Pass filters to table */}
           <EducationPartnerTable
             name={searchName}
             partnerType={searchPartnerType}

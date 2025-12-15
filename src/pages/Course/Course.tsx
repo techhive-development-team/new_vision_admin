@@ -23,6 +23,17 @@ const Course = () => {
     setSearchToDate(toDate);
   };
 
+  const handleReset = () => {
+    setName("");
+    setProgramType("");
+    setFromDate("");
+    setToDate("");
+    setSearchName("");
+    setSearchProgramType("");
+    setSearchFromDate("");
+    setSearchToDate("");
+  };
+
   return (
     <Layout>
       <div className="card card-bordered w-full bg-base-100 mb-6">
@@ -77,6 +88,7 @@ const Course = () => {
                   onChange={(e) => setToDate(e.target.value)}
                 />
               </div>
+
               <div className="flex flex-col md:flex-row gap-2">
                 <button
                   className="btn btn-primary w-full md:w-auto rounded-lg"
@@ -84,11 +96,18 @@ const Course = () => {
                 >
                   Search
                 </button>
+                <button
+                  className="btn btn-secondary w-full md:w-auto rounded-lg"
+                  onClick={handleReset}
+                >
+                  Reset
+                </button>
               </div>
             </div>
           )}
         </div>
       </div>
+
       <div className="card card-bordered w-full bg-base-100">
         <div className="card-body">
           <div className="flex justify-between items-center">

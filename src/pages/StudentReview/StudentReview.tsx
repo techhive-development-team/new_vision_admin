@@ -13,6 +13,11 @@ const Dashboard = () => {
     setSearchName(name);
   };
 
+  const handleReset = () => {
+    setName("");
+    setSearchName("");
+  };
+
   return (
     <Layout>
       <div className="card card-bordered w-full bg-base-100 mb-6">
@@ -44,10 +49,17 @@ const Dashboard = () => {
               >
                 Search
               </button>
+              <button
+                className="btn btn-secondary w-full md:w-auto rounded-lg"
+                onClick={handleReset}
+              >
+                Reset
+              </button>
             </div>
           )}
         </div>
       </div>
+
       <div className="card card-bordered w-full bg-base-100">
         <div className="card-body">
           <div className="flex justify-between items-center">
@@ -57,9 +69,7 @@ const Dashboard = () => {
             </Link>
           </div>
 
-          <StudentReviewTable
-            name={searchName}
-          />
+          <StudentReviewTable name={searchName} />
         </div>
       </div>
     </Layout>
