@@ -52,7 +52,6 @@ const ImageTypeTable: React.FC = () => {
     if (response?.statusCode === 200) {
         await mutate();
         closeModal();
-        alert(response?.message || "Course deleted successfully.");
       }
   } catch (err: any) {
     console.error("Delete failed:", err);
