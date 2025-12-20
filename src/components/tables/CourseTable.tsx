@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useGetCourse } from "../../hooks/useGetCourse";
 import { API_URLS, imageUrl } from "../../enum/urls";
 import { courseRepository } from "../../repositories/courseRepository";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 const PAGE_SIZE = 10;
 
@@ -34,7 +34,8 @@ const CourseTable: React.FC<CourseTableProps> = ({
   fromDate = "",
   toDate = "",
 }) => {
-  const [page, setPage] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const page = Number(searchParams.get("page")) || 1;
   const offset = (page - 1) * PAGE_SIZE;
 
   const {
@@ -93,6 +94,10 @@ const CourseTable: React.FC<CourseTableProps> = ({
     }
   };
 
+  const handlePageChange = (pageNumber: number) => {
+    setSearchParams({ page: String(pageNumber) });
+  };
+
   return (
     <div>
       <div className="overflow-x-auto">
@@ -148,7 +153,10 @@ const CourseTable: React.FC<CourseTableProps> = ({
                       <div className="badge badge-error">Closed</div>
                     )}
                   </td>
-                  <td>{course.expireDate && new Date(course.expireDate).toLocaleDateString()}</td>
+                  <td>
+                    {course.expireDate &&
+                      new Date(course.expireDate).toLocaleDateString()}
+                  </td>
                   <td>{course.duration}</td>
                   <td>
                     {course.location === "onsite" ? (
@@ -161,8 +169,8 @@ const CourseTable: React.FC<CourseTableProps> = ({
                   <td>{new Date(course.createdAt).toLocaleString()}</td>
                   <td className="flex gap-2">
                     <Link
-                      to={`/courses/${course.id}/edit`}
-                      className="btn btn-sm btn-primary"
+                      to={`/courses/${course.id}/edit?page=${page}`}
+                      className="btn btn-sm"
                     >
                       Edit
                     </Link>
@@ -196,8 +204,8 @@ const CourseTable: React.FC<CourseTableProps> = ({
               type="radio"
               name="options"
               aria-label={String(pageNumber)}
-              defaultChecked={page === pageNumber}
-              onClick={() => setPage(pageNumber)}
+              checked={page === pageNumber}
+              onChange={() => handlePageChange(pageNumber)}
             />
           );
         })}

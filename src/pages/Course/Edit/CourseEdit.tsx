@@ -5,7 +5,7 @@ import Layout from "../../../components/layouts/Layout";
 import TextArea from "../../../components/forms/TextArea";
 import InputFile from "../../../components/forms/InputFile";
 import RadioInput from "../../../components/forms/RadioInput";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import Alert from "../../../components/forms/Alert";
 import { useCourseEditForm } from "./useCourseEditForm";
 import { API_URLS, imageUrl } from "../../../enum/urls";
@@ -27,6 +27,9 @@ const CourseEdit = () => {
 
   const [selectedDays, setSelectedDays] = useState<Set<string>>(new Set());
 
+  const [searchParams] = useSearchParams();
+  const page = searchParams.get("page") || "1";
+  
   // Sync selectedDays with form data when schedules are loaded
   useEffect(() => {
     const schedules = methods.getValues("schedules");
@@ -246,7 +249,7 @@ const CourseEdit = () => {
           <div className="card card-bordered w-full bg-base-100 mt-6 shadow-sm">
             <div className="card-body">
               <div className="flex justify-between items-center">
-                <Link to="/courses" className="btn btn-soft">
+                <Link to={`/courses?page=${page}`} className="btn btn-soft">
                   Back to Courses
                 </Link>
                 <button className="btn btn-primary" disabled={loading}>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { API_URLS, imageUrl } from "../../enum/urls";
 import { happeningRepository } from "../../repositories/happeningRepository";
 import { useGetHappening } from "../../hooks/useGetHappening";
@@ -28,7 +28,9 @@ type HappeningTableProps = {
 const PAGE_SIZE = 10;
 
 const HappeningTable: React.FC<HappeningTableProps> = ({ title = "", happeningTypeId = ""}) => {
-  const [page, setPage] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const page = Number(searchParams.get("page")) || 1;
+
   const offset = (page - 1) * PAGE_SIZE;
   const {
     data: happenings,
@@ -69,6 +71,10 @@ const HappeningTable: React.FC<HappeningTableProps> = ({ title = "", happeningTy
     }
   };
 
+  const handlePageChange = (pageNumber: number) => {
+    setSearchParams({ page: String(pageNumber) });
+  };
+
   return (
     <div>
       <div className="overflow-x-auto">
@@ -100,7 +106,7 @@ const HappeningTable: React.FC<HappeningTableProps> = ({ title = "", happeningTy
                   <td>{new Date(happening.createdAt).toLocaleString()}</td>
                   <td className="flex gap-2">
                     <Link
-                      to={`/happenings/${happening.id}/edit`}
+                      to={`/happenings/${happening.id}/edit?page=${page}`}
                       className="btn btn-sm btn-primary"
                     >
                       Edit
@@ -136,8 +142,8 @@ const HappeningTable: React.FC<HappeningTableProps> = ({ title = "", happeningTy
               type="radio"
               name="options"
               aria-label={String(pageNumber)}
-              defaultChecked={page === pageNumber}
-              onClick={() => setPage(pageNumber)}
+              checked={page === pageNumber}
+              onChange={() => handlePageChange(pageNumber)}
             />
           );
         })}

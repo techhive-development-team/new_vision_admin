@@ -6,7 +6,7 @@ import InputFile from "../../../components/forms/InputFile";
 import Breadcrumb from "../../../components/layouts/common/Breadcrumb";
 import Layout from "../../../components/layouts/Layout";
 import Alert from "../../../components/forms/Alert";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { useHappeningEditForm } from "./useHappeningEditForm";
 import { useGetHappeningType } from "../../../hooks/useGetHappeningType";
 import { API_URLS, imageUrl } from "../../../enum/urls";
@@ -24,6 +24,9 @@ const HappeningEdit = () => {
     ...methods
   } = useHappeningEditForm();
 
+  const [searchParams] = useSearchParams();
+  const page = searchParams.get("page") || "1";
+
   const { data, isLoading, error } = useGetHappeningType();
 
   return (
@@ -40,7 +43,10 @@ const HappeningEdit = () => {
             />
             <h3 className="text-2xl font-bold my-4">Edit Happening</h3>
             <FormProvider {...methods}>
-              <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-4">
+              <form
+                onSubmit={methods.handleSubmit(onSubmit)}
+                className="space-y-4"
+              >
                 {show && <Alert success={success} message={message} />}
                 <InputText label="Happening Name" name="title" required />
                 <TextArea label="Description" name="description" required />
@@ -68,7 +74,9 @@ const HappeningEdit = () => {
                   label="Background Image"
                   name="mainImage"
                   required
-                  defaultImage={`${imageUrl}${API_URLS.HAPPENING}/${methods.getValues("mainImage")}`}
+                  defaultImage={`${imageUrl}${
+                    API_URLS.HAPPENING
+                  }/${methods.getValues("mainImage")}`}
                 />
 
                 <MultiFileUpload
@@ -87,7 +95,10 @@ const HappeningEdit = () => {
                 />
 
                 <div className="pt-4 card-actions flex justify-between">
-                  <Link to="/happenings" className="btn btn-soft">
+                  <Link
+                    to={`/happenings?page=${page}`}
+                    className="btn btn-soft"
+                  >
                     Back to Happenings
                   </Link>
                   <button className="btn btn-primary" disabled={loading}>
