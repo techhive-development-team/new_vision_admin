@@ -4,12 +4,14 @@ import Breadcrumb from "../../../components/layouts/common/Breadcrumb";
 import InputText from "../../../components/forms/InputText";
 import TextArea from "../../../components/forms/TextArea";
 import { useForm, FormProvider } from "react-hook-form";
+import type { Course } from "../../../components/tables/CourseTable";
 
 type Form = {
   name: string;
   email: string;
   phone?: string;
   description: string;
+  course?: Course;
 };
 
 const InquiryView = () => {
@@ -36,6 +38,7 @@ const InquiryView = () => {
       email: inquiry.email,
       phone: inquiry.phone,
       description: inquiry.description,
+      course: inquiry.course,
     },
   });
 
@@ -58,6 +61,7 @@ const InquiryView = () => {
                 <InputText label="Name" name="name" type="text" />
                 <InputText label="Email" name="email" type="email" />
                 <InputText label="Phone" name="phone" type="text" />
+                <InputText label="Course" name="course.name" type="text" readonly />
                 <TextArea label="Description" name="description" />
 
                 <div className="pt-4 card-actions">

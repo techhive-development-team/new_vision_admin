@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetInquiry } from "../../hooks/useGetInquiry";
 import { inquiryRepository } from "../../repositories/inquiryRepository";
+import type { Course } from "./CourseTable";
 
 type Inquiry = {
   id: string;
   name: string;
   email: string;
   phone?: string;
+  course?: Course;
   description: string;
   createdAt: string;
 };
@@ -62,6 +64,7 @@ const InquiryTable: React.FC = () => {
             <tr>
               <th>No</th>
               <th>Name</th>
+              <th>Course</th>
               <th>Email</th>
               <th>Phone</th>
               <th>Description</th>
@@ -75,6 +78,17 @@ const InquiryTable: React.FC = () => {
                 <tr key={inquiry.id}>
                   <th>{offset + index + 1}</th>
                   <td>{inquiry.name}</td>
+                  <td>
+                    {inquiry.course
+                      ? [
+                          inquiry.course.name,
+                          inquiry.course.level,
+                          inquiry.course.location,
+                        ]
+                          .filter(Boolean)
+                          .join(" - ")
+                      : "-"}
+                  </td>
                   <td>{inquiry.email}</td>
                   <td>{inquiry.phone || "-"}</td>
                   <td>{inquiry.description}</td>
@@ -87,7 +101,7 @@ const InquiryTable: React.FC = () => {
                     >
                       View
                     </Link>
-                    
+
                     <button
                       onClick={() => handleDelete(inquiry)}
                       className="btn btn-sm btn-error"
